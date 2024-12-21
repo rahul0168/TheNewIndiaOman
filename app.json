@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "RentAnythingApp",
-    "slug": "RentAnythingApp",
+    "name": "thenewIndiaOman",
+    "slug": "thenewIndiaOman",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/appicon.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.rbnm.thenewIndiaOman"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "24142b2b-31b5-432e-bc59-9191e32b1bf6"
+      }
     }
   }
 }
