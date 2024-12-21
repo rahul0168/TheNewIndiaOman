@@ -12,6 +12,7 @@ import MotorInsurance from "./MotorInsurance"; // Import the Detail tab
 import { Ionicons } from "@expo/vector-icons"; // Ensure you have the correct import
 import HomeScreen from "./Home";
 import HomeScreen1 from "./HomeScreen";
+import ProfileViewScreen from "../ProfileViewScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -69,8 +70,8 @@ export default function TabLayout() {
         {/* Profile Tab */}
         <Tab.Screen
           name="Profile"
-          component={ProfileScreen}
-          options={{ title: "Profile" }}
+          component={ProfileViewScreen}
+          options={{ title: "Profile", headerShown: false }}
           screenOptions={{ headershown: false }}
         />
 
