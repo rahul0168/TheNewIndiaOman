@@ -7,21 +7,39 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "expo-router";
 
 const insuranceOptions = [
-  { id: "1", title: "Health", subtitle: "Starts @₹19/day*", icon: "🏥" },
-  { id: "2", title: "2 Wheeler", subtitle: "Starts @₹538/yr*", icon: "🛵" },
-  { id: "3", title: "4 Wheeler", subtitle: "Starts @₹2094/yr*", icon: "🚗" },
-  { id: "4", title: "Travel", subtitle: "Starts @₹300/trip*", icon: "✈️" },
-  { id: "5", title: "Home", subtitle: "Starts @₹1500/yr*", icon: "🏠" },
-  { id: "6", title: "Life", subtitle: "Starts @₹500/month*", icon: "❤️" },
-  { id: "7", title: "Pet", subtitle: "Starts @₹1000/yr*", icon: "🐾" },
-  { id: "8", title: "Gadget", subtitle: "Starts @₹299/yr*", icon: "📱" },
-  { id: "9", title: "Business", subtitle: "Starts @₹3000/yr*", icon: "🏢" },
-  { id: "10", title: "Cyber", subtitle: "Starts @₹500/yr*", icon: "💻" },
+  { id: "1", title: "Health", subtitle: "Starts @₹19/day*", icon: "heartbeat" },
+  {
+    id: "2",
+    title: "2 Wheeler",
+    subtitle: "Starts @₹538/yr*",
+    icon: "motorcycle",
+  },
+  { id: "3", title: "4 Wheeler", subtitle: "Starts @₹2094/yr*", icon: "car" },
+  { id: "4", title: "Travel", subtitle: "Starts @₹300/trip*", icon: "flight" },
+  { id: "5", title: "Home", subtitle: "Starts @₹1500/yr*", icon: "home" },
+  { id: "6", title: "Life", subtitle: "Starts @₹500/month*", icon: "heart" },
+  { id: "7", title: "Pet", subtitle: "Starts @₹1000/yr*", icon: "paw" },
+  {
+    id: "8",
+    title: "Gadget",
+    subtitle: "Starts @₹299/yr*",
+    icon: "mobile-phone",
+  },
+  {
+    id: "9",
+    title: "Business",
+    subtitle: "Starts @₹3000/yr*",
+    icon: "building",
+  },
+  { id: "10", title: "Cyber", subtitle: "Starts @₹500/yr*", icon: "computer" },
 ];
 
 const BottomSheetComponent = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       {/* My Policies Section */}
@@ -41,11 +59,19 @@ const BottomSheetComponent = () => {
       <Text style={styles.buyInsuranceTitle}>Buy New Insurance</Text>
       <ScrollView contentContainerStyle={styles.insuranceList}>
         {insuranceOptions.map((item) => (
-          <View key={item.id} style={styles.card}>
-            <Text style={styles.icon}>{item.icon}</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("MotorInsurance", { id: 1 })}
+            key={item.id}
+            style={styles.card}
+          >
+            {item.icon === "flight" || item.icon === "computer" ? (
+              <MaterialIcons name={item.icon} style={styles.icon} />
+            ) : (
+              <FontAwesome name={item.icon} style={styles.icon} />
+            )}
             <Text style={styles.cardTitle}>{item.title}</Text>
             <Text style={styles.cardSubtitle}>{item.subtitle}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>
@@ -122,6 +148,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 32,
     marginBottom: 10,
+    color: "#356CFF",
   },
   cardTitle: {
     fontSize: 16,
