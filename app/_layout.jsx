@@ -7,6 +7,8 @@ import LoginWithEmailScreen from "./LoginWithEmailScreen"; // Import LoginScreen
 import OtpScreen from "./OtpScreen"; // Import LoginScreen
 import VerifiedOtpScreen from "./VerifiedOtpScreen"; // Import LoginScreen
 import TabLayout from "./tabs/_layout"; // Import TabLayout component
+import ProfileScreen from "./EditProfileScreen";
+import EditProfileScreen from "./EditProfileScreen";
 // import DetailScreen from './DetailScreen'
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +51,11 @@ export default function RootLayout() {
         name="VerifiedOtpScreen"
         component={VerifiedOtpScreen}
         options={{ title: "otpveify Screen", headerShown: false }} // Hide header for login screen
+      />
+      <Stack.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+        options={{ headerShown: false }} // Hide header for login screen
       />
 
       {/* Tabs Navigator */}

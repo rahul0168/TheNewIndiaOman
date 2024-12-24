@@ -6,8 +6,10 @@ import {
   Ionicons,
   Feather,
 } from "@expo/vector-icons";
+import { useNavigation } from "expo-router";
 
 const ProfileViewScreen = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.profileIcon}>
@@ -40,7 +42,10 @@ const ProfileViewScreen = () => {
         {/* Options Section */}
         <View style={styles.optionsContainer}>
           {/* My Profile */}
-          <TouchableOpacity style={styles.optionItem}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("EditProfileScreen")}
+            style={styles.optionItem}
+          >
             <FontAwesome name="user-o" size={24} color="#000" />
             <View style={styles.optionTextContainer}>
               <Text style={styles.optionTitle}>My Profile</Text>

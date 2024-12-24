@@ -2,7 +2,7 @@ import React from "react";
 import { StatusBar } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./Home"; // Import the Home tab screen
-import ProfileScreen from "./profile"; // Import the Profile tab screen
+import ProfileScreen from "../EditProfileScreen"; // Import the Profile tab screen
 import SettingsScreen from "./settings"; // Import the Settings tab screen
 import ListScreen from "./listScreen"; // Import the Settings tab screen
 import { NavigationContainer } from "@react-navigation/native";
@@ -71,7 +71,7 @@ export default function TabLayout() {
         <Tab.Screen
           name="Profile"
           component={ProfileViewScreen}
-          options={{ title: "Profile", headerShown: false }}
+          options={{ headerShown: false }}
           screenOptions={{ headershown: false }}
         />
 
