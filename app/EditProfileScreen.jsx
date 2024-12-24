@@ -1,30 +1,39 @@
-import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
-import { TextInput, Button, Provider as PaperProvider } from 'react-native-paper';
+import React from "react";
+import { ScrollView, View, Text } from "react-native";
+import {
+  TextInput,
+  Button,
+  Provider as PaperProvider,
+} from "react-native-paper";
 
 const theme = {
   colors: {
-    primary: '#6b7280', // Gray color
-    background: '#ffffff', // White background
+    primary: "#6b7280", // Gray color
+    background: "#ffffff", // White background
   },
   roundness: 8, // For globally rounded corners
 };
 
-export default function ProfileScreen() {
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [phone, setPhone] = React.useState('');
-  const [address, setAddress] = React.useState('');
-  const [city, setCity] = React.useState('');
-  const [state, setState] = React.useState('');
-  const [work, setWork] = React.useState('');
-  const [home, setHome] = React.useState('');
+export default function EditProfileScreen() {
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [city, setCity] = React.useState("");
+  const [state, setState] = React.useState("");
+  const [work, setWork] = React.useState("");
+  const [home, setHome] = React.useState("");
 
   return (
     <PaperProvider theme={theme}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 16 }} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, padding: 16 }}
+        keyboardShouldPersistTaps="handled"
+      >
         <View className="bg-white p-6 rounded-lg shadow-md">
-          <Text className="mb-6 text-3xl font-bold text-center">Update Profile</Text>
+          <Text className="mb-6 text-3xl font-bold text-center">
+            Update Profile
+          </Text>
 
           {/* Name Input */}
           <TextInput
