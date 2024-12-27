@@ -53,6 +53,7 @@ const MotorInsurance = () => {
   const [uaeExtension, setUaeExtension] = useState(false);
   const [aaaRoadAssist, setAaaRoadAssist] = useState(false);
   const [selectedCapacity, setSelectedCapacity] = useState(null);
+  const [drivers, setDrivers] = useState([]);
   const [name, setName] = useState("");
 
   const [phone, setPhone] = useState("");
@@ -79,6 +80,24 @@ const MotorInsurance = () => {
     const nextIndex = (currentIndex + 1) % tabs.length;
     setActiveTab(tabs[nextIndex]);
   };
+  const prevTab = () => {
+    const tabs = ["Vehicle Details", "Personal Info", "Additional Driver"];
+    const currentIndex = tabs.indexOf(activeTab);
+    const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    setActiveTab(tabs[prevIndex]);
+  };
+
+  const addDrivers = () => {
+    setDrivers([...drivers, { name: "", license: "", expiry: "" }]);
+  };
+
+  const updateDriver = (index, key, value) => {
+    const updatedDrivers = drivers.map((driver, i) =>
+      i === index ? { ...driver, [key]: value } : driver
+    );
+    setDrivers(updatedDrivers);
+  };
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "Vehicle Details":
@@ -368,77 +387,138 @@ const MotorInsurance = () => {
              </ScrollView> */}
 
             {/* <Button title="Next" color="#1e40af" onPress={nextPage} /> */}
-            <PButton
-              mode="contained"
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              onPress={nextTab}
-              // disabled={!selectedCapacity}
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              Next
-            </PButton>
+              <PButton mode="contained" onPress={prevTab} disabled={true}>
+                Previous
+              </PButton>
+              <PButton mode="contained" onPress={nextTab}>
+                Next
+              </PButton>
+            </View>
           </View>
         );
       case "Personal Info":
         return (
           <View className="bg-white p-4 gap-2 rounded-lg shadow">
+            <Text className="font-semibold">Enter Name</Text>
             <PTextInput
               mode="outlined"
               label="Name"
               value={name}
               onChangeText={setName}
+              style={inputStyle}
               theme={{ colors: { primary: "#1E3A8A" } }}
+              outlineStyle={{ borderRadius: 25 }}
             />
+            <Text className="font-semibold">Enter DOB</Text>
             <PTextInput
               mode="outlined"
               label="Date of Birth"
               value={dob}
               onChangeText={setDob}
+              style={inputStyle}
               theme={{ colors: { primary: "#1E3A8A" } }}
+              outlineStyle={{ borderRadius: 25 }}
             />
+            <Text className="font-semibold">Enter Email</Text>
             <PTextInput
               mode="outlined"
               label="Email"
               value={email}
               onChangeText={setEmail}
+              style={inputStyle}
               theme={{ colors: { primary: "#1E3A8A" } }}
+              outlineStyle={{ borderRadius: 25 }}
             />
+            <Text className="font-semibold ">Enter Address</Text>
             <PTextInput
               mode="outlined"
               label="Address"
               value={address}
               onChangeText={setAddress}
+              style={inputStyle}
               theme={{ colors: { primary: "#1E3A8A" } }}
+              outlineStyle={{ borderRadius: 25 }}
             />
+            <Text className="font-semibold">Enter Phone</Text>
             <PTextInput
               mode="outlined"
               label="Phone"
               value={phone}
               onChangeText={setPhone}
+              style={inputStyle}
               theme={{ colors: { primary: "#1E3A8A" } }}
+              outlineStyle={{ borderRadius: 25 }}
             />
-            <PButton
-              className="mt-5"
-              mode="contained"
-              onPress={nextTab}
-              theme={{ colors: { primary: "#1E3A8A" } }}
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              Next
-            </PButton>
+              <PButton mode="contained" onPress={prevTab}>
+                Previous
+              </PButton>
+              <PButton mode="contained" onPress={nextTab}>
+                Next
+              </PButton>
+            </View>
           </View>
         );
       case "Additional Driver":
         return (
-          <View className="bg-white p-4 gap-3 rounded-lg shadow">
-            <Text>Driver Name: John Doe</Text>
-            <Text>Driver License: D12345678</Text>
-            <Text>License Expiry: 2025-12-31</Text>
-            <PButton
-              mode="contained"
-              onPress={nextTab}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-            >
-              Finish
+          <View className="bg-white p-4 rounded-lg shadow">
+            {drivers.map((driver, index) => (
+              <View className="mb-4 border-b border-gray-300" key={index}>
+                <Text className="font-semibold">Enter Name</Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Driver Name"
+                  value={driver.name}
+                  onChangeText={(value) => updateDriver(index, "name", value)}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+                <Text className="font-semibold">Enter License</Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Driver License"
+                  value={driver.license}
+                  onChangeText={(value) =>
+                    updateDriver(index, "license", value)
+                  }
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+                <Text className="font-semibold">Enter Expiry</Text>
+                <PTextInput
+                  mode="outlined"
+                  label="License Expiry"
+                  value={driver.expiry}
+                  onChangeText={(value) => updateDriver(index, "expiry", value)}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
+            ))}
+
+            <PButton mode="outlined" onPress={addDrivers}>
+              Add Driver
             </PButton>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 16,
+              }}
+            >
+              <PButton mode="contained" onPress={prevTab}>
+                Previous
+              </PButton>
+              <PButton mode="contained" onPress={() => alert("Finished")}>
+                Finish
+              </PButton>
+            </View>
           </View>
         );
       default:
