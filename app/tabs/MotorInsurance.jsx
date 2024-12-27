@@ -75,13 +75,13 @@ const MotorInsurance = () => {
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
   const nextTab = () => {
-    const tabs = ["Vehicle Details", "Vehicle Details extra","Personal Info", "Additional Driver"];
+    const tabs = ["Vehicle Details", "Vehicle Details extra","Personal Info", "Additional Driver","Motor Summery"];
     const currentIndex = tabs.indexOf(activeTab);
     const nextIndex = (currentIndex + 1) % tabs.length;
     setActiveTab(tabs[nextIndex]);
   };
   const prevTab = () => {
-    const tabs = ["Vehicle Details", "Vehicle Details extra","Personal Info", "Additional Driver"];
+    const tabs = ["Vehicle Details", "Vehicle Details extra","Personal Info", "Additional Driver","Motor Summery"];
     const currentIndex = tabs.indexOf(activeTab);
     const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
     setActiveTab(tabs[prevIndex]);
@@ -536,8 +536,8 @@ const MotorInsurance = () => {
               <PButton mode="contained" onPress={prevTab}  theme={{ colors: { primary: "#1E3A8A" } }} >
                 Previous
               </PButton>
-              <PButton mode="contained" onPress={() => alert("Finished")}  theme={{ colors: { primary: "#1E3A8A" } }} >
-                Finish
+              <PButton mode="contained" onPress={nextTab}  theme={{ colors: { primary: "#1E3A8A" } }} >
+                Next
               </PButton>
             </View>
           </View>
@@ -546,6 +546,20 @@ const MotorInsurance = () => {
           return (
             <View className="bg-white p-4 rounded-lg shadow">
 
+             <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 16,
+              }}
+            >
+            <PButton mode="contained" onPress={prevTab}  theme={{ colors: { primary: "#1E3A8A" } }} >
+                Previous
+              </PButton>
+              <PButton mode="contained" onPress={() => alert("Finished")}  theme={{ colors: { primary: "#1E3A8A" } }} >
+                Finish
+              </PButton>
+            </View>
             </View>
 
 
