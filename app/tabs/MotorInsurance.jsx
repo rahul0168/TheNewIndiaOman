@@ -128,7 +128,7 @@ const MotorInsurance = () => {
               label="First Registration"
               value={firstRegistration}
               onChangeText={setFirstRegistration}
-              theme={{ colors: { primary: "#1E3A8A" } }}
+              theme={{ colors: { primary: "#1E3A8A" } }} 
               style={inputStyle}
               outlineStyle={{ borderRadius: 25 }}
             />
