@@ -75,13 +75,13 @@ const MotorInsurance = () => {
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
   const nextTab = () => {
-    const tabs = ["Vehicle Details", "Personal Info", "Additional Driver"];
+    const tabs = ["Vehicle Details", "Vehicle Details extra","Personal Info", "Additional Driver"];
     const currentIndex = tabs.indexOf(activeTab);
     const nextIndex = (currentIndex + 1) % tabs.length;
     setActiveTab(tabs[nextIndex]);
   };
   const prevTab = () => {
-    const tabs = ["Vehicle Details", "Personal Info", "Additional Driver"];
+    const tabs = ["Vehicle Details", "Vehicle Details extra","Personal Info", "Additional Driver"];
     const currentIndex = tabs.indexOf(activeTab);
     const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
     setActiveTab(tabs[prevIndex]);
@@ -152,36 +152,39 @@ const MotorInsurance = () => {
               outlineStyle={{ borderRadius: 25 }}
             />
 
-            <Text className="font-semibold mb-2">
-              Is Your Vehicle Imported?{" "}
-            </Text>
-            <View className="flex-row mb-4">
-              <TouchableOpacity
-                onPress={() => setIsImported("yes")}
-                className="mr-4"
-              >
-                <Text
-                  className={`px-2 py-1 ${
-                    isImported === "yes"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200"
-                  }`}
-                >
-                  Yes
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => setIsImported("no")}>
-                <Text
-                  className={`px-2 py-1 ${
-                    isImported === "no"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200"
-                  }`}
-                >
-                  No
-                </Text>
-              </TouchableOpacity>
-            </View>
+<Text className="font-semibold mb-2 text-lg">
+        Is Your Vehicle Imported?
+      </Text>
+      <View className="flex-row mb-4">
+        <TouchableOpacity
+          onPress={() => setIsImported("yes")}
+          className={`px-4 py-2 mr-4 rounded ${
+            isImported === "yes" ? "bg-blue-500" : "bg-gray-200"
+          }`}
+        >
+          <Text
+            className={`text-center ${
+              isImported === "yes" ? "text-white" : "text-black"
+            }`}
+          >
+            Yes
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setIsImported("no")}
+          className={`px-4 py-2 rounded ${
+            isImported === "no" ? "bg-blue-500" : "bg-gray-200"
+          }`}
+        >
+          <Text
+            className={`text-center ${
+              isImported === "no" ? "text-white" : "text-black"
+            }`}
+          >
+            No
+          </Text>
+        </TouchableOpacity>
+      </View>
 
             <Text className="font-semibold mb-2">Vehicle Usage</Text>
             <PTextInput
@@ -248,7 +251,43 @@ const MotorInsurance = () => {
               outlineStyle={{ borderRadius: 25 }}
             />
 
-            <Text className="font-semibold mb-2">Load Weight </Text>
+            
+
+            {/* <Text className="font-semibold mb-2">Seating Capacity </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row">
+          {options.map((option, index) => (
+             <TouchableOpacity
+             key={index}
+             onPress={() => setSelectedCapacity(option)}
+             className="flex-row items-center mx-2"
+           >
+             <View
+               className={`w-5 h-5 rounded-full mt-4 mb-4 border-2 border-gray-400 ${
+                 selectedCapacity === option ? 'bg-blue-500' : 'bg-white'
+               }`}
+             />
+             <Text className="ml-2 mt-4 mb-4">{option}</Text>
+           </TouchableOpacity>
+          ))}
+             </ScrollView> */}
+
+            {/* <Button title="Next" color="#1e40af" onPress={nextPage} /> */}
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <PButton mode="contained" onPress={prevTab} disabled={true} theme={{ colors: { primary: "#1E3A8A" } }}  >
+                Previous
+              </PButton>
+              <PButton mode="contained" onPress={nextTab} theme={{ colors: { primary: "#1E3A8A" } }} >
+                Next
+              </PButton>
+            </View>
+          </View>
+        );
+        case "Vehicle Details extra":
+          return (
+                      <View className="bg-white p-4 gap-2 rounded-lg shadow">
+                        <Text className="font-semibold mb-2">Load Weight </Text>
             <PTextInput
               mode="outlined"
               label="Load Weight"
@@ -367,38 +406,20 @@ const MotorInsurance = () => {
               />
               <Text style={styles.checkboxLabel}>AAA (Road Assistance)</Text>
             </View>
-
-            {/* <Text className="font-semibold mb-2">Seating Capacity </Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row">
-          {options.map((option, index) => (
-             <TouchableOpacity
-             key={index}
-             onPress={() => setSelectedCapacity(option)}
-             className="flex-row items-center mx-2"
-           >
-             <View
-               className={`w-5 h-5 rounded-full mt-4 mb-4 border-2 border-gray-400 ${
-                 selectedCapacity === option ? 'bg-blue-500' : 'bg-white'
-               }`}
-             />
-             <Text className="ml-2 mt-4 mb-4">{option}</Text>
-           </TouchableOpacity>
-          ))}
-             </ScrollView> */}
-
-            {/* <Button title="Next" color="#1e40af" onPress={nextPage} /> */}
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              <PButton mode="contained" onPress={prevTab} disabled={true}>
+              <PButton mode="contained" onPress={prevTab}  theme={{ colors: { primary: "#1E3A8A" } }}  >
                 Previous
               </PButton>
-              <PButton mode="contained" onPress={nextTab}>
+              <PButton mode="contained" onPress={nextTab} theme={{ colors: { primary: "#1E3A8A" } }} >
                 Next
               </PButton>
             </View>
-          </View>
-        );
+                        </View>
+
+
+          );
       case "Personal Info":
         return (
           <View className="bg-white p-4 gap-2 rounded-lg shadow">
@@ -455,10 +476,10 @@ const MotorInsurance = () => {
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              <PButton mode="contained" onPress={prevTab}>
+              <PButton mode="contained" onPress={prevTab}  theme={{ colors: { primary: "#1E3A8A" } }} >
                 Previous
               </PButton>
-              <PButton mode="contained" onPress={nextTab}>
+              <PButton mode="contained" onPress={nextTab}  theme={{ colors: { primary: "#1E3A8A" } }} >
                 Next
               </PButton>
             </View>
@@ -512,14 +533,22 @@ const MotorInsurance = () => {
                 marginTop: 16,
               }}
             >
-              <PButton mode="contained" onPress={prevTab}>
+              <PButton mode="contained" onPress={prevTab}  theme={{ colors: { primary: "#1E3A8A" } }} >
                 Previous
               </PButton>
-              <PButton mode="contained" onPress={() => alert("Finished")}>
+              <PButton mode="contained" onPress={() => alert("Finished")}  theme={{ colors: { primary: "#1E3A8A" } }} >
                 Finish
               </PButton>
             </View>
           </View>
+        );
+        case "Motor Summery":
+          return (
+            <View className="bg-white p-4 rounded-lg shadow">
+
+            </View>
+
+
         );
       default:
         return null;
@@ -536,8 +565,10 @@ const MotorInsurance = () => {
       <View className="flex-row justify-around mx-2 bg-white p-2 shadow rounded-full mb-4">
         {[
           { key: "Vehicle Details", icon: "car-outline" },
+          { key: "Vehicle Details extra", icon: "add-circle-outline" },
           { key: "Personal Info", icon: "person-circle-outline" },
           { key: "Additional Driver", icon: "person-add-outline" },
+          { key: "Motor Summery", icon: "document-outline" },
         ].map((tab) => (
           <TouchableOpacity
             key={tab.key}
