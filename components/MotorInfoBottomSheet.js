@@ -48,7 +48,7 @@ const MotorInfoBottomSheet = forwardRef(
           <View>
             <View style={styles.labelContainer}>
               <Text style={styles.label}>Our Policy No</Text>
-              <Text style={styles.arabicLabel}>رقم الوثيقة التأمنية</Text>
+              {/* <Text style={styles.arabicLabel}>رقم الوثيقة التأمنية</Text> */}
             </View>
             <PTextInput
               outlineStyle={{ borderRadius: 25 }}
@@ -57,6 +57,8 @@ const MotorInfoBottomSheet = forwardRef(
               style={styles.input}
               value={formData.policyNo}
               onChangeText={(value) => handleInputChange("policyNo", value)}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+
             />
           </View>
 
@@ -64,7 +66,7 @@ const MotorInfoBottomSheet = forwardRef(
             <View style={styles.halfWidth}>
               <View style={styles.labelContainer}>
                 <Text style={styles.label}>Veh.Usage</Text>
-                <Text style={styles.arabicLabel}>استخدام السيارات</Text>
+                {/* <Text style={styles.arabicLabel}>استخدام السيارات</Text> */}
               </View>
               <PTextInput
                 outlineStyle={{ borderRadius: 25 }}
@@ -75,12 +77,14 @@ const MotorInfoBottomSheet = forwardRef(
                 onChangeText={(value) =>
                   handleInputChange("vehicleUsage", value)
                 }
+                theme={{ colors: { primary: "#1E3A8A" } }}
+
               />
             </View>
             <View style={styles.halfWidth}>
               <View style={styles.labelContainer}>
                 <Text style={styles.label}>Reg.No</Text>
-                <Text style={styles.arabicLabel}>رقم المركبة</Text>
+                {/* <Text style={styles.arabicLabel}>رقم المركبة</Text> */}
               </View>
               <PTextInput
                 outlineStyle={{ borderRadius: 25 }}
@@ -89,6 +93,8 @@ const MotorInfoBottomSheet = forwardRef(
                 style={styles.input}
                 value={formData.regNo}
                 onChangeText={(value) => handleInputChange("regNo", value)}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+
               />
             </View>
           </View>
@@ -97,7 +103,7 @@ const MotorInfoBottomSheet = forwardRef(
             <View style={styles.halfWidth}>
               <View style={styles.labelContainer}>
                 <Text style={styles.label}>Chassis No</Text>
-                <Text style={styles.arabicLabel}>رقم الشاسي</Text>
+                {/* <Text style={styles.arabicLabel}>رقم الشاسي</Text> */}
               </View>
               <PTextInput
                 outlineStyle={{ borderRadius: 25 }}
@@ -106,12 +112,14 @@ const MotorInfoBottomSheet = forwardRef(
                 style={styles.input}
                 value={formData.chassisNo}
                 onChangeText={(value) => handleInputChange("chassisNo", value)}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+
               />
             </View>
             <View style={styles.halfWidth}>
               <View style={styles.labelContainer}>
                 <Text style={styles.label}>BarCode</Text>
-                <Text style={styles.arabicLabel}>الباركود</Text>
+                {/* <Text style={styles.arabicLabel}>الباركود</Text> */}
               </View>
               <PTextInput
                 outlineStyle={{ borderRadius: 25 }}
@@ -121,6 +129,8 @@ const MotorInfoBottomSheet = forwardRef(
                 style={styles.input}
                 value={formData.barCode}
                 onChangeText={(value) => handleInputChange("barCode", value)}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+
               />
             </View>
           </View>
@@ -128,7 +138,7 @@ const MotorInfoBottomSheet = forwardRef(
           <View>
             <View style={styles.labelContainer}>
               <Text style={styles.label}>License Number (or) Civil ID</Text>
-              <Text style={styles.arabicLabel}>رخصة</Text>
+              {/* <Text style={styles.arabicLabel}>رخصة</Text> */}
             </View>
             <PTextInput
               outlineStyle={{ borderRadius: 25 }}
@@ -139,35 +149,40 @@ const MotorInfoBottomSheet = forwardRef(
               onChangeText={(value) =>
                 handleInputChange("licenseNumber", value)
               }
+              theme={{ colors: { primary: "#1E3A8A" } }}
+
             />
           </View>
 
           <View style={styles.buttonContainer}>
-            <PButton
+            {/* <PButton
               mode="contained"
               onPress={onPremiumCalculate}
               labelStyle={{ color: "white", fontSize: 14, fontWeight: "bold" }}
-              style={[styles.actionButton, { backgroundColor: "#0096c7" }]}
+              style={[styles.actionButton, { backgroundColor: "#1E3A8A" }]}
+                            theme={{ colors: { primary: "#1E3A8A" } }}
+
             >
               Premium Calculator
-            </PButton>
-            <PButton
-              mode="contained"
-              onPress={onShowInformation}
-              labelStyle={{ color: "white", fontSize: 14, fontWeight: "bold" }}
-              style={[styles.actionButton, { backgroundColor: "#2da84e" }]}
-            >
-              Show Information
-            </PButton>
-          </View>
-          <PButton
+            </PButton> */}
+          
+             {/* <PButton
             mode="contained"
             onPress={onNext}
             labelStyle={{ color: "white", fontSize: 16, fontWeight: "bold" }}
-            style={[styles.actionButton, { backgroundColor: "#dc3545" }]}
+            style={[styles.actionButton, { backgroundColor: "#1E3A8A" }]}
           >
             Next
-          </PButton>
+          </PButton> */}
+          </View>
+          <PButton
+              mode="contained"
+              onPress={onShowInformation}
+              labelStyle={{ color: "white", fontSize: 14, fontWeight: "bold" }}
+              style={[styles.actionButton, { backgroundColor: "#1E3A8A" }]}
+            >
+              Show Information
+            </PButton>
         </View>
       </RBSheet>
     );
@@ -179,7 +194,7 @@ export default MotorInfoBottomSheet;
 const styles = StyleSheet.create({
   draggableContainer: {
     width: "100%",
-    height: 24,
+    height: 20,
     alignItems: "center",
     justifyContent: "center",
     borderTopLeftRadius: 20,
@@ -240,6 +255,7 @@ const styles = StyleSheet.create({
   actionButton: {
     padding: 5,
     // fontSize: 16,
-    borderRadius: 5,
+    marginRight: -5,
+    borderRadius: 25,
   },
 });
