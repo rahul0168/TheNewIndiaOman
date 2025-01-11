@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Button,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {
@@ -16,14 +17,24 @@ import {
 } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import VehicleDetailsModal from "../../components/ViewDertailsModalComponent";
+import MotorInfoBottomSheet from "../../components/MotorInfoBottomSheet";
 
 const MotorInsurance = () => {
+  const vehicleModalRef = useRef();
   const [activeTab, setActiveTab] = useState("Vehicle Details");
   const [isVehicleDetailsModalVisible, setVehicleDetailsModalVisible] =
     useState(false);
   const [registrationNo, setRegistrationNo] = useState("");
   const [chassisNo, setChassisNo] = useState("");
   const [licenseNo, setLicenseNo] = useState("");
+  const [vehicleInfoFormData, setVehicleInfoFormData] = useState({
+    policyNo: "",
+    vehicleUsage: "",
+    regNo: "",
+    chassisNo: "",
+    barCode: "",
+    licenseNumber: "",
+  });
 
   const [licenseNumber, setLicenseNumber] = useState("");
   const [firstRegistration, setFirstRegistration] = useState("");
@@ -58,6 +69,26 @@ const MotorInsurance = () => {
   const [selectedCapacity, setSelectedCapacity] = useState(null);
   const [drivers, setDrivers] = useState([]);
   const [name, setName] = useState("");
+
+  // vehicle details logic
+  const handleFormChange = (newFormData) => {
+    setVehicleInfoFormData(newFormData);
+  };
+
+  const handlePremiumCalculate = () => {
+    // Handle premium calculation
+    console.log("Calculate Premium for:", formData);
+  };
+
+  const handleShowInformation = () => {
+    // Handle showing information
+    console.log("Show Information for:", formData);
+  };
+
+  const handleNext = () => {
+    // Handle next action
+    console.log("Next with form data:", formData);
+  };
 
   const [phone, setPhone] = useState("");
   const options = [2, 4, 5, 6, 7, 8, 9];
@@ -105,13 +136,27 @@ const MotorInsurance = () => {
   const addDrivers = () => {
     setDrivers([...drivers, { name: "", license: "", expiry: "" }]);
   };
+  // useEffect(() => {
+  //   if (activeTab === "Vehicle Details") {
+  //     setVehicleDetailsModalVisible(true);
+  //   } else {
+  //     setVehicleDetailsModalVisible(false);
+  //   }
+  // }, [activeTab]);
+
   useEffect(() => {
     if (activeTab === "Vehicle Details") {
-      setVehicleDetailsModalVisible(true);
-    } else {
-      setVehicleDetailsModalVisible(false);
+      // Check if vehicleInfoFormData exists and is empty
+      const isFormEmpty =
+        !vehicleInfoFormData ||
+        Object.keys(vehicleInfoFormData).length === 0 ||
+        Object.values(vehicleInfoFormData).every((value) => !value);
+
+      if (isFormEmpty) {
+        vehicleModalRef.current?.open();
+      }
     }
-  }, [activeTab]);
+  }, [activeTab, vehicleInfoFormData]);
   const updateDriver = (index, key, value) => {
     const updatedDrivers = drivers.map((driver, i) =>
       i === index ? { ...driver, [key]: value } : driver
@@ -122,202 +167,206 @@ const MotorInsurance = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case "Vehicle Details":
-        return null;
-      // return (
-      //   <>
-      //     {/* <View className="bg-white p-4 rounded-lg shadow">
-      //       <View className="flex-row items-center mb-4">
-      //         <Ionicons name="car-outline" size={28} color="#0c4ea2" />
-      //         <Text className="ml-3 text-lg font-bold text-gray-700">
-      //           Vehicle Details
-      //         </Text>
-      //       </View>
+        // return null;
+        return (
+          <>
+            <View className="bg-white p-4 rounded-lg shadow">
+              <View className="flex-row items-center mb-4">
+                <Ionicons name="car-outline" size={28} color="#0c4ea2" />
+                <Text className="ml-3 text-lg font-bold text-gray-700">
+                  Vehicle Details
+                </Text>
+              </View>
 
-      //       <Text className="font-semibold mb-2">Registration No </Text>
-      //       <PTextInput
-      //         mode="outlined"
-      //         label="Registration No"
-      //         placeholder="eg: AA/1234"
-      //         value={registrationNo}
-      //         onChangeText={setRegistrationNo}
-      //         theme={{ colors: { primary: "#1E3A8A" } }}
-      //         style={inputStyle}
-      //         outlineStyle={{ borderRadius: 25 }}
-      //       />
-      //       <Text className="font-semibold mb-2">Chassis No </Text>
-      //       <PTextInput
-      //         mode="outlined"
-      //         label="Chassis No"
-      //         value={chassisNo}
-      //         onChangeText={setChassisNo}
-      //         theme={{ colors: { primary: "#1E3A8A" } }}
-      //         style={inputStyle}
-      //         outlineStyle={{ borderRadius: 25 }}
-      //       />
-      //       <Text className="font-semibold mb-2">License Number</Text>
-      //       <PTextInput
-      //         mode="outlined"
-      //         label="License Number"
-      //         value={licenseNumber}
-      //         onChangeText={setLicenseNumber}
-      //         theme={{ colors: { primary: "#1E3A8A" } }}
-      //         style={inputStyle}
-      //         outlineStyle={{ borderRadius: 25 }}
-      //       />
-      //       <Text className="font-semibold mb-2">First Registration</Text>
-      //       <PTextInput
-      //         mode="outlined"
-      //         label="First Registration"
-      //         value={firstRegistration}
-      //         onChangeText={setFirstRegistration}
-      //         theme={{ colors: { primary: "#1E3A8A" } }}
-      //         style={inputStyle}
-      //         outlineStyle={{ borderRadius: 25 }}
-      //       />
+              <Text className="font-semibold mb-2">Registration No </Text>
+              <PTextInput
+                mode="outlined"
+                label="Registration No"
+                placeholder="eg: AA/1234"
+                value={registrationNo}
+                onChangeText={setRegistrationNo}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+                style={inputStyle}
+                outlineStyle={{ borderRadius: 25 }}
+              />
+              <Text className="font-semibold mb-2">Chassis No </Text>
+              <PTextInput
+                mode="outlined"
+                label="Chassis No"
+                value={chassisNo}
+                onChangeText={setChassisNo}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+                style={inputStyle}
+                outlineStyle={{ borderRadius: 25 }}
+              />
+              <Text className="font-semibold mb-2">License Number</Text>
+              <PTextInput
+                mode="outlined"
+                label="License Number"
+                value={licenseNumber}
+                onChangeText={setLicenseNumber}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+                style={inputStyle}
+                outlineStyle={{ borderRadius: 25 }}
+              />
+              <Text className="font-semibold mb-2">First Registration</Text>
+              <PTextInput
+                mode="outlined"
+                label="First Registration"
+                value={firstRegistration}
+                onChangeText={setFirstRegistration}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+                style={inputStyle}
+                outlineStyle={{ borderRadius: 25 }}
+              />
 
-      //       <Text className="font-semibold mb-2 text-lg">
-      //         Is Your Vehicle Imported?
-      //       </Text>
-      //       <View className="flex-row mb-4">
-      //         <TouchableOpacity
-      //           onPress={() => setIsImported("yes")}
-      //           className={`px-4 py-2 mr-4 rounded ${
-      //             isImported === "yes" ? "bg-blue-500" : "bg-gray-200"
-      //           }`}
-      //         >
-      //           <Text
-      //             className={`text-center ${
-      //               isImported === "yes" ? "text-white" : "text-black"
-      //             }`}
-      //           >
-      //             Yes
-      //           </Text>
-      //         </TouchableOpacity>
-      //         <TouchableOpacity
-      //           onPress={() => setIsImported("no")}
-      //           className={`px-4 py-2 rounded ${
-      //             isImported === "no" ? "bg-blue-500" : "bg-gray-200"
-      //           }`}
-      //         >
-      //           <Text
-      //             className={`text-center ${
-      //               isImported === "no" ? "text-white" : "text-black"
-      //             }`}
-      //           >
-      //             No
-      //           </Text>
-      //         </TouchableOpacity>
-      //       </View>
+              <Text className="font-semibold mb-2 text-lg">
+                Is Your Vehicle Imported?
+              </Text>
+              <View className="flex-row mb-4">
+                <TouchableOpacity
+                  onPress={() => setIsImported("yes")}
+                  className={`px-4 py-2 mr-4 rounded ${
+                    isImported === "yes" ? "bg-blue-500" : "bg-gray-200"
+                  }`}
+                >
+                  <Text
+                    className={`text-center ${
+                      isImported === "yes" ? "text-white" : "text-black"
+                    }`}
+                  >
+                    Yes
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setIsImported("no")}
+                  className={`px-4 py-2 rounded ${
+                    isImported === "no" ? "bg-blue-500" : "bg-gray-200"
+                  }`}
+                >
+                  <Text
+                    className={`text-center ${
+                      isImported === "no" ? "text-white" : "text-black"
+                    }`}
+                  >
+                    No
+                  </Text>
+                </TouchableOpacity>
+              </View>
 
-      //       <Text className="font-semibold mb-2">Vehicle Usage</Text>
-      //       <PTextInput
-      //         mode="outlined"
-      //         label="Vehicle Usage"
-      //         value={vehicleUsage}
-      //         onChangeText={setVehicleUsage}
-      //         outlineStyle={{ borderRadius: 25 }} // Ensures outline follows the rounded shape
-      //         style={inputStyle}
-      //         theme={{ colors: { primary: "#1E3A8A" } }}
-      //       />
-      //       <Text className="font-semibold mb-2">Make </Text>
-      //       <PTextInput
-      //         mode="outlined"
-      //         label="Make"
-      //         value={make}
-      //         onChangeText={setMake}
-      //         theme={{ colors: { primary: "#1E3A8A" } }}
-      //         style={inputStyle}
-      //         outlineStyle={{ borderRadius: 25 }}
-      //       />
+              <Text className="font-semibold mb-2">Vehicle Usage</Text>
+              <PTextInput
+                mode="outlined"
+                label="Vehicle Usage"
+                value={vehicleUsage}
+                onChangeText={setVehicleUsage}
+                outlineStyle={{ borderRadius: 25 }} // Ensures outline follows the rounded shape
+                style={inputStyle}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+              />
+              <Text className="font-semibold mb-2">Make </Text>
+              <PTextInput
+                mode="outlined"
+                label="Make"
+                value={make}
+                onChangeText={setMake}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+                style={inputStyle}
+                outlineStyle={{ borderRadius: 25 }}
+              />
 
-      //       <Text className="font-semibold mb-2">Model </Text>
-      //       <PTextInput
-      //         mode="outlined"
-      //         label="Model"
-      //         value={model}
-      //         onChangeText={setModel}
-      //         theme={{ colors: { primary: "#1E3A8A" } }}
-      //         style={inputStyle}
-      //         outlineStyle={{ borderRadius: 25 }}
-      //       />
+              <Text className="font-semibold mb-2">Model </Text>
+              <PTextInput
+                mode="outlined"
+                label="Model"
+                value={model}
+                onChangeText={setModel}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+                style={inputStyle}
+                outlineStyle={{ borderRadius: 25 }}
+              />
 
-      //       <Text className="font-semibold mb-2">Color</Text>
-      //       <PTextInput
-      //         mode="outlined"
-      //         label="Color"
-      //         value={color}
-      //         onChangeText={setColor}
-      //         theme={{ colors: { primary: "#1E3A8A" } }}
-      //         style={inputStyle}
-      //         outlineStyle={{ borderRadius: 25 }}
-      //       />
+              <Text className="font-semibold mb-2">Color</Text>
+              <PTextInput
+                mode="outlined"
+                label="Color"
+                value={color}
+                onChangeText={setColor}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+                style={inputStyle}
+                outlineStyle={{ borderRadius: 25 }}
+              />
 
-      //       <Text className="font-semibold mb-2">HP CC </Text>
-      //       <PTextInput
-      //         mode="outlined"
-      //         label="HP CC"
-      //         value={hpCc}
-      //         onChangeText={setHpCc}
-      //         theme={{ colors: { primary: "#1E3A8A" } }}
-      //         style={inputStyle}
-      //         outlineStyle={{ borderRadius: 25 }}
-      //       />
+              <Text className="font-semibold mb-2">HP CC </Text>
+              <PTextInput
+                mode="outlined"
+                label="HP CC"
+                value={hpCc}
+                onChangeText={setHpCc}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+                style={inputStyle}
+                outlineStyle={{ borderRadius: 25 }}
+              />
 
-      //       <Text className="font-semibold mb-2">Empty Weight </Text>
-      //       <PTextInput
-      //         mode="outlined"
-      //         label="Empty Weight"
-      //         value={emptyWeight}
-      //         onChangeText={setEmptyWeight}
-      //         theme={{ colors: { primary: "#1E3A8A" } }}
-      //         style={inputStyle}
-      //         outlineStyle={{ borderRadius: 25 }}
-      //       />
+              <Text className="font-semibold mb-2">Empty Weight </Text>
+              <PTextInput
+                mode="outlined"
+                label="Empty Weight"
+                value={emptyWeight}
+                onChangeText={setEmptyWeight}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+                style={inputStyle}
+                outlineStyle={{ borderRadius: 25 }}
+              />
 
-      //       <Text className="font-semibold mb-2">Seating Capacity </Text>
-      //   <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row">
-      //   {options.map((option, index) => (
-      //      <TouchableOpacity
-      //      key={index}
-      //      onPress={() => setSelectedCapacity(option)}
-      //      className="flex-row items-center mx-2"
-      //    >
-      //      <View
-      //        className={`w-5 h-5 rounded-full mt-4 mb-4 border-2 border-gray-400 ${
-      //          selectedCapacity === option ? 'bg-blue-500' : 'bg-white'
-      //        }`}
-      //      />
-      //      <Text className="ml-2 mt-4 mb-4">{option}</Text>
-      //    </TouchableOpacity>
-      //   ))}
-      //      </ScrollView>
+              {/* <Text className="font-semibold mb-2">Seating Capacity </Text> */}
+              {/* <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                className="flex-row"
+              >
+                {options.map((option, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => setSelectedCapacity(option)}
+                    className="flex-row items-center mx-2"
+                  >
+                    <View
+                      className={`w-5 h-5 rounded-full mt-4 mb-4 border-2 border-gray-400 ${
+                        selectedCapacity === option ? "bg-blue-500" : "bg-white"
+                      }`}
+                    />
+                    <Text className="ml-2 mt-4 mb-4">{option}</Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView> */}
 
-      //       <Button title="Next" color="#1e40af" onPress={nextPage} />
-      //       <View
-      //         style={{
-      //           flexDirection: "row",
-      //           justifyContent: "space-between",
-      //         }}
-      //       >
-      //         <PButton
-      //           mode="contained"
-      //           onPress={prevTab}
-      //           disabled={true}
-      //           theme={{ colors: { primary: "#1E3A8A" } }}
-      //         >
-      //           Previous
-      //         </PButton>
-      //         <PButton
-      //           mode="contained"
-      //           onPress={nextTab}
-      //           theme={{ colors: { primary: "#1E3A8A" } }}
-      //         >
-      //           Next
-      //         </PButton>
-      //       </View>
-      //     </View> */}
-      //   </>
-      // );
+              {/* <Button title="Next" color="#1e40af" onPress={nextPage} /> */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <PButton
+                  mode="contained"
+                  onPress={prevTab}
+                  disabled={true}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                >
+                  Previous
+                </PButton>
+                <PButton
+                  mode="contained"
+                  onPress={nextTab}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                >
+                  Next
+                </PButton>
+              </View>
+            </View>
+          </>
+        );
       case "Vehicle Details extra":
         return (
           <View className="bg-white p-4 gap-2 rounded-lg shadow">
@@ -675,6 +724,14 @@ const MotorInsurance = () => {
         chassisNo={chassisNo}
         setChassisNo={setChassisNo}
         // ... other props
+      />
+      <MotorInfoBottomSheet
+        ref={vehicleModalRef}
+        formData={vehicleInfoFormData}
+        onFormChange={handleFormChange}
+        onPremiumCalculate={handlePremiumCalculate}
+        onShowInformation={handleShowInformation}
+        onNext={handleNext}
       />
     </View>
   );
