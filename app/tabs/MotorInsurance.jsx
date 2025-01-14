@@ -18,6 +18,7 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import VehicleDetailsModal from "../../components/ViewDertailsModalComponent";
 import MotorInfoBottomSheet from "../../components/MotorInfoBottomSheet";
+import SummaryRow from "../../components/SummaryRow";
 
 const MotorInsurance = () => {
   const vehicleModalRef = useRef();
@@ -80,7 +81,7 @@ const MotorInsurance = () => {
     console.log("Calculate Premium for:", formData);
   };
 
-  const handleShowInformation = () => {
+  const handleShowInformation = ({ formData }) => {
     // Handle showing information
     console.log("Show Information for:", formData);
   };
@@ -169,158 +170,163 @@ const MotorInsurance = () => {
       case "Vehicle Details":
         // return null;
         return (
-          <>
-            <View className="bg-white p-4 rounded-lg shadow">
-              <View className="flex-row items-center mb-4">
-                <Ionicons name="car-outline" size={28} color="#0c4ea2" />
-                <Text className="ml-3 text-lg font-bold text-gray-700">
-                  Vehicle Details
-                </Text>
-              </View>
-
-              <Text className="font-semibold mb-2">Registration No </Text>
-              <PTextInput
-                mode="outlined"
-                label="Registration No"
-                placeholder="eg: AA/1234"
-                value={registrationNo}
-                onChangeText={setRegistrationNo}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-                style={inputStyle}
-                outlineStyle={{ borderRadius: 25 }}
-              />
-              <Text className="font-semibold mb-2">Chassis No </Text>
-              <PTextInput
-                mode="outlined"
-                label="Chassis No"
-                value={chassisNo}
-                onChangeText={setChassisNo}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-                style={inputStyle}
-                outlineStyle={{ borderRadius: 25 }}
-              />
-              <Text className="font-semibold mb-2">License Number</Text>
-              <PTextInput
-                mode="outlined"
-                label="License Number"
-                value={licenseNumber}
-                onChangeText={setLicenseNumber}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-                style={inputStyle}
-                outlineStyle={{ borderRadius: 25 }}
-              />
-              <Text className="font-semibold mb-2">First Registration</Text>
-              <PTextInput
-                mode="outlined"
-                label="First Registration"
-                value={firstRegistration}
-                onChangeText={setFirstRegistration}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-                style={inputStyle}
-                outlineStyle={{ borderRadius: 25 }}
-              />
-
-              <Text className="font-semibold mb-2 text-lg">
-                Is Your Vehicle Imported?
+          <View
+            style={{
+              elevation: 4,
+              flex: 1,
+            }}
+            className="bg-white p-4 rounded-lg shadow-2xl shadow-blue-500"
+          >
+            <View className="flex-row items-center mb-4">
+              <Ionicons name="car-outline" size={28} color="#0c4ea2" />
+              <Text className="ml-3 text-lg font-bold text-gray-700">
+                Vehicle Details
               </Text>
-              <View className="flex-row mb-4">
-                <TouchableOpacity
-                  onPress={() => setIsImported("yes")}
-                  className={`px-4 py-2 mr-4 rounded ${
-                    isImported === "yes" ? "bg-blue-500" : "bg-gray-200"
+            </View>
+
+            <Text className="font-semibold mb-2">Registration No </Text>
+            <PTextInput
+              mode="outlined"
+              label="Registration No"
+              placeholder="eg: AA/1234"
+              value={registrationNo}
+              onChangeText={setRegistrationNo}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+              style={inputStyle}
+              outlineStyle={{ borderRadius: 25 }}
+            />
+            <Text className="font-semibold mb-2">Chassis No </Text>
+            <PTextInput
+              mode="outlined"
+              label="Chassis No"
+              value={chassisNo}
+              onChangeText={setChassisNo}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+              style={inputStyle}
+              outlineStyle={{ borderRadius: 25 }}
+            />
+            <Text className="font-semibold mb-2">License Number</Text>
+            <PTextInput
+              mode="outlined"
+              label="License Number"
+              value={licenseNumber}
+              onChangeText={setLicenseNumber}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+              style={inputStyle}
+              outlineStyle={{ borderRadius: 25 }}
+            />
+            <Text className="font-semibold mb-2">First Registration</Text>
+            <PTextInput
+              mode="outlined"
+              label="First Registration"
+              value={firstRegistration}
+              onChangeText={setFirstRegistration}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+              style={inputStyle}
+              outlineStyle={{ borderRadius: 25 }}
+            />
+
+            <Text className="font-semibold mb-2 text-lg">
+              Is Your Vehicle Imported?
+            </Text>
+            <View className="flex-row mb-4">
+              <TouchableOpacity
+                onPress={() => setIsImported("yes")}
+                className={`px-4 py-2 mr-4 rounded ${
+                  isImported === "yes" ? "bg-blue-500" : "bg-gray-200"
+                }`}
+              >
+                <Text
+                  className={`text-center ${
+                    isImported === "yes" ? "text-white" : "text-black"
                   }`}
                 >
-                  <Text
-                    className={`text-center ${
-                      isImported === "yes" ? "text-white" : "text-black"
-                    }`}
-                  >
-                    Yes
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => setIsImported("no")}
-                  className={`px-4 py-2 rounded ${
-                    isImported === "no" ? "bg-blue-500" : "bg-gray-200"
+                  Yes
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setIsImported("no")}
+                className={`px-4 py-2 rounded ${
+                  isImported === "no" ? "bg-blue-500" : "bg-gray-200"
+                }`}
+              >
+                <Text
+                  className={`text-center ${
+                    isImported === "no" ? "text-white" : "text-black"
                   }`}
                 >
-                  <Text
-                    className={`text-center ${
-                      isImported === "no" ? "text-white" : "text-black"
-                    }`}
-                  >
-                    No
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                  No
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-              <Text className="font-semibold mb-2">Vehicle Usage</Text>
-              <PTextInput
-                mode="outlined"
-                label="Vehicle Usage"
-                value={vehicleUsage}
-                onChangeText={setVehicleUsage}
-                outlineStyle={{ borderRadius: 25 }} // Ensures outline follows the rounded shape
-                style={inputStyle}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-              />
-              <Text className="font-semibold mb-2">Make </Text>
-              <PTextInput
-                mode="outlined"
-                label="Make"
-                value={make}
-                onChangeText={setMake}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-                style={inputStyle}
-                outlineStyle={{ borderRadius: 25 }}
-              />
+            <Text className="font-semibold mb-2">Vehicle Usage</Text>
+            <PTextInput
+              mode="outlined"
+              label="Vehicle Usage"
+              value={vehicleUsage}
+              onChangeText={setVehicleUsage}
+              outlineStyle={{ borderRadius: 25 }} // Ensures outline follows the rounded shape
+              style={inputStyle}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+            />
+            <Text className="font-semibold mb-2">Make </Text>
+            <PTextInput
+              mode="outlined"
+              label="Make"
+              value={make}
+              onChangeText={setMake}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+              style={inputStyle}
+              outlineStyle={{ borderRadius: 25 }}
+            />
 
-              <Text className="font-semibold mb-2">Model </Text>
-              <PTextInput
-                mode="outlined"
-                label="Model"
-                value={model}
-                onChangeText={setModel}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-                style={inputStyle}
-                outlineStyle={{ borderRadius: 25 }}
-              />
+            <Text className="font-semibold mb-2">Model </Text>
+            <PTextInput
+              mode="outlined"
+              label="Model"
+              value={model}
+              onChangeText={setModel}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+              style={inputStyle}
+              outlineStyle={{ borderRadius: 25 }}
+            />
 
-              <Text className="font-semibold mb-2">Color</Text>
-              <PTextInput
-                mode="outlined"
-                label="Color"
-                value={color}
-                onChangeText={setColor}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-                style={inputStyle}
-                outlineStyle={{ borderRadius: 25 }}
-              />
+            <Text className="font-semibold mb-2">Color</Text>
+            <PTextInput
+              mode="outlined"
+              label="Color"
+              value={color}
+              onChangeText={setColor}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+              style={inputStyle}
+              outlineStyle={{ borderRadius: 25 }}
+            />
 
-              <Text className="font-semibold mb-2">HP CC </Text>
-              <PTextInput
-                mode="outlined"
-                label="HP CC"
-                value={hpCc}
-                onChangeText={setHpCc}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-                style={inputStyle}
-                outlineStyle={{ borderRadius: 25 }}
-              />
+            <Text className="font-semibold mb-2">HP CC </Text>
+            <PTextInput
+              mode="outlined"
+              label="HP CC"
+              value={hpCc}
+              onChangeText={setHpCc}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+              style={inputStyle}
+              outlineStyle={{ borderRadius: 25 }}
+            />
 
-              <Text className="font-semibold mb-2">Empty Weight </Text>
-              <PTextInput
-                mode="outlined"
-                label="Empty Weight"
-                value={emptyWeight}
-                onChangeText={setEmptyWeight}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-                style={inputStyle}
-                outlineStyle={{ borderRadius: 25 }}
-              />
+            <Text className="font-semibold mb-2">Empty Weight </Text>
+            <PTextInput
+              mode="outlined"
+              label="Empty Weight"
+              value={emptyWeight}
+              onChangeText={setEmptyWeight}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+              style={inputStyle}
+              outlineStyle={{ borderRadius: 25 }}
+            />
 
-              {/* <Text className="font-semibold mb-2">Seating Capacity </Text> */}
-              {/* <ScrollView
+            {/* <Text className="font-semibold mb-2">Seating Capacity </Text> */}
+            {/* <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 className="flex-row"
@@ -341,31 +347,30 @@ const MotorInsurance = () => {
                 ))}
               </ScrollView> */}
 
-              {/* <Button title="Next" color="#1e40af" onPress={nextPage} /> */}
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
+            {/* <Button title="Next" color="#1e40af" onPress={nextPage} /> */}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <PButton
+                mode="contained"
+                onPress={prevTab}
+                disabled={true}
+                theme={{ colors: { primary: "#1E3A8A" } }}
               >
-                <PButton
-                  mode="contained"
-                  onPress={prevTab}
-                  disabled={true}
-                  theme={{ colors: { primary: "#1E3A8A" } }}
-                >
-                  Previous
-                </PButton>
-                <PButton
-                  mode="contained"
-                  onPress={nextTab}
-                  theme={{ colors: { primary: "#1E3A8A" } }}
-                >
-                  Next
-                </PButton>
-              </View>
+                Previous
+              </PButton>
+              <PButton
+                mode="contained"
+                onPress={nextTab}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+              >
+                Next
+              </PButton>
             </View>
-          </>
+          </View>
         );
       case "Vehicle Details extra":
         return (
@@ -649,14 +654,61 @@ const MotorInsurance = () => {
         );
       case "Motor Summery":
         return (
-          <View className="bg-white p-4 rounded-lg shadow">
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: 16,
-              }}
-            >
+          <View className="bg-white p-6 rounded-lg shadow-md">
+            {/* Header */}
+            <View className="mb-6">
+              <Text className="text-2xl font-bold text-blue-900">
+                Renewal Summary
+              </Text>
+              {/* <Text className="text-lg text-gray-600 text-right">
+                ملخص تجديد التأمين
+              </Text> */}
+            </View>
+
+            {/* Summary Content */}
+            <View className="space-y-1">
+              <SummaryRow
+                label="Old Policy No"
+                arabicLabel="رقم الوثيقة القديمة"
+              />
+              <SummaryRow label="Customer Name" arabicLabel="اسم العميل" />
+              <SummaryRow label="Vehicle Usage" arabicLabel="استخدام المركبة" />
+              <SummaryRow label="Start Date" arabicLabel="تاريخ البدء" />
+              <SummaryRow label="End Date" arabicLabel="تاريخ الانتهاء" />
+              <SummaryRow label="Registration No" arabicLabel="رقم المركبة" />
+              <SummaryRow label="Make" arabicLabel="الصنع" />
+              <SummaryRow label="Model" arabicLabel="الطراز" />
+              <SummaryRow label="Vehicle Value" arabicLabel="قيمة المركبة" />
+              <SummaryRow label="Basic Premium" arabicLabel="القسط الأساسي" />
+              <SummaryRow label="Other Charges" arabicLabel="رسم اخرى" />
+              <SummaryRow label="VAT Charges" arabicLabel="VAT charges" />
+              <SummaryRow label="Total Premium" arabicLabel="مجموع الاقساط" />
+              <SummaryRow label="Payment Mode" arabicLabel="طريقة الدفع" />
+            </View>
+
+            {/* Payment Icons */}
+            <View className="flex flex-row gap-2 my-4">
+              <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
+                <Text className="text-sm font-medium">VISA</Text>
+              </View>
+              <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
+                <Text className="text-sm font-medium">MC</Text>
+              </View>
+            </View>
+
+            {/* Declaration */}
+            <View className="my-4">
+              <Text className="text-sm text-gray-600">
+                I hereby declare that the information entered by me in this
+                application are true to the best of my knowledge and belief.
+              </Text>
+              <Text className="text-sm text-gray-600 text-right mt-1">
+                تعهد
+              </Text>
+            </View>
+
+            {/* Buttons */}
+            <View className="flex flex-row justify-between mt-6">
               <PButton
                 mode="contained"
                 onPress={prevTab}
@@ -666,7 +718,7 @@ const MotorInsurance = () => {
               </PButton>
               <PButton
                 mode="contained"
-                onPress={() => alert("Finished")}
+                onPress={prevTab}
                 theme={{ colors: { primary: "#1E3A8A" } }}
               >
                 Finish
@@ -680,13 +732,16 @@ const MotorInsurance = () => {
   };
 
   return (
-    <View className="flex-1 bg-gray-100 mt-4">
+    <View className="flex-1 bg-gray-200 pt-4">
       {/* Tabs */}
-      <Text className="text-2xl pl-2 font-bold mb-4">
+      <Text className="text-xl pl-3 font-semibold mb-4">
         Motor Insurance Quote
       </Text>
 
-      <View className="flex-row justify-around mx-2 bg-white p-2 shadow rounded-full mb-4">
+      <View
+        style={{ elevation: 9 }}
+        className="flex-row justify-around mx-3 bg-white p-3 rounded-full mb-4 shadow-xl"
+      >
         {[
           { key: "Vehicle Details", icon: "car-outline" },
           { key: "Vehicle Details extra", icon: "add-circle-outline" },
@@ -696,6 +751,9 @@ const MotorInsurance = () => {
         ].map((tab) => (
           <TouchableOpacity
             key={tab.key}
+            style={{
+              elevation: 2,
+            }}
             onPress={() => setActiveTab(tab.key)}
             className={`p-2 rounded-full flex items-center ${
               activeTab === tab.key ? "bg-blue-100" : "bg-gray-100"
@@ -703,15 +761,18 @@ const MotorInsurance = () => {
           >
             <Ionicons
               name={tab.icon}
-              size={28}
-              color={activeTab === tab.key ? "#0c4ea2" : "#999"}
+              size={23}
+              color={activeTab === tab.key ? "#0c4ea2" : "#000"}
             />
           </TouchableOpacity>
         ))}
       </View>
 
       {/* Tab Content */}
-      <ScrollView className="flex-1 p-4">{renderTabContent()}</ScrollView>
+      <ScrollView className="flex-1 p-3">
+        {renderTabContent()}
+        <View style={{ height: 50 }} />
+      </ScrollView>
       <VehicleDetailsModal
         visible={isVehicleDetailsModalVisible}
         onClose={() => {

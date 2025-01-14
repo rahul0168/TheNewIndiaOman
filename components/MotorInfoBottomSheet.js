@@ -28,7 +28,7 @@ const MotorInfoBottomSheet = forwardRef(
         ref={ref}
         closeOnDragDown={true}
         closeOnPressMask={true}
-        height={690}
+        height={630}
         dragFromTopOnly={true}
         animationType="slide"
         customStyles={{
@@ -58,7 +58,6 @@ const MotorInfoBottomSheet = forwardRef(
               value={formData.policyNo}
               onChangeText={(value) => handleInputChange("policyNo", value)}
               theme={{ colors: { primary: "#1E3A8A" } }}
-
             />
           </View>
 
@@ -78,7 +77,6 @@ const MotorInfoBottomSheet = forwardRef(
                   handleInputChange("vehicleUsage", value)
                 }
                 theme={{ colors: { primary: "#1E3A8A" } }}
-
               />
             </View>
             <View style={styles.halfWidth}>
@@ -94,7 +92,6 @@ const MotorInfoBottomSheet = forwardRef(
                 value={formData.regNo}
                 onChangeText={(value) => handleInputChange("regNo", value)}
                 theme={{ colors: { primary: "#1E3A8A" } }}
-
               />
             </View>
           </View>
@@ -113,7 +110,6 @@ const MotorInfoBottomSheet = forwardRef(
                 value={formData.chassisNo}
                 onChangeText={(value) => handleInputChange("chassisNo", value)}
                 theme={{ colors: { primary: "#1E3A8A" } }}
-
               />
             </View>
             <View style={styles.halfWidth}>
@@ -130,7 +126,6 @@ const MotorInfoBottomSheet = forwardRef(
                 value={formData.barCode}
                 onChangeText={(value) => handleInputChange("barCode", value)}
                 theme={{ colors: { primary: "#1E3A8A" } }}
-
               />
             </View>
           </View>
@@ -150,7 +145,6 @@ const MotorInfoBottomSheet = forwardRef(
                 handleInputChange("licenseNumber", value)
               }
               theme={{ colors: { primary: "#1E3A8A" } }}
-
             />
           </View>
 
@@ -165,8 +159,8 @@ const MotorInfoBottomSheet = forwardRef(
             >
               Premium Calculator
             </PButton> */}
-          
-             {/* <PButton
+
+            {/* <PButton
             mode="contained"
             onPress={onNext}
             labelStyle={{ color: "white", fontSize: 16, fontWeight: "bold" }}
@@ -176,13 +170,13 @@ const MotorInfoBottomSheet = forwardRef(
           </PButton> */}
           </View>
           <PButton
-              mode="contained"
-              onPress={onShowInformation}
-              labelStyle={{ color: "white", fontSize: 14, fontWeight: "bold" }}
-              style={[styles.actionButton, { backgroundColor: "#1E3A8A" }]}
-            >
-              Show Information
-            </PButton>
+            mode="contained"
+            onPress={onShowInformation}
+            labelStyle={{ color: "white", fontSize: 14, fontWeight: "bold" }}
+            style={[styles.actionButton, { backgroundColor: "#1E3A8A" }]}
+          >
+            Show Information
+          </PButton>
         </View>
       </RBSheet>
     );
