@@ -19,6 +19,7 @@ import { Picker } from "@react-native-picker/picker";
 import VehicleDetailsModal from "../../components/ViewDertailsModalComponent";
 import MotorInfoBottomSheet from "../../components/MotorInfoBottomSheet";
 import SummaryRow from "../../components/SummaryRow";
+import ImportantField from "../../components/ImportantField";
 
 const MotorInsurance = () => {
   const vehicleModalRef = useRef();
@@ -766,77 +767,61 @@ const MotorInsurance = () => {
         );
       case "Motor Summery":
         return (
-          <View className="bg-white p-6 rounded-lg shadow-md">
-            {/* Header */}
-            <View className="mb-6">
-              <Text className="text-2xl font-bold text-blue-900">
-                Renewal Summary
-              </Text>
-              {/* <Text className="text-lg text-gray-600 text-right">
-                ملخص تجديد التأمين
-              </Text> */}
+          <ScrollView className="flex-1 bg-gray-100 p-4">
+          <Text className="text-2xl font-bold text-blue-900 mb-4">New Motor Policy Summary</Text>
+    
+          <View className="flex-row flex-wrap justify-between mb-4">
+            <ImportantField label="New Policy No"  value="POL-12345678" />
+            <ImportantField label="Customer Name"  value="John Doe" />
+            <ImportantField label="Start Date"  value="01/01/2024" />
+            <ImportantField label="End Date"  value="31/12/2024" />
+            <ImportantField label="Total Premium"  value="234.56 OMR" />
+          </View>
+    
+          <View className="bg-white rounded-lg shadow-md p-4 mb-4">
+            <Text className="text-lg font-semibold text-gray-800 mb-2">Additional Details</Text>
+            <SummaryRow label="Vehicle Usage"  value="Personal" />
+            <SummaryRow label="Registration No" value="ABC 123" />
+            <SummaryRow label="Make" value="Toyota" />
+            <SummaryRow label="Model"  value="Camry" />
+            <SummaryRow label="Vehicle Value"value="25,000" />
+            <SummaryRow label="Basic Premium" value="1,000 OMR" />
+            <SummaryRow label="Other Charges"  value="100  OMR" />
+            <SummaryRow label="VAT Charges"  value="134.56 OMR" />
+            <SummaryRow label="Payment Mode"  value="Credit Card" />
+          </View>
+    
+          <View className="flex-row mb-4">
+            <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
+              <Text className="text-sm font-medium">VISA</Text>
             </View>
-
-            {/* Summary Content */}
-            <View className="space-y-1">
-              <SummaryRow
-                label="Old Policy No"
-                arabicLabel="رقم الوثيقة القديمة"
-              />
-              <SummaryRow label="Customer Name" arabicLabel="اسم العميل" />
-              <SummaryRow label="Vehicle Usage" arabicLabel="استخدام المركبة" />
-              <SummaryRow label="Start Date" arabicLabel="تاريخ البدء" />
-              <SummaryRow label="End Date" arabicLabel="تاريخ الانتهاء" />
-              <SummaryRow label="Registration No" arabicLabel="رقم المركبة" />
-              <SummaryRow label="Make" arabicLabel="الصنع" />
-              <SummaryRow label="Model" arabicLabel="الطراز" />
-              <SummaryRow label="Vehicle Value" arabicLabel="قيمة المركبة" />
-              <SummaryRow label="Basic Premium" arabicLabel="القسط الأساسي" />
-              <SummaryRow label="Other Charges" arabicLabel="رسم اخرى" />
-              <SummaryRow label="VAT Charges" arabicLabel="VAT charges" />
-              <SummaryRow label="Total Premium" arabicLabel="مجموع الاقساط" />
-              <SummaryRow label="Payment Mode" arabicLabel="طريقة الدفع" />
-            </View>
-
-            {/* Payment Icons */}
-            <View className="flex flex-row gap-2 my-4">
-              <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
-                <Text className="text-sm font-medium">VISA</Text>
-              </View>
-              <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
-                <Text className="text-sm font-medium">MC</Text>
-              </View>
-            </View>
-
-            {/* Declaration */}
-            <View className="my-4">
-              <Text className="text-sm text-gray-600">
-                I hereby declare that the information entered by me in this
-                application are true to the best of my knowledge and belief.
-              </Text>
-              <Text className="text-sm text-gray-600 text-right mt-1">
-                تعهد
-              </Text>
-            </View>
-
-            {/* Buttons */}
-            <View className="flex flex-row justify-between mt-6">
-              <PButton
-                mode="contained"
-                onPress={prevTab}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-              >
-                Previous
-              </PButton>
-              <PButton
-                mode="contained"
-                onPress={prevTab}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-              >
-                Finish
-              </PButton>
+            <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
+              <Text className="text-sm font-medium">MC</Text>
             </View>
           </View>
+          <View className="flex-row items-center mb-2">
+              <Checkbox
+                status={uaeExtension ? "checked" : "unchecked"}
+                onPress={() => setUaeExtension(!uaeExtension)}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+              />
+              <Text className="text-sm text-gray-600 mb-2">
+                      I hereby declare that the information entered by me in this application are true to the best of my knowledge and
+                      belief.
+                    </Text>           
+             </View>
+      
+          <Text className="text-sm text-gray-600 text-right mb-4">تعهد</Text>
+    
+          <View className="flex-row justify-between">
+            <TouchableOpacity onPress={prevTab} className="bg-gray-200 py-2 px-4 rounded-full">
+              <Text className="text-blue-900 font-semibold">Previous</Text>
+            </TouchableOpacity>
+            <TouchableOpacity  className="bg-blue-900 py-2 px-4 rounded-full">
+              <Text className="text-white font-semibold">Proceed Payment</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
         );
       default:
         return null;
@@ -847,7 +832,7 @@ const MotorInsurance = () => {
     <View className="flex-1 bg-gray-200 pt-4">
       {/* Tabs */}
       <Text className="text-xl pl-3 font-semibold mb-4">
-        Motor Insurance Quote
+        Motor Insurance 
       </Text>
 
       <View

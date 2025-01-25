@@ -8,9 +8,8 @@ const SummaryRow = ({ label, value, arabicLabel }) => {
         <View className="flex flex-row justify-between w-full">
           <View className="flex flex-row gap-2">
             <Text className="text-gray-700 font-medium w-32">{label}</Text>
-            <Text className="text-gray-600">{value || "-"}</Text>
           </View>
-          <Text className="text-gray-600 text-right">{arabicLabel}</Text>
+          <Text className="text-gray-600 text-right">{value || "-"}</Text>
         </View>
       </View>
     </View>
