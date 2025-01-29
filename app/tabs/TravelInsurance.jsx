@@ -14,7 +14,7 @@ import {
 
 const TravelInsurance = () => {
   const travelModalRef = useRef();
-  const [activeTab, setActiveTab] = useState("Travel Details");
+  const [activeTab, setActiveTab] = useState("Personal Details");
  
   const inputStyle = {
     marginBottom: 16,
