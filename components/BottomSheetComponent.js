@@ -11,18 +11,19 @@ import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
 
 const insuranceOptions = [
-  { id: "1", title: "Health", subtitle: "Starts @₹19/day*", icon: "heartbeat" },
+  { id: "1", title: "Health", subtitle: "Starts @₹19/day*", icon: "heartbeat" ,URL: "MotorInsurance",},
   {
     id: "2",
     title: "2 Wheeler",
     subtitle: "Starts @₹538/yr*",
     icon: "motorcycle",
+    URL: "TravelInsurance",
   },
-  { id: "3", title: "4 Wheeler", subtitle: "Starts @₹2094/yr*", icon: "car" },
-  { id: "4", title: "Travel", subtitle: "Starts @₹300/trip*", icon: "flight" },
-  { id: "5", title: "Home", subtitle: "Starts @₹1500/yr*", icon: "home" },
-  { id: "6", title: "Life", subtitle: "Starts @₹500/month*", icon: "heart" },
-  { id: "7", title: "Pet", subtitle: "Starts @₹1000/yr*", icon: "paw" },
+  { id: "3", title: "4 Wheeler", subtitle: "Starts @₹2094/yr*", icon: "car" ,URL: "MotorInsurance"},
+  { id: "4", title: "Travel", subtitle: "Starts @₹300/trip*", icon: "flight" ,URL: "TravelInsurance",},
+  { id: "5", title: "Home", subtitle: "Starts @₹1500/yr*", icon: "home" ,URL: "TravelInsurance",},
+  { id: "6", title: "Life", subtitle: "Starts @₹500/month*", icon: "heart" ,URL: "PersonalAccident",},
+  { id: "7", title: "Pet", subtitle: "Starts @₹1000/yr*", icon: "paw" ,URL: "TravelInsurance",},
   {
     id: "8",
     title: "Gadget",
@@ -60,7 +61,7 @@ const BottomSheetComponent = () => {
       <ScrollView contentContainerStyle={styles.insuranceList}>
         {insuranceOptions.map((item) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("MotorInsurance", { id: 1 })}
+            onPress={() => navigation.navigate(item.URL, { id: 1 })}
             key={item.id}
             style={styles.card}
           >

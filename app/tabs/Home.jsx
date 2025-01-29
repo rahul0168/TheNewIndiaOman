@@ -4,11 +4,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from 'expo-router';
 
 const insuranceSlides = [
-  { title: "Motor Insurance", icon: "car", color: "#4299e1", bgImage: require('../../assets/images/motors.jpg') },
-  { title: "Car Insurance", icon: "car", color: "#4299e1", bgImage: require('../../assets/images/motor.jpg') },
-  { title: "Health Insurance", icon: "heart", color: "#4299e1", bgImage: require('../../assets/images/healths.jpg') },
-  { title: "Home Insurance", icon: "home", color: "#4299e1", bgImage: require('../../assets/images/home.jpg') },
-  { title: "Travel Insurance", icon: "airplane", color: "#4299e1", bgImage: require('../../assets/images/travel.jpg') },
+  { title: "Motor Insurance", URL:"", icon: "car", color: "#4299e1", bgImage: require('../../assets/images/motors.jpg') },
+  { title: "Car Insurance",URL:"",  icon: "car", color: "#4299e1", bgImage: require('../../assets/images/motor.jpg') },
+  { title: "Health Insurance", URL:"" ,icon: "heart", color: "#4299e1", bgImage: require('../../assets/images/healths.jpg') },
+  { title: "Home Insurance", URL:"" ,icon: "home", color: "#4299e1", bgImage: require('../../assets/images/home.jpg') },
+  { title: "Travel Insurance", URL:"TravelInsurance",icon: "airplane", color: "#4299e1", bgImage: require('../../assets/images/travel.jpg') },
 ];
 
 export default function HomeScreen() {
@@ -114,7 +114,7 @@ export default function HomeScreen() {
                       {/* View Button */}
                       <TouchableOpacity
                         className="mt-2 py-1 px-3 bg-white rounded-full"
-                        onPress={() => navigation.navigate('MotorInsurance', { id: index })}
+                        onPress={() => navigation.navigate(item.URL, { id: index })}
                       >
                         <Text className="text-sm font-bold text-blue-800">
                           View
