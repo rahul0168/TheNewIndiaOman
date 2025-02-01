@@ -4,23 +4,30 @@ import { useRef, useState } from "react";
 import {
     Checkbox,
     TextInput as PTextInput,
-    Button as PButton,
+    Button as PButton,RadioButton
   } from "react-native-paper";
   import { StyleSheet, TouchableOpacity,Text, View, ScrollView } from "react-native";
   import Ionicons from "@expo/vector-icons/Ionicons";
+  import { Picker } from "@react-native-picker/picker";
 
 const PersonalAccident = () => {
   const travelModalRef = useRef();
-  const [activeTab, setActiveTab] = useState("Travel Details");
+  const [activeTab, setActiveTab] = useState("Personal Info");
   const [isTravelDetailsModalVisible, setTravelDetailsModalVisible] = useState(false);
   const [policyNo, setPolicyNo] = useState("");
   const [passportNo, setPassportNo] = useState("");
-  const [travelInfoFormData, setTravelInfoFormData] = useState({
-    policyNo: "",
-    passportNo: "",
-    travelDestination: "",
-    travelStartDate: "",
-    travelEndDate: "",
+  const [formData, setFormData] = useState({
+    customerName: "",
+    mobileNo: "",
+    address: "",
+    telephoneNo: "",
+    email: "",
+    period: "10 Days",
+    territoryPlan: "Worldwide Excluding USA&Canada",
+    commencingDate: new Date(),
+    maturityDate: new Date(),
+    policyType: "Family",
+    remark: "",
   });
   const inputStyle = {
     marginBottom: 16,
@@ -28,12 +35,12 @@ const PersonalAccident = () => {
     backgroundColor: "white",
   
   };
+  const [showCommencingDate, setShowCommencingDate] = useState(false);
+  const [showMaturityDate, setShowMaturityDate] = useState(false);
   const prevPage = () => setCurrentPage(currentPage - 1);
   const nextTab = () => {
     const tabs = [
-      "Vehicle Details",
       "Personal Info",
-      "Additional Driver",
       "Motor Summery",
     ];
     const currentIndex = tabs.indexOf(activeTab);
@@ -42,10 +49,8 @@ const PersonalAccident = () => {
   };
   const prevTab = () => {
     const tabs = [
-      "Vehicle Details",
       "Personal Info",
-      "Additional Driver",
-      "Motor Summery",
+      "Personal Accident Summery",
     ];
     const currentIndex = tabs.indexOf(activeTab);
     const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
@@ -58,49 +63,20 @@ const PersonalAccident = () => {
   const [insuranceType, setInsuranceType] = useState("");
   const [coverageAmount, setCoverageAmount] = useState("");
   const [premiumAmount, setPremiumAmount] = useState("");
-
+  const [visaType, setVisaType] = useState('employment');
+  const [coverageType, setCoverageType] = useState("");
+  const styles = StyleSheet.create({
+    pickerContainer: {
+      borderWidth: 2, // Tailwind `border-2`
+      borderColor: "#d1d5db", // Tailwind `border-gray-300`
+      borderRadius: 28, // Tailwind `rounded`
+      marginBottom: 8, // Tailwind `mb-2`
+      paddingHorizontal: 8, // Tailwind `px-2`
+    },
+  });
   const renderTabContent = () => {
     switch (activeTab) {
-      case "Vehicle Details":
-        // return null;
-        return (
-          <View
-            style={{
-              elevation: 4,
-              flex: 1,
-            }}
-            className="bg-white p-4 rounded-lg shadow-2xl shadow-blue-500"
-          >
-            <View className="flex-row items-center mb-4">
-              <Ionicons name="car-outline" size={28} color="#0c4ea2" />
-              <Text className="ml-3 text-lg font-bold text-gray-700">
-                Vehicle Details
-              </Text>
-            </View>
-          
-
-           
-
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <PButton
-                mode="contained"
-                onPress={prevTab}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-              >
-                Previous
-              </PButton>
-              <PButton
-                mode="contained"
-                onPress={nextTab}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-              >
-                Next
-              </PButton>
-            </View>
-          </View>
-        );
+     
     
       case "Personal Info":
         return (
@@ -112,7 +88,269 @@ const PersonalAccident = () => {
                 Personal Details
               </Text>
             </View>
-         
+
+            
+            <ScrollView>
+
+            <View style={{ flexDirection: 'row', alignItems: 'center'}} className="mb-4">
+              <Text className="font-semibold mb-2">Visa Type:</Text>
+
+              <RadioButton.Group onValueChange={newValue => setVisaType(newValue)} value={visaType}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <RadioButton value="employment" theme={{ colors: { primary: "#1E3A8A" } }} />
+                  <Text style={{ marginRight: 10 }}>Employment </Text>
+
+                  <RadioButton value="others"  theme={{ colors: { primary: "#1E3A8A" } }}/>
+                  <Text>Others</Text>
+                </View>
+              </RadioButton.Group>
+            </View>
+
+            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+            <View style={{ flex: 1 }}>
+            <Text className="font-semibold mb-2">Commencing Date</Text>
+            <TouchableOpacity
+              onPress={() => setShowCommencingDate(true)}
+              activeOpacity={0.7}
+            >
+              <PTextInput
+                style={inputStyle}
+                editable={false}
+                value={formData.commencingDate.toDateString()}
+              />
+            </TouchableOpacity>
+            </View>
+          
+
+            <View style={{ flex: 1 }}>
+            <Text className="font-semibold mb-2">Maturity Date</Text>
+            <TouchableOpacity
+              onPress={() => setShowMaturityDate(true)}
+              activeOpacity={0.7}
+            >
+              <PTextInput
+                style={inputStyle}
+                editable={false}
+                value={formData.commencingDate.toDateString()}
+              />
+            </TouchableOpacity>
+            </View>
+            
+            </View>
+
+            <Text className="font-semibold mb-2">No. of Years</Text>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={coverageType}
+                    onValueChange={(itemValue) => setCoverageType(itemValue)}
+                  >
+                    <Picker.Item label="Select" value="" />
+                    <Picker.Item label="1 Year" value="1 Year" />
+                    <Picker.Item label="2 Years" value="2 Years" />
+                
+                  </Picker>
+                </View>
+
+                <Text className="font-semibold mb-2">Sum Insured</Text>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={coverageType}
+                    onValueChange={(itemValue) => setCoverageType(itemValue)}
+                  >
+                    <Picker.Item label="Select" value="" />
+                    <Picker.Item label="3000" value="3000" />
+                    <Picker.Item label="5000" value="5000" />
+                
+                  </Picker>
+                </View>
+
+
+                <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+              <View style={{ flex: 1 }}>
+              <Text className="font-semibold mb-2">Customer Name </Text>
+
+                <PTextInput
+                    label="Customer Name"
+                    value={formData.customerName}
+                    onChangeText={(text) =>
+                    setFormData({ ...formData, customerName: text })
+                    }
+                    style={inputStyle}
+                    mode="outlined"
+                    outlineStyle={{ borderRadius: 25 }}
+                    theme={{ colors: { primary: "#1E3A8A" } }}
+
+                />
+                </View>
+                <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Mobile  No</Text>
+
+                <PTextInput
+                    label="Mobile No"
+                    value={formData.mobileNo}
+                    keyboardType="phone-pad"
+                    onChangeText={(text) => setFormData({ ...formData, mobileNo: text })}
+                    style={inputStyle}
+                    mode="outlined"
+                    outlineStyle={{ borderRadius: 25 }}
+                    theme={{ colors: { primary: "#1E3A8A" } }}
+                />
+                </View>
+                </View>
+
+                <Text className="font-semibold mb-2">Address </Text>
+              <PTextInput
+                  label="Address"
+                  value={formData.address}
+                  onChangeText={(text) => setFormData({ ...formData, address: text })}
+                  style={inputStyle}
+                  
+                  mode="outlined"
+                  outlineStyle={{ borderRadius: 25 }}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+              />
+
+              <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+                  <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Telephone No</Text>
+
+                  <PTextInput
+                      label="Telephone No"
+                      value={formData.telephoneNo}
+                      keyboardType="phone-pad"
+                      onChangeText={(text) =>
+                      setFormData({ ...formData, telephoneNo: text })
+                      }
+                      style={inputStyle}
+                      mode="outlined"
+                      outlineStyle={{ borderRadius: 25 }}
+                      theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Email</Text>
+
+                  <PTextInput
+                      label="Email"
+                      value={formData.email}
+                      keyboardType="email-address"
+                      onChangeText={(text) => setFormData({ ...formData, email: text })}
+                      style={inputStyle}
+                      mode="outlined"
+                      outlineStyle={{ borderRadius: 25 }}
+                      theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                  </View>
+                  </View>
+
+
+                <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+                  <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Nominee </Text>
+
+                  <PTextInput
+                      label="Nominee "
+                      value={formData.Nominee}
+                      keyboardType="phone-pad"
+                      onChangeText={(text) =>
+                      setFormData({ ...formData, Nominee: text })
+                      }
+                      style={inputStyle}
+                      mode="outlined"
+                      outlineStyle={{ borderRadius: 25 }}
+                      theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Date of Birth</Text>
+                  <TouchableOpacity
+                    onPress={() => setShowMaturityDate(true)}
+                    activeOpacity={0.7}
+                  >
+                    <PTextInput
+                      style={inputStyle}
+                      editable={false}
+                      value={formData.commencingDate.toDateString()}
+                    />
+                  </TouchableOpacity>
+                  </View>
+                </View>
+
+
+                <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+                  <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">   Resi.Card No	 </Text>
+
+                  <PTextInput
+                      label=" Resi.Card No "
+                      value={formData.Resicard}
+                      keyboardType="phone-pad"
+                      onChangeText={(text) =>
+                      setFormData({ ...formData, Resicard: text })
+                      }
+                      style={inputStyle}
+                      mode="outlined"
+                      outlineStyle={{ borderRadius: 25 }}
+                      theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Passport No</Text>
+                  <PTextInput
+                      label=" Passport No "
+                      value={formData.Passport}
+                      keyboardType="phone-pad"
+                      onChangeText={(text) =>
+                      setFormData({ ...formData, Passport: text })
+                      }
+                      style={inputStyle}
+                      mode="outlined"
+                      outlineStyle={{ borderRadius: 25 }}
+                      theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                  </View>
+                </View>
+
+                
+                <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+                  <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Business/Occupation </Text>
+
+                  <PTextInput
+                      label="Business/Occupation "
+                      value={formData.Business}
+                      keyboardType="phone-pad"
+                      onChangeText={(text) =>
+                      setFormData({ ...formData, Business: text })
+                      }
+                      style={inputStyle}
+                      mode="outlined"
+                      outlineStyle={{ borderRadius: 25 }}
+                      theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                  </View>
+                  
+                </View>
+
+                  <Text className="font-semibold mb-2">Nationality</Text>
+                  <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={coverageType}
+                    onValueChange={(itemValue) => setCoverageType(itemValue)}
+                  >
+                    <Picker.Item label="Select" value="" />
+                    <Picker.Item label="3000" value="3000" />
+                    <Picker.Item label="5000" value="5000" />
+                
+                  </Picker>
+                  </View>
+
+
+
+
+            </ScrollView>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+            <View style={{ flex: 1 }}>
               <PButton
                 mode="contained"
                 onPress={prevTab}
@@ -120,6 +358,10 @@ const PersonalAccident = () => {
               >
                 Previous
               </PButton>
+        
+              </View>
+            <View style={{ flex: 1 }}>
+
               <PButton
                 mode="contained"
                 onPress={nextTab}
@@ -127,69 +369,38 @@ const PersonalAccident = () => {
               >
                 Next
               </PButton>
+              </View>
+              </View>
+
             </View>
           
         );
-      case "Additional Driver":
-        return (
-          <View className="bg-white p-4 rounded-lg shadow">
-          <View className="flex-row items-center mb-4">
-            <Ionicons name="people-circle-outline" size={28} color="#0c4ea2" />
-            <Text className="ml-3 text-lg font-bold text-gray-700">
-              About The Driver
-            </Text>
-          </View>
-        
-        
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 16,
-            }}
-          >
-            <PButton
-              mode="contained"
-              onPress={prevTab}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-            >
-              Previous
-            </PButton>
-            <PButton
-              mode="contained"
-              onPress={nextTab}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-            >
-              Next
-            </PButton>
-          </View>
-        </View>
-        
-        );
-      case "Motor Summery":
+    
+      case "Personal Accident Summery":
         return (
           <ScrollView className="flex-1 bg-gray-100 p-4">
-          <Text className="text-2xl font-bold text-blue-900 mb-4">Travel Policy Summary</Text>
+          <Text className="text-2xl font-bold text-blue-900 mb-4">Personal Accident Summary</Text>
     
           <View className="flex-row flex-wrap justify-between mb-4">
-            <ImportantField label="New Policy No"  value="POL-12345678" />
             <ImportantField label="Customer Name"  value="John Doe" />
-            <ImportantField label="Start Date"  value="01/01/2024" />
-            <ImportantField label="End Date"  value="31/12/2024" />
-            <ImportantField label="Total Premium"  value="234.56 OMR" />
+            <ImportantField label=" Commencing Date "  value="01/01/2024" />
+            <ImportantField label="	Maturity Date "  value="31/12/2024" />
+            <ImportantField label="Sum Insured "  value="234.56 OMR" />
+            <ImportantField label="Premium "  value="13.5 OMR" />
           </View>
     
           <View className="bg-white rounded-lg shadow-md p-4 mb-4">
             <Text className="text-lg font-semibold text-gray-800 mb-2">Additional Details</Text>
-            <SummaryRow label="Vehicle Usage"  value="Personal" />
-            <SummaryRow label="Registration No" value="ABC 123" />
-            <SummaryRow label="Make" value="Toyota" />
-            <SummaryRow label="Model"  value="Camry" />
-            <SummaryRow label="Vehicle Value"value="25,000" />
-            <SummaryRow label="Basic Premium" value="1,000 OMR" />
+            <SummaryRow label="	BENEFIT A (Death)"  value="RO. 5000" />
+            <SummaryRow label="	BENEFIT B (Permanent Disablement)" value="	AS PER SCALE ATTACHED" />
+            <SummaryRow label="BENEFIT C (Temporary Total Disablement)" value="	BUT NOT EXCEEDING 100% OF WEEKLY WAGES" />
+            <SummaryRow label="	BENEFIT D (Medical Expenses)"  value="UPTO RO. 500/- PER ACCIDENT" />
+            <SummaryRow label="Additional Line "value="REPATRIATION EXPENSES DUE TO ACCIDENTAL DEATH OR PERMANENT TOTAL	
+ 		DISABLEMENT UTO RO. 500/-" />
+            {/* <SummaryRow label="Basic Premium" value="1,000 OMR" />
             <SummaryRow label="Other Charges"  value="100  OMR" />
             <SummaryRow label="VAT Charges"  value="134.56 OMR" />
-            <SummaryRow label="Payment Mode"  value="Credit Card" />
+            <SummaryRow label="Payment Mode"  value="Credit Card" /> */}
           </View>
     
           <View className="flex-row mb-4">
@@ -205,7 +416,7 @@ const PersonalAccident = () => {
               
                 theme={{ colors: { primary: "#1E3A8A" } }}
               />
-              <Text className="text-sm text-gray-600 mb-2">
+              <Text className="text-sm text-gray-600 mb-2 break-words">
                       I hereby declare that the information entered by me in this application are true to the best of my knowledge and
                       belief.
                     </Text>           
@@ -231,7 +442,7 @@ const PersonalAccident = () => {
     <View className="flex-1 bg-gray-200 pt-4">
     {/* Tabs */}
     <Text className="text-xl pl-3 font-semibold mb-4">
-      Travel Insurance 
+    Personal Accident 
     </Text>
 
     <View
@@ -239,10 +450,8 @@ const PersonalAccident = () => {
       className="flex-row justify-around mx-3 bg-white p-3 rounded-full mb-4 shadow-xl"
     >
       {[
-        { key: "Vehicle Details", icon: "car-outline" },
         { key: "Personal Info", icon: "person-circle-outline" },
-        { key: "Additional Driver", icon: "person-add-outline" },
-        { key: "Motor Summery", icon: "document-outline" },
+        { key: "Personal Accident Summery", icon: "document-outline" },
       ].map((tab) => (
         <TouchableOpacity
           key={tab.key}
