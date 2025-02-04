@@ -14,7 +14,7 @@ const DeclarationModal = ({ visible, onClose, onProceed }) => {
     >
       <View style={styles.overlay}>
         <View style={styles.container}>
-          <Text style={styles.title}>Declaration تعهد</Text>
+          <Text style={styles.title}>Declaration </Text>
 
           <Text style={styles.declarationText}>
             I hereby declare that the information entered by me in this
@@ -22,18 +22,16 @@ const DeclarationModal = ({ visible, onClose, onProceed }) => {
             change after the submission of the data, then the same would be
             conveyed immediately to NIA.
             {"\n\n"}
-            أتعهد بأن البيانات التي ادخلتها في الموقع صحيحة و حقيقية لحد معرفتي
-            و فهمي ، اي تغيير بعد تقديم البيانات سيتم اخطار الشركة الهندية
-            الجديدة للتأمين المحدودة فورا .
+         
           </Text>
 
           <View style={styles.checkboxContainer}>
             <Checkbox
               status={isChecked ? "checked" : "unchecked"}
               onPress={() => setIsChecked(!isChecked)}
-              color="#007bff"
+              color="#1E3A8A"
             />
-            <Text>I Agree أوافق</Text>
+            <Text>I Agree </Text>
           </View>
 
           <View style={styles.buttonContainer}>
@@ -49,7 +47,7 @@ const DeclarationModal = ({ visible, onClose, onProceed }) => {
               style={[styles.button, { backgroundColor: "#fff" }]}
               onPress={onClose}
             >
-              <Text style={[styles.buttonText, { color: "#007bff" }]}>
+              <Text style={[styles.buttonText, { color: "#1E3A8A" }]}>
                 Cancel
               </Text>
             </TouchableOpacity>
@@ -103,7 +101,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     padding: 10,
     width: "100%",
-    backgroundColor: "#007bff",
+    backgroundColor: "#1E3A8A",
     alignItems: "center",
     marginHorizontal: 5,
     borderRadius: 5,
