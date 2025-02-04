@@ -11,6 +11,8 @@ import InsuranceDetails from "./InsuranceDetails"; // Import the Detail tab
 import MotorInsurance from "./MotorInsurance"; // Import the Detail tab
 import TravelInsurance from "./TravelInsurance"; // Import the Detail tab
 import PersonalAccident from "./PersonalAccident"; // Import the Detail tab
+import PolicySearch from "./PolicySearch"; // Import the Detail tab
+import CompassInsurance from "./CompassInsurance"; // Import the Detail tab
 import { Ionicons } from "@expo/vector-icons"; // Ensure you have the correct import
 import HomeScreen from "./Home";
 import HomeScreen1 from "./HomeScreen";
@@ -124,6 +126,26 @@ export default function TabLayout() {
           name="PersonalAccident"
           component={PersonalAccident}
           title="Personal Accident "
+          options={{
+            tabBarButton: () => null, // Hide ProductDetails from the bottom tab
+            tabBarVisible: false,
+            // Hide tabBar when viewing ProductDetails
+          }}
+        />
+        <Tab.Screen
+          name="PolicySearch"
+          component={PolicySearch}
+          title="Policy Search "
+          options={{
+            tabBarButton: () => null, // Hide ProductDetails from the bottom tab
+            tabBarVisible: false,
+            // Hide tabBar when viewing ProductDetails
+          }}
+        />
+         <Tab.Screen
+          name="CompassInsurance"
+          component={CompassInsurance}
+          title="Compass Insurance  "
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,

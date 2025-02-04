@@ -4,30 +4,36 @@ import { useRef, useState } from "react";
 import {
     Checkbox,
     TextInput as PTextInput,
-    Button as PButton,RadioButton
+    Button as PButton,
   } from "react-native-paper";
-  import { StyleSheet, TouchableOpacity,Text, View, ScrollView } from "react-native";
+  import { StyleSheet, TouchableOpacity,Text, View, ScrollView , Image } from "react-native";
   import Ionicons from "@expo/vector-icons/Ionicons";
   import { Picker } from "@react-native-picker/picker";
 
-const PersonalAccident = () => {
+const CompassInsurance = () => {
   const travelModalRef = useRef();
   const [activeTab, setActiveTab] = useState("Personal Info");
   const [isTravelDetailsModalVisible, setTravelDetailsModalVisible] = useState(false);
   const [policyNo, setPolicyNo] = useState("");
   const [passportNo, setPassportNo] = useState("");
+  const [travelInfoFormData, setTravelInfoFormData] = useState({
+    policyNo: "",
+    passportNo: "",
+    travelDestination: "",
+    travelStartDate: "",
+    travelEndDate: "",
+  });
   const [formData, setFormData] = useState({
     customerName: "",
     mobileNo: "",
     address: "",
     telephoneNo: "",
     email: "",
-    period: "10 Days",
-    territoryPlan: "Worldwide Excluding USA&Canada",
+    Telephone: "",
     commencingDate: new Date(),
     maturityDate: new Date(),
-    policyType: "Family",
-    remark: "",
+    Employer: "",
+    AddressOfSponsor: "",
   });
   const inputStyle = {
     marginBottom: 16,
@@ -35,8 +41,6 @@ const PersonalAccident = () => {
     backgroundColor: "white",
   
   };
-  const [showCommencingDate, setShowCommencingDate] = useState(false);
-  const [showMaturityDate, setShowMaturityDate] = useState(false);
   const prevPage = () => setCurrentPage(currentPage - 1);
   const nextTab = () => {
     const tabs = [
@@ -50,7 +54,7 @@ const PersonalAccident = () => {
   const prevTab = () => {
     const tabs = [
       "Personal Info",
-      "Personal Accident Summery",
+      "Motor Summery",
     ];
     const currentIndex = tabs.indexOf(activeTab);
     const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
@@ -63,7 +67,6 @@ const PersonalAccident = () => {
   const [insuranceType, setInsuranceType] = useState("");
   const [coverageAmount, setCoverageAmount] = useState("");
   const [premiumAmount, setPremiumAmount] = useState("");
-  const [visaType, setVisaType] = useState('employment');
   const [coverageType, setCoverageType] = useState("");
   const styles = StyleSheet.create({
     pickerContainer: {
@@ -73,39 +76,31 @@ const PersonalAccident = () => {
       marginBottom: 8, // Tailwind `mb-2`
       paddingHorizontal: 8, // Tailwind `px-2`
     },
+    logo: {
+      width: 100,
+      height: 30,
+      resizeMode: 'contain',
+    },
   });
   const renderTabContent = () => {
     switch (activeTab) {
-     
-    
       case "Personal Info":
+        // return null;
         return (
-        
-          <View className="bg-white p-4 gap-2 rounded-lg shadow">
-              <View className="flex-row items-center mb-4">
+          <View
+            style={{
+              elevation: 4,
+              flex: 1,
+            }}
+            className="bg-white p-4 rounded-lg shadow-2xl shadow-blue-500"
+          >
+            <View className="flex-row items-center mb-4">
               <Ionicons name="person-circle-outline" size={28} color="#0c4ea2" />
               <Text className="ml-3 text-lg font-bold text-gray-700">
                 Personal Details
               </Text>
+
             </View>
-
-            
-            <ScrollView>
-
-            <View style={{ flexDirection: 'row', alignItems: 'center'}} className="mb-4">
-              <Text className="font-semibold mb-2">Visa Type:</Text>
-
-              <RadioButton.Group onValueChange={newValue => setVisaType(newValue)} value={visaType}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <RadioButton value="employment" theme={{ colors: { primary: "#1E3A8A" } }} />
-                  <Text style={{ marginRight: 10 }}>Employment </Text>
-
-                  <RadioButton value="others"  theme={{ colors: { primary: "#1E3A8A" } }}/>
-                  <Text>Others</Text>
-                </View>
-              </RadioButton.Group>
-            </View>
-
             <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
             <View style={{ flex: 1 }}>
             <Text className="font-semibold mb-2">Commencing Date</Text>
@@ -138,33 +133,8 @@ const PersonalAccident = () => {
             
             </View>
 
-            <Text className="font-semibold mb-2">No. of Years</Text>
-                <View style={styles.pickerContainer}>
-                  <Picker
-                    selectedValue={coverageType}
-                    onValueChange={(itemValue) => setCoverageType(itemValue)}
-                  >
-                    <Picker.Item label="Select" value="" />
-                    <Picker.Item label="1 Year" value="1 Year" />
-                    <Picker.Item label="2 Years" value="2 Years" />
-                
-                  </Picker>
-                </View>
 
-                <Text className="font-semibold mb-2">Sum Insured</Text>
-                <View style={styles.pickerContainer}>
-                  <Picker
-                    selectedValue={coverageType}
-                    onValueChange={(itemValue) => setCoverageType(itemValue)}
-                  >
-                    <Picker.Item label="Select" value="" />
-                    <Picker.Item label="3000" value="3000" />
-                    <Picker.Item label="5000" value="5000" />
-                
-                  </Picker>
-                </View>
-
-
+            
             <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
               <View style={{ flex: 1 }}>
               <Text className="font-semibold mb-2">Customer Name </Text>
@@ -210,7 +180,7 @@ const PersonalAccident = () => {
                   theme={{ colors: { primary: "#1E3A8A" } }}
               />
 
-              <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+<View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
                   <View style={{ flex: 1 }}>
                   <Text className="font-semibold mb-2">Telephone No</Text>
 
@@ -243,24 +213,9 @@ const PersonalAccident = () => {
                   </View>
                   </View>
 
-
+                  
                 <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-                  <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">Nominee </Text>
-
-                  <PTextInput
-                      label="Nominee "
-                      value={formData.Nominee}
-                      keyboardType="phone-pad"
-                      onChangeText={(text) =>
-                      setFormData({ ...formData, Nominee: text })
-                      }
-                      style={inputStyle}
-                      mode="outlined"
-                      outlineStyle={{ borderRadius: 25 }}
-                      theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                  </View>
+                 
                   <View style={{ flex: 1 }}>
                   <Text className="font-semibold mb-2">Date of Birth</Text>
                   <TouchableOpacity
@@ -275,8 +230,6 @@ const PersonalAccident = () => {
                   </TouchableOpacity>
                   </View>
                 </View>
-
-
                 <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
                   <View style={{ flex: 1 }}>
                   <Text className="font-semibold mb-2">   Resi.Card No	 </Text>
@@ -311,7 +264,6 @@ const PersonalAccident = () => {
                   </View>
                 </View>
 
-                
                 <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
                   <View style={{ flex: 1 }}>
                   <Text className="font-semibold mb-2">Business/Occupation </Text>
@@ -329,9 +281,7 @@ const PersonalAccident = () => {
                       theme={{ colors: { primary: "#1E3A8A" } }}
                   />
                   </View>
-                  
-                </View>
-
+                  <View style={{ flex: 1 }}>
                   <Text className="font-semibold mb-2">Nationality</Text>
                   <View style={styles.pickerContainer}>
                   <Picker
@@ -344,13 +294,63 @@ const PersonalAccident = () => {
                 
                   </Picker>
                   </View>
+                </View>
 
+                  
+                </View>
 
+                <Text className="font-semibold mb-2">	Address Of Sponsor</Text>
+                <PTextInput
+                    label="	Address Of Sponsor "
+                    value={formData.AddressOfSponsor}
+                    keyboardType="phone-pad"
+                    onChangeText={(text) =>
+                    setFormData({ ...formData, AddressOfSponsor: text })
+                    }
+                    style={inputStyle}
+                    mode="outlined"
+                    outlineStyle={{ borderRadius: 25 }}
+                    theme={{ colors: { primary: "#1E3A8A" } }}
+                />
 
+                <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+                  <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Telephone No </Text>
+                  <PTextInput
+                    label="	Telephone "
+                    value={formData.Telephone}
+                    keyboardType="phone-pad"
+                    onChangeText={(text) =>
+                    setFormData({ ...formData, Telephone: text })
+                    }
+                    style={inputStyle}
+                    mode="outlined"
+                    outlineStyle={{ borderRadius: 25 }}
+                    theme={{ colors: { primary: "#1E3A8A" } }}
+                />
 
-            </ScrollView>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Employer </Text>
+                  <PTextInput
+                    label="	Employer   "
+                    value={formData.Employer}
+                    keyboardType="phone-pad"
+                    onChangeText={(text) =>
+                    setFormData({ ...formData, Employer: text })
+                    }
+                    style={inputStyle}
+                    mode="outlined"
+                    outlineStyle={{ borderRadius: 25 }}
+                    theme={{ colors: { primary: "#1E3A8A" } }}
+                />
+                </View>
+                </View>
+
+            
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
               <PButton
                 mode="contained"
                 onPress={prevTab}
@@ -358,10 +358,6 @@ const PersonalAccident = () => {
               >
                 Previous
               </PButton>
-        
-              </View>
-            <View style={{ flex: 1 }}>
-
               <PButton
                 mode="contained"
                 onPress={nextTab}
@@ -369,60 +365,56 @@ const PersonalAccident = () => {
               >
                 Next
               </PButton>
-              </View>
-              </View>
-
             </View>
-          
+          </View>
         );
     
-      case "Personal Accident Summery":
+
+      case "Motor Summery":
         return (
           <ScrollView className="flex-1 bg-gray-100 p-4">
-          <Text className="text-2xl font-bold text-blue-900 mb-4">Personal Accident Summary</Text>
+          <Text className="text-2xl font-bold text-blue-900 mb-4">Compress Insurance Summary</Text>
     
           <View className="flex-row flex-wrap justify-between mb-4">
             <ImportantField label="Customer Name"  value="John Doe" />
-            <ImportantField label=" Commencing Date "  value="01/01/2024" />
-            <ImportantField label="	Maturity Date "  value="31/12/2024" />
+            <ImportantField label="Commencing  Date"  value="01/01/2024" />
+            <ImportantField label="Maturity  Date"  value="31/12/2024" />
             <ImportantField label="Sum Insured "  value="234.56 OMR" />
-            <ImportantField label="Premium "  value="13.5 OMR" />
+            <ImportantField label="Premium  "  value="234.56 OMR" />
           </View>
     
           <View className="bg-white rounded-lg shadow-md p-4 mb-4">
             <Text className="text-lg font-semibold text-gray-800 mb-2">Additional Details</Text>
-            <SummaryRow label="	BENEFIT A (Death)"  value="RO. 5000" />
-            <SummaryRow label="	BENEFIT B (Permanent Disablement)" value="	AS PER SCALE ATTACHED" />
-            <SummaryRow label="BENEFIT C (Temporary Total Disablement)" value="	BUT NOT EXCEEDING 100% OF WEEKLY WAGES" />
-            <SummaryRow label="	BENEFIT D (Medical Expenses)"  value="UPTO RO. 500/- PER ACCIDENT" />
-            <SummaryRow label="Additional Line "value="REPATRIATION EXPENSES DUE TO ACCIDENTAL DEATH OR PERMANENT TOTAL	
- 		DISABLEMENT UTO RO. 500/-" />
-            {/* <SummaryRow label="Basic Premium" value="1,000 OMR" />
-            <SummaryRow label="Other Charges"  value="100  OMR" />
-            <SummaryRow label="VAT Charges"  value="134.56 OMR" />
-            <SummaryRow label="Payment Mode"  value="Credit Card" /> */}
+            <SummaryRow label="BENEFIT A (Accidental Death/Permanent Total Disability)"  value="5000" />
+            <SummaryRow label="BENEFIT B (Repatriation Expenses)" value="RO.500/-" />
+            <SummaryRow label="BENEFIT C (Accidental Medical Expenses)" value="RO.1000/-" />
+            
           </View>
     
           <View className="flex-row mb-4">
-            <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
+            {/* <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
               <Text className="text-sm font-medium">VISA</Text>
             </View>
             <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
               <Text className="text-sm font-medium">MC</Text>
-            </View>
+            </View> */}
+            <Image
+            source={{ uri: 'https://newindiaoman.com/directcustomer/images/Vcard.png' }}
+            style={styles.logo}
+          />
           </View>
           <View className="flex-row items-center mb-2">
               <Checkbox
               
                 theme={{ colors: { primary: "#1E3A8A" } }}
               />
-              <Text className="text-sm text-gray-600 mb-2 break-words">
-                      I hereby declare that the information entered by me in this application are true to the best of my knowledge and
-                      belief.
+              <Text className="text-sm text-gray-600 mb-2">
+              I hereby declare that the information entered by me in this application are true to the best of my knowledge and belief. Any change after the 
+              submission of the data, then the same would be conveyed immediately to NIA.
                     </Text>           
              </View>
       
-          <Text className="text-sm text-gray-600 text-right mb-4">تعهد</Text>
+          {/* <Text className="text-sm text-gray-600 text-right mb-4">تعهد</Text> */}
     
           <View className="flex-row justify-between">
             <TouchableOpacity onPress={prevTab} className="bg-gray-200 py-2 px-4 rounded-full">
@@ -442,7 +434,7 @@ const PersonalAccident = () => {
     <View className="flex-1 bg-gray-200 pt-4">
     {/* Tabs */}
     <Text className="text-xl pl-3 font-semibold mb-4">
-    Personal Accident 
+    Compass Insurance 
     </Text>
 
     <View
@@ -450,8 +442,10 @@ const PersonalAccident = () => {
       className="flex-row justify-around mx-3 bg-white p-3 rounded-full mb-4 shadow-xl"
     >
       {[
+       
         { key: "Personal Info", icon: "person-circle-outline" },
-        { key: "Personal Accident Summery", icon: "document-outline" },
+       
+        { key: "Motor Summery", icon: "document-outline" },
       ].map((tab) => (
         <TouchableOpacity
           key={tab.key}
@@ -480,4 +474,4 @@ const PersonalAccident = () => {
   );
 };
 
-export default PersonalAccident;
+export default CompassInsurance;

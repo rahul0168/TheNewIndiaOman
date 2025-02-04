@@ -21,22 +21,10 @@ const insuranceOptions = [
   },
   { id: "3", title: "4 Wheeler", subtitle: "Starts @₹2094/yr*", icon: "car" ,URL: "MotorInsurance"},
   { id: "4", title: "Travel", subtitle: "Starts @₹300/trip*", icon: "flight" ,URL: "TravelInsurance",},
-  { id: "5", title: "Home", subtitle: "Starts @₹1500/yr*", icon: "home" ,URL: "TravelInsurance",},
-  { id: "6", title: "Life", subtitle: "Starts @₹500/month*", icon: "heart" ,URL: "PersonalAccident",},
-  { id: "7", title: "Pet", subtitle: "Starts @₹1000/yr*", icon: "paw" ,URL: "TravelInsurance",},
-  {
-    id: "8",
-    title: "Gadget",
-    subtitle: "Starts @₹299/yr*",
-    icon: "mobile-phone",
-  },
-  {
-    id: "9",
-    title: "Business",
-    subtitle: "Starts @₹3000/yr*",
-    icon: "building",
-  },
-  { id: "10", title: "Cyber", subtitle: "Starts @₹500/yr*", icon: "computer" },
+  { id: "5", title: "Life", subtitle: "Starts @₹500/month*", icon: "heart" ,URL: "PersonalAccident",},
+  { id: "6", title: "Policy Search", subtitle: "Starts @₹1000/yr*", icon: "paw" ,URL: "PolicySearch",},
+  { id: "7", title: "Compass Insurance", subtitle: "Starts @₹1000/yr*", icon: "paw" ,URL: "CompassInsurance",},
+ 
 ];
 
 const BottomSheetComponent = () => {
