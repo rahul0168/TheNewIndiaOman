@@ -20,6 +20,7 @@ import VehicleDetailsModal from "../../components/ViewDertailsModalComponent";
 import MotorInfoBottomSheet from "../../components/MotorInfoBottomSheet";
 import SummaryRow from "../../components/SummaryRow";
 import ImportantField from "../../components/ImportantField";
+import DeclarationModal from "../../components/DeclarationModal";
 
 const MotorInsurance = () => {
   const vehicleModalRef = useRef();
@@ -64,7 +65,7 @@ const MotorInsurance = () => {
   const [crNumber, setCrNumber] = useState("");
   const [addDriver, setAddDriver] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [declarationModalVisible, setDeclarationModalVisible] = useState(false);
   const [vehicleType, setVehicleType] = useState("");
   const [uaeExtension, setUaeExtension] = useState(false);
   const [aaaRoadAssist, setAaaRoadAssist] = useState(false);
@@ -98,8 +99,6 @@ const MotorInsurance = () => {
     marginBottom: 16,
     borderRadius: 25, // Rounded corners
     backgroundColor: "white",
-  
-
   };
   const styles = StyleSheet.create({
     pickerContainer: {
@@ -119,9 +118,16 @@ const MotorInsurance = () => {
       "Additional Driver",
       "Motor Summery",
     ];
-    const currentIndex = tabs.indexOf(activeTab);
-    const nextIndex = (currentIndex + 1) % tabs.length;
-    setActiveTab(tabs[nextIndex]);
+    if (activeTab === "Additional Driver") {
+      setDeclarationModalVisible(true);
+    } else {
+      const currentIndex = tabs.indexOf(activeTab);
+      const nextIndex = (currentIndex + 1) % tabs.length;
+      setActiveTab(tabs[nextIndex]);
+    }
+    // const currentIndex = tabs.indexOf(activeTab);
+    // const nextIndex = (currentIndex + 1) % tabs.length;
+    // setActiveTab(tabs[nextIndex]);
   };
   const prevTab = () => {
     const tabs = [
@@ -133,6 +139,18 @@ const MotorInsurance = () => {
     const currentIndex = tabs.indexOf(activeTab);
     const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
     setActiveTab(tabs[prevIndex]);
+  };
+  const handleProceed = () => {
+    setDeclarationModalVisible(false);
+    const tabs = [
+      "Vehicle Details",
+      "Personal Info",
+      "Additional Driver",
+      "Motor Summery",
+    ];
+    const currentIndex = tabs.indexOf(activeTab);
+    const nextIndex = (currentIndex + 1) % tabs.length;
+    setActiveTab(tabs[nextIndex]);
   };
 
   const addDrivers = () => {
@@ -195,36 +213,39 @@ const MotorInsurance = () => {
               style={inputStyle}
               outlineStyle={{ borderRadius: 25 }}
             />
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-             
-            <View style={{ flex: 1 }}>
-
-            <Text className="font-semibold mb-2">Chassis No </Text>
-            <PTextInput
-              mode="outlined"
-              label="Chassis No"
-              value={chassisNo}
-              onChangeText={setChassisNo}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              style={inputStyle}
-              outlineStyle={{ borderRadius: 25 }}
-            />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Chassis No </Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Chassis No"
+                  value={chassisNo}
+                  onChangeText={setChassisNo}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">License Number</Text>
+                <PTextInput
+                  mode="outlined"
+                  label="License Number"
+                  value={licenseNumber}
+                  onChangeText={setLicenseNumber}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
             </View>
-            <View style={{ flex: 1 }}>
-            <Text className="font-semibold mb-2">License Number</Text>
-            <PTextInput
-              mode="outlined"
-              label="License Number"
-              value={licenseNumber}
-              onChangeText={setLicenseNumber}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              style={inputStyle}
-              outlineStyle={{ borderRadius: 25 }}
-            />
-           </View>
-            </View>
 
-             
             <Text className="font-semibold mb-2">First Registration</Text>
             <PTextInput
               mode="outlined"
@@ -235,10 +256,6 @@ const MotorInsurance = () => {
               style={inputStyle}
               outlineStyle={{ borderRadius: 25 }}
             />
-         
-            
-
-
 
             <Text className="font-semibold mb-2 text-lg">
               Is Your Vehicle Imported?
@@ -284,96 +301,104 @@ const MotorInsurance = () => {
               theme={{ colors: { primary: "#1E3A8A" } }}
             />
 
-
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
-          <Text className="font-semibold mb-2">Make </Text>
-            <PTextInput
-              mode="outlined"
-              label="Make"
-              value={make}
-              onChangeText={setMake}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              style={inputStyle}
-              outlineStyle={{ borderRadius: 25 }}
-            />
-            </View>
-            <View style={{ flex: 1 }}>
-               <Text className="font-semibold mb-2">Model </Text>
-            <PTextInput
-              mode="outlined"
-              label="Model"
-              value={model}
-              onChangeText={setModel}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              style={inputStyle}
-              outlineStyle={{ borderRadius: 25 }}
-            />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Make </Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Make"
+                  value={make}
+                  onChangeText={setMake}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
               </View>
-            </View>
-           
-
-           
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
-          <Text className="font-semibold mb-2">Color</Text>
-            <PTextInput
-              mode="outlined"
-              label="Color"
-              value={color}
-              onChangeText={setColor}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              style={inputStyle}
-              outlineStyle={{ borderRadius: 25 }}
-            />
-            </View>
-            <View style={{ flex: 1 }}>
-               <Text className="font-semibold mb-2">HP CC </Text>
-            <PTextInput
-              mode="outlined"
-              label="HP CC"
-              value={hpCc}
-              onChangeText={setHpCc}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              style={inputStyle}
-              outlineStyle={{ borderRadius: 25 }}
-            />
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Model </Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Model"
+                  value={model}
+                  onChangeText={setModel}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
               </View>
             </View>
 
-           
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
-          <Text className="font-semibold mb-2">Empty Weight </Text>
-            <PTextInput
-              mode="outlined"
-              label="Empty Weight"
-              value={emptyWeight}
-              onChangeText={setEmptyWeight}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              style={inputStyle}
-              outlineStyle={{ borderRadius: 25 }}
-            />
-            </View>
-            <View style={{ flex: 1 }}>
-              
-            <Text className="font-semibold mb-2">Load Weight </Text>
-            <PTextInput
-              mode="outlined"
-              label="Load Weight"
-              value={loadWeight}
-              onChangeText={setLoadWeight}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              style={inputStyle}
-              outlineStyle={{ borderRadius: 25 }}
-            />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Color</Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Color"
+                  value={color}
+                  onChangeText={setColor}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">HP CC </Text>
+                <PTextInput
+                  mode="outlined"
+                  label="HP CC"
+                  value={hpCc}
+                  onChangeText={setHpCc}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
               </View>
             </View>
-           
 
-           
-
-           
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Empty Weight </Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Empty Weight"
+                  value={emptyWeight}
+                  onChangeText={setEmptyWeight}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Load Weight </Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Load Weight"
+                  value={loadWeight}
+                  onChangeText={setLoadWeight}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
+            </View>
 
             {/* <Text className="font-semibold mb-2">Seating Capacity </Text> */}
             {/* <ScrollView
@@ -398,37 +423,40 @@ const MotorInsurance = () => {
               </ScrollView> */}
 
             {/* <Button title="Next" color="#1e40af" onPress={nextPage} /> */}
-          
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
-          <Text className="font-semibold mb-2">Manufacture Year </Text>
-            <PTextInput
-              mode="outlined"
-              label="Year"
-              value={year}
-              onChangeText={setYear}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              style={inputStyle}
-              outlineStyle={{ borderRadius: 25 }}
-            />
-            </View>
-            <View style={{ flex: 1 }}>
-              
-            <Text className="font-semibold mb-2">Car Value (OMR) </Text>
-            <PTextInput
-              mode="outlined"
-              label="Car Value (OMR)"
-              value={carValue}
-              onChangeText={setCarValue}
-              keyboardType="numeric"
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              style={inputStyle}
-              outlineStyle={{ borderRadius: 25 }}
-            />
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Manufacture Year </Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Year"
+                  value={year}
+                  onChangeText={setYear}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Car Value (OMR) </Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Car Value (OMR)"
+                  value={carValue}
+                  onChangeText={setCarValue}
+                  keyboardType="numeric"
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  style={inputStyle}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
               </View>
             </View>
-           
-
 
             <Text className="font-semibold mb-2">Seating Capacity </Text>
             <PTextInput
@@ -454,40 +482,43 @@ const MotorInsurance = () => {
                 <Picker.Item label="Fire and Theft" value="fireAndTheft" />
               </Picker>
             </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
-          <Text className="font-semibold mb-2">Policy Expiry Date </Text>
-            <PTextInput
-              mode="outlined"
-              label="Policy Expiry Date"
-              value={policyExpiry}
-              onChangeText={setPolicyExpiry}
-              placeholder="YYYY-MM-DD"
-              keyboardType="default"
-              style={inputStyle}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              outlineStyle={{ borderRadius: 25 }}
-            />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Policy Expiry Date </Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Policy Expiry Date"
+                  value={policyExpiry}
+                  onChangeText={setPolicyExpiry}
+                  placeholder="YYYY-MM-DD"
+                  keyboardType="default"
+                  style={inputStyle}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2 ">Finance </Text>
+                <PTextInput
+                  value={finance}
+                  onChangeText={setFinance}
+                  mode="outlined"
+                  label="Finance "
+                  placeholder=" "
+                  style={inputStyle}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
             </View>
-            <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2 ">Finance </Text>
-            <PTextInput
-              value={finance}
-              onChangeText={setFinance}
-              mode="outlined"
-              label="Finance "
-              placeholder=" "
-              style={inputStyle}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              outlineStyle={{ borderRadius: 25 }}
-            />
-            </View>
-            </View>
-           
-             
 
             {/* Finance/تمويل Input */}
-            
 
             {/* Vehicle Type Select Box */}
             <Text className="font-semibold mb-2 mt-4">Vehicle Type </Text>
@@ -503,33 +534,40 @@ const MotorInsurance = () => {
                 <Picker.Item label="SUV" value="suv" />
               </Picker>
             </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
-            <Text className="font-semibold mb-2">U.A.E. Extension </Text>
-            <View className="flex-row items-center mb-2">
-              <Checkbox
-                status={uaeExtension ? "checked" : "unchecked"}
-                onPress={() => setUaeExtension(!uaeExtension)}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-              />
-              <Text>U.A.E. Extension </Text>
-            </View>
-            </View>
-            <View style={{ flex: 1 }}>
-              
-            <Text className="font-semibold mb-2">AAA (Road Assistance)</Text>
-            <View className="flex-row items-center mr-4">
-              <Checkbox
-                status={aaaRoadAssist ? "checked" : "unchecked"}
-                onPress={() => setAaaRoadAssist(!aaaRoadAssist)}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-              />
-              <Text style={styles.checkboxLabel}>AAA (Road Assistance)</Text>
-            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">U.A.E. Extension </Text>
+                <View className="flex-row items-center mb-2">
+                  <Checkbox
+                    status={uaeExtension ? "checked" : "unchecked"}
+                    onPress={() => setUaeExtension(!uaeExtension)}
+                    theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                  <Text>U.A.E. Extension </Text>
+                </View>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">
+                  AAA (Road Assistance)
+                </Text>
+                <View className="flex-row items-center mr-4">
+                  <Checkbox
+                    status={aaaRoadAssist ? "checked" : "unchecked"}
+                    onPress={() => setAaaRoadAssist(!aaaRoadAssist)}
+                    theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                  <Text style={styles.checkboxLabel}>
+                    AAA (Road Assistance)
+                  </Text>
+                </View>
               </View>
             </View>
-
-         
 
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -551,71 +589,83 @@ const MotorInsurance = () => {
             </View>
           </View>
         );
-    
+
       case "Personal Info":
         return (
-        
           <View className="bg-white p-4 gap-2 rounded-lg shadow">
-              <View className="flex-row items-center mb-4">
-              <Ionicons name="person-circle-outline" size={28} color="#0c4ea2" />
+            <View className="flex-row items-center mb-4">
+              <Ionicons
+                name="person-circle-outline"
+                size={28}
+                color="#0c4ea2"
+              />
               <Text className="ml-3 text-lg font-bold text-gray-700">
                 Personal Details
               </Text>
             </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
-            <Text className="font-semibold">Enter Name</Text>
-            <PTextInput
-              mode="outlined"
-              label="Name"
-              value={name}
-              onChangeText={setName}
-              style={inputStyle}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              outlineStyle={{ borderRadius: 25 }}
-            />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold">Enter Name</Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Name"
+                  value={name}
+                  onChangeText={setName}
+                  style={inputStyle}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold">Enter DOB</Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Date of Birth"
+                  value={dob}
+                  onChangeText={setDob}
+                  style={inputStyle}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
             </View>
-            <View style={{ flex: 1 }}>
-            <Text className="font-semibold">Enter DOB</Text>
-            <PTextInput
-              mode="outlined"
-              label="Date of Birth"
-              value={dob}
-              onChangeText={setDob}
-              style={inputStyle}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              outlineStyle={{ borderRadius: 25 }}
-            />
-            </View>
-            </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
-
-            <Text className="font-semibold">Enter Email</Text>
-            <PTextInput
-              mode="outlined"
-              label="Email"
-              value={email}
-              onChangeText={setEmail}
-              style={inputStyle}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              outlineStyle={{ borderRadius: 25 }}
-            />
-            </View>
-            <View style={{ flex: 1 }}>
-
-            <Text className="font-semibold ">Enter Address</Text>
-            <PTextInput
-              mode="outlined"
-              label="Address"
-              value={address}
-              onChangeText={setAddress}
-              style={inputStyle}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-              outlineStyle={{ borderRadius: 25 }}
-            />
-            </View>
-         
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold">Enter Email</Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Email"
+                  value={email}
+                  onChangeText={setEmail}
+                  style={inputStyle}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold ">Enter Address</Text>
+                <PTextInput
+                  mode="outlined"
+                  label="Address"
+                  value={address}
+                  onChangeText={setAddress}
+                  style={inputStyle}
+                  theme={{ colors: { primary: "#1E3A8A" } }}
+                  outlineStyle={{ borderRadius: 25 }}
+                />
+              </View>
             </View>
             <Text className="font-semibold">Enter Phone</Text>
             <PTextInput
@@ -650,178 +700,213 @@ const MotorInsurance = () => {
       case "Additional Driver":
         return (
           <View className="bg-white p-4 rounded-lg shadow">
-          <View className="flex-row items-center mb-4">
-            <Ionicons name="people-circle-outline" size={28} color="#0c4ea2" />
-            <Text className="ml-3 text-lg font-bold text-gray-700">
-              About The Driver
-            </Text>
-          </View>
-          {drivers.map((driver, index) => (
-            <View className="mb-4 border-b border-gray-300" key={index}>
-              {/* Section 1: Name and Mobile No Side by Side */}
-              <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold">Enter Name</Text>
-                  <PTextInput
-                    mode="outlined"
-                    label="Driver Name"
-                    value={driver.name}
-                    onChangeText={(value) => updateDriver(index, "name", value)}
-                    style={inputStyle}
-                    outlineStyle={{ borderRadius: 25 }}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold">Mobile No.</Text>
-                  <PTextInput
-                    mode="outlined"
-                    label="Mobile No."
-                    value={driver.mobile}
-                    onChangeText={(value) => updateDriver(index, "mobile", value)}
-                    style={inputStyle}
-                    outlineStyle={{ borderRadius: 25 }}
-                  />
-                </View>
-              </View>
-        
-              {/* Section 2: Email and License Side by Side */}
-              <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold">Email</Text>
-                  <PTextInput
-                    mode="outlined"
-                    label="Email"
-                    value={driver.email}
-                    onChangeText={(value) => updateDriver(index, "email", value)}
-                    style={inputStyle}
-                    outlineStyle={{ borderRadius: 25 }}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold">Enter License</Text>
-                  <PTextInput
-                    mode="outlined"
-                    label="Driver License"
-                    value={driver.license}
-                    onChangeText={(value) => updateDriver(index, "license", value)}
-                    style={inputStyle}
-                    outlineStyle={{ borderRadius: 25 }}
-                  />
-                </View>
-              </View>
-        
-            
-              <View>
-                <Text className="font-semibold">Address</Text>
-                <PTextInput
-                  mode="outlined"
-                  label="Address"
-                  value={driver.expiry}
-                  onChangeText={(value) => updateDriver(index, "expiry", value)}
-                  style={inputStyle}
-                  outlineStyle={{ borderRadius: 25 }}
-                />
-              </View>
-              <View>
-                <Text className="font-semibold">CR Number</Text>
-                <PTextInput
-                  mode="outlined"
-                  label="CR Number"
-                  value={driver.expiry}
-                  onChangeText={(value) => updateDriver(index, "expiry", value)}
-                  style={inputStyle}
-                  outlineStyle={{ borderRadius: 25 }}
-                />
-              </View>
+            <View className="flex-row items-center mb-4">
+              <Ionicons
+                name="people-circle-outline"
+                size={28}
+                color="#0c4ea2"
+              />
+              <Text className="ml-3 text-lg font-bold text-gray-700">
+                About The Driver
+              </Text>
             </View>
-          ))}
-        
-          <PButton mode="outlined" onPress={addDrivers}>
-            Add Driver
-          </PButton>
-        
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 16,
-            }}
-          >
-            <PButton
-              mode="contained"
-              onPress={prevTab}
-              theme={{ colors: { primary: "#1E3A8A" } }}
-            >
-              Previous
+            {drivers.map((driver, index) => (
+              <View className="mb-4 border-b border-gray-300" key={index}>
+                {/* Section 1: Name and Mobile No Side by Side */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    gap: 16,
+                  }}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text className="font-semibold">Enter Name</Text>
+                    <PTextInput
+                      mode="outlined"
+                      label="Driver Name"
+                      value={driver.name}
+                      onChangeText={(value) =>
+                        updateDriver(index, "name", value)
+                      }
+                      style={inputStyle}
+                      outlineStyle={{ borderRadius: 25 }}
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text className="font-semibold">Mobile No.</Text>
+                    <PTextInput
+                      mode="outlined"
+                      label="Mobile No."
+                      value={driver.mobile}
+                      onChangeText={(value) =>
+                        updateDriver(index, "mobile", value)
+                      }
+                      style={inputStyle}
+                      outlineStyle={{ borderRadius: 25 }}
+                    />
+                  </View>
+                </View>
+
+                {/* Section 2: Email and License Side by Side */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    gap: 16,
+                  }}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text className="font-semibold">Email</Text>
+                    <PTextInput
+                      mode="outlined"
+                      label="Email"
+                      value={driver.email}
+                      onChangeText={(value) =>
+                        updateDriver(index, "email", value)
+                      }
+                      style={inputStyle}
+                      outlineStyle={{ borderRadius: 25 }}
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text className="font-semibold">Enter License</Text>
+                    <PTextInput
+                      mode="outlined"
+                      label="Driver License"
+                      value={driver.license}
+                      onChangeText={(value) =>
+                        updateDriver(index, "license", value)
+                      }
+                      style={inputStyle}
+                      outlineStyle={{ borderRadius: 25 }}
+                    />
+                  </View>
+                </View>
+
+                <View>
+                  <Text className="font-semibold">Address</Text>
+                  <PTextInput
+                    mode="outlined"
+                    label="Address"
+                    value={driver.expiry}
+                    onChangeText={(value) =>
+                      updateDriver(index, "expiry", value)
+                    }
+                    style={inputStyle}
+                    outlineStyle={{ borderRadius: 25 }}
+                  />
+                </View>
+                <View>
+                  <Text className="font-semibold">CR Number</Text>
+                  <PTextInput
+                    mode="outlined"
+                    label="CR Number"
+                    value={driver.expiry}
+                    onChangeText={(value) =>
+                      updateDriver(index, "expiry", value)
+                    }
+                    style={inputStyle}
+                    outlineStyle={{ borderRadius: 25 }}
+                  />
+                </View>
+              </View>
+            ))}
+
+            <PButton mode="outlined" onPress={addDrivers}>
+              Add Driver
             </PButton>
-            <PButton
-              mode="contained"
-              onPress={nextTab}
-              theme={{ colors: { primary: "#1E3A8A" } }}
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 16,
+              }}
             >
-              Next
-            </PButton>
+              <PButton
+                mode="contained"
+                onPress={prevTab}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+              >
+                Previous
+              </PButton>
+              <PButton
+                mode="contained"
+                onPress={nextTab}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+              >
+                Next
+              </PButton>
+            </View>
           </View>
-        </View>
-        
         );
       case "Motor Summery":
         return (
           <ScrollView className="flex-1 bg-gray-100 p-4">
-          <Text className="text-2xl font-bold text-blue-900 mb-4">New Motor Policy Summary</Text>
-    
-          <View className="flex-row flex-wrap justify-between mb-4">
-            <ImportantField label="New Policy No"  value="POL-12345678" />
-            <ImportantField label="Customer Name"  value="John Doe" />
-            <ImportantField label="Start Date"  value="01/01/2024" />
-            <ImportantField label="End Date"  value="31/12/2024" />
-            <ImportantField label="Total Premium"  value="234.56 OMR" />
-          </View>
-    
-          <View className="bg-white rounded-lg shadow-md p-4 mb-4">
-            <Text className="text-lg font-semibold text-gray-800 mb-2">Additional Details</Text>
-            <SummaryRow label="Vehicle Usage"  value="Personal" />
-            <SummaryRow label="Registration No" value="ABC 123" />
-            <SummaryRow label="Make" value="Toyota" />
-            <SummaryRow label="Model"  value="Camry" />
-            <SummaryRow label="Vehicle Value"value="25,000" />
-            <SummaryRow label="Basic Premium" value="1,000 OMR" />
-            <SummaryRow label="Other Charges"  value="100  OMR" />
-            <SummaryRow label="VAT Charges"  value="134.56 OMR" />
-            <SummaryRow label="Payment Mode"  value="Credit Card" />
-          </View>
-    
-          <View className="flex-row mb-4">
-            <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
-              <Text className="text-sm font-medium">VISA</Text>
+            <Text className="text-2xl font-bold text-blue-900 mb-4">
+              New Motor Policy Summary
+            </Text>
+
+            <View className="flex-row flex-wrap justify-between mb-4">
+              <ImportantField label="New Policy No" value="POL-12345678" />
+              <ImportantField label="Customer Name" value="John Doe" />
+              <ImportantField label="Start Date" value="01/01/2024" />
+              <ImportantField label="End Date" value="31/12/2024" />
+              <ImportantField label="Total Premium" value="234.56 OMR" />
             </View>
-            <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
-              <Text className="text-sm font-medium">MC</Text>
+
+            <View className="bg-white rounded-lg shadow-md p-4 mb-4">
+              <Text className="text-lg font-semibold text-gray-800 mb-2">
+                Additional Details
+              </Text>
+              <SummaryRow label="Vehicle Usage" value="Personal" />
+              <SummaryRow label="Registration No" value="ABC 123" />
+              <SummaryRow label="Make" value="Toyota" />
+              <SummaryRow label="Model" value="Camry" />
+              <SummaryRow label="Vehicle Value" value="25,000" />
+              <SummaryRow label="Basic Premium" value="1,000 OMR" />
+              <SummaryRow label="Other Charges" value="100  OMR" />
+              <SummaryRow label="VAT Charges" value="134.56 OMR" />
+              <SummaryRow label="Payment Mode" value="Credit Card" />
             </View>
-          </View>
-          <View className="flex-row items-center mb-2">
+
+            <View className="flex-row mb-4">
+              <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
+                <Text className="text-sm font-medium">VISA</Text>
+              </View>
+              <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
+                <Text className="text-sm font-medium">MC</Text>
+              </View>
+            </View>
+            <View className="flex-row items-center mb-2">
               <Checkbox
                 status={uaeExtension ? "checked" : "unchecked"}
                 onPress={() => setUaeExtension(!uaeExtension)}
                 theme={{ colors: { primary: "#1E3A8A" } }}
               />
               <Text className="text-sm text-gray-600 mb-2">
-                      I hereby declare that the information entered by me in this application are true to the best of my knowledge and
-                      belief.
-                    </Text>           
-             </View>
-      
-          <Text className="text-sm text-gray-600 text-right mb-4">تعهد</Text>
-    
-          <View className="flex-row justify-between">
-            <TouchableOpacity onPress={prevTab} className="bg-gray-200 py-2 px-4 rounded-full">
-              <Text className="text-blue-900 font-semibold">Previous</Text>
-            </TouchableOpacity>
-            <TouchableOpacity  className="bg-blue-900 py-2 px-4 rounded-full">
-              <Text className="text-white font-semibold">Proceed Payment</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+                I hereby declare that the information entered by me in this
+                application are true to the best of my knowledge and belief.
+              </Text>
+            </View>
+
+            <Text className="text-sm text-gray-600 text-right mb-4">تعهد</Text>
+
+            <View className="flex-row justify-between">
+              <TouchableOpacity
+                onPress={prevTab}
+                className="bg-gray-200 py-2 px-4 rounded-full"
+              >
+                <Text className="text-blue-900 font-semibold">Previous</Text>
+              </TouchableOpacity>
+              <TouchableOpacity className="bg-blue-900 py-2 px-4 rounded-full">
+                <Text className="text-white font-semibold">
+                  Proceed Payment
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         );
       default:
         return null;
@@ -831,9 +916,7 @@ const MotorInsurance = () => {
   return (
     <View className="flex-1 bg-gray-200 pt-4">
       {/* Tabs */}
-      <Text className="text-xl pl-3 font-semibold mb-4">
-        Motor Insurance 
-      </Text>
+      <Text className="text-xl pl-3 font-semibold mb-4">Motor Insurance</Text>
 
       <View
         style={{ elevation: 9 }}
@@ -889,6 +972,11 @@ const MotorInsurance = () => {
         onPremiumCalculate={handlePremiumCalculate}
         onShowInformation={handleShowInformation}
         onNext={handleNext}
+      />
+      <DeclarationModal
+        onClose={() => setDeclarationModalVisible(false)}
+        visible={declarationModalVisible}
+        onProceed={handleProceed}
       />
     </View>
   );
