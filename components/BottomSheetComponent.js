@@ -17,7 +17,7 @@ const insuranceOptions = [
     title: "Renew Motor Insurance",
     subtitle: "Starts @₹538/yr*",
     icon: "car",
-    URL: "MotorInsurance",
+    URL: "RenewalMotorInsurance",
   },
   { id: "3", title: "Personal Accident", subtitle: "Starts @₹2094/yr*", icon: "heart" ,URL: "PersonalAccident"},
   { id: "4", title: "Travel", subtitle: "Starts @₹300/trip*", icon: "flight" ,URL: "TravelInsurance",},
