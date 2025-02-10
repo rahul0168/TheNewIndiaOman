@@ -390,8 +390,8 @@ const RenewalMotorInsurance = () => {
             </View>
           ))}
 
-          <PButton mode="outlined" onPress={addDrivers}>
-            Add Driver
+          <PButton mode="outlined" onPress={addDrivers}   theme={{ colors: { primary: "#1E3A8A" } }}>
+            <Text>Add  Driver</Text>
           </PButton>
 
           <View
