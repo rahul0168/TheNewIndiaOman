@@ -22,7 +22,7 @@ const ProfileViewScreen = () => {
           <TouchableOpacity>
             <Text style={styles.addNameButton}>Add Your Name</Text>
           </TouchableOpacity>
-          <Text style={styles.phoneNumber}>+91 9922916180</Text>
+          <Text style={styles.phoneNumber}>+968 123455</Text>
         </View>
 
         {/* ABHA Card Section */}

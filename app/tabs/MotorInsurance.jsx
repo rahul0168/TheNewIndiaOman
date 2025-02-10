@@ -8,6 +8,7 @@ import {
   ScrollView,
   StyleSheet,
   Button,
+  
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {
@@ -107,6 +108,10 @@ const MotorInsurance = () => {
       borderRadius: 8, // Tailwind `rounded`
       marginBottom: 8, // Tailwind `mb-2`
       paddingHorizontal: 8, // Tailwind `px-2`
+    },logo: {
+      width: 100,
+      height: 30,
+      resizeMode: 'contain',
     },
   });
   const nextPage = () => setCurrentPage(currentPage + 1);
@@ -872,12 +877,16 @@ const MotorInsurance = () => {
             </View>
 
             <View className="flex-row mb-4">
-              <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
+              {/* <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
                 <Text className="text-sm font-medium">VISA</Text>
               </View>
               <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
                 <Text className="text-sm font-medium">MC</Text>
-              </View>
+              </View> */}
+                <Image
+            source={{ uri: 'https://newindiaoman.com/directcustomer/images/Vcard.png' }}
+            style={styles.logo}
+          />
             </View>
             <View className="flex-row items-center mb-2">
               <Checkbox

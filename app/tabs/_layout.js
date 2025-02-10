@@ -164,12 +164,12 @@ export default function TabLayout() {
           }}
         />
         {/* Settings Tab */}
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Settings"
           component={SettingsScreen}
           options={{ title: "Settings" }}
           screenOptions={{ headershown: false }}
-        />
+        /> */}
       </Tab.Navigator>
     </>
   );

@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   Text,
   View,
-  ScrollView,
+  ScrollView,Image
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -37,6 +37,10 @@ const TravelInsurance = () => {
       borderRadius: 28, // Tailwind `rounded`
       marginBottom: 8, // Tailwind `mb-2`
       paddingHorizontal: 8, // Tailwind `px-2`
+    },logo: {
+      width: 100,
+      height: 30,
+      resizeMode: 'contain',
     },
   });
   const prevPage = () => setCurrentPage(currentPage - 1);
@@ -393,6 +397,8 @@ const TravelInsurance = () => {
               </Text>
             </View>
             <ScrollView>
+            {policyType === "Single" && (
+              <View>
               <View
                 style={{
                   flexDirection: "row",
@@ -400,6 +406,7 @@ const TravelInsurance = () => {
                   gap: 16,
                 }}
               >
+                
                 <View style={{ flex: 1 }}>
                   <Text className="font-semibold mb-2">Name </Text>
 
@@ -475,7 +482,94 @@ const TravelInsurance = () => {
                   ))}
                 </Picker>
               </View>
+              </View>
+            )}
 
+         {policyType === "Family" && (
+              <View>
+                <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  gap: 16,
+                }}
+              >
+                
+                <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Name </Text>
+
+                  <PTextInput
+                    label="Name "
+                    value={formData.telephoneNo}
+                    keyboardType="phone-pad"
+                    onChangeText={(text) =>
+                      setFormData({ ...formData, telephoneNo: text })
+                    }
+                    style={inputStyle}
+                    mode="outlined"
+                    outlineStyle={{ borderRadius: 25 }}
+                    theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                  <Text className="font-semibold mb-2">Passport No </Text>
+
+                  <PTextInput
+                    label="Name "
+                    value={formData.telephoneNo}
+                    keyboardType="phone-pad"
+                    onChangeText={(text) =>
+                      setFormData({ ...formData, telephoneNo: text })
+                    }
+                    style={inputStyle}
+                    mode="outlined"
+                    outlineStyle={{ borderRadius: 25 }}
+                    theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">DOB Date</Text>
+                  <TouchableOpacity
+                    onPress={() => setShowMaturityDate(true)}
+                    activeOpacity={0.7}
+                  >
+                    <PTextInput
+                      style={inputStyle}
+                      editable={false}
+                      value={formData.commencingDate.toDateString()}
+                    />
+                  </TouchableOpacity>
+
+                  <Text className="font-semibold mb-2">Resident Card </Text>
+
+                  <PTextInput
+                    label="Resident Card "
+                    value={formData.telephoneNo}
+                    keyboardType="phone-pad"
+                    onChangeText={(text) =>
+                      setFormData({ ...formData, telephoneNo: text })
+                    }
+                    style={inputStyle}
+                    mode="outlined"
+                    outlineStyle={{ borderRadius: 25 }}
+                    theme={{ colors: { primary: "#1E3A8A" } }}
+                  />
+                </View>
+              </View>
+              <Text className="font-semibold mb-2">Nationality </Text>
+              <View style={styles.pickerContainer}>
+                <Picker
+                  selectedValue={policyType}
+                  onValueChange={(itemValue) => setPolicyType(itemValue)}
+                >
+                  <Picker.Item label="Select" value="" />
+                  {policyTypes.map((poltypes, index) => (
+                    <Picker.Item
+                      key={index}
+                      label={poltypes}
+                      value={poltypes}
+                    />
+                  ))}
+                </Picker>
+              </View>
               <View className="flex-row items-center mb-4 mt-4">
                 <Ionicons
                   name="person-circle-outline"
@@ -851,6 +945,8 @@ const TravelInsurance = () => {
                   ))}
                 </Picker>
               </View>
+              </View>
+            )}
             </ScrollView>
 
             <View
@@ -902,12 +998,16 @@ const TravelInsurance = () => {
             </View>
 
             <View className="flex-row mb-4">
-              <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
+              {/* <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
                 <Text className="text-sm font-medium">VISA</Text>
               </View>
               <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
                 <Text className="text-sm font-medium">MC</Text>
-              </View>
+              </View> */}
+                <Image
+            source={{ uri: 'https://newindiaoman.com/directcustomer/images/Vcard.png' }}
+            style={styles.logo}
+          />
             </View>
             <View className="flex-row items-center mb-2">
               <Checkbox theme={{ colors: { primary: "#1E3A8A" } }} />

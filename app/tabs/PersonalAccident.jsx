@@ -6,7 +6,7 @@ import {
     TextInput as PTextInput,
     Button as PButton,RadioButton
   } from "react-native-paper";
-  import { StyleSheet, TouchableOpacity,Text, View, ScrollView } from "react-native";
+  import { StyleSheet, TouchableOpacity,Text, View, ScrollView , Image} from "react-native";
   import Ionicons from "@expo/vector-icons/Ionicons";
   import { Picker } from "@react-native-picker/picker";
 
@@ -72,6 +72,10 @@ const PersonalAccident = () => {
       borderRadius: 28, // Tailwind `rounded`
       marginBottom: 8, // Tailwind `mb-2`
       paddingHorizontal: 8, // Tailwind `px-2`
+    },logo: {
+      width: 100,
+      height: 30,
+      resizeMode: 'contain',
     },
   });
   const renderTabContent = () => {
@@ -404,12 +408,16 @@ const PersonalAccident = () => {
           </View>
     
           <View className="flex-row mb-4">
-            <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
-              <Text className="text-sm font-medium">VISA</Text>
-            </View>
-            <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
-              <Text className="text-sm font-medium">MC</Text>
-            </View>
+              {/* <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center mr-2">
+                <Text className="text-sm font-medium">VISA</Text>
+              </View>
+              <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
+                <Text className="text-sm font-medium">MC</Text>
+              </View> */}
+                <Image
+            source={{ uri: 'https://newindiaoman.com/directcustomer/images/Vcard.png' }}
+            style={styles.logo}
+          />
           </View>
           <View className="flex-row items-center mb-2">
               <Checkbox
