@@ -23,6 +23,7 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.4.1",
     "autoprefixer": "^10.4.20",
+    "axios": "^1.7.9",
     "expo": "~51.0.39",
     "expo-checkbox": "~3.0.0",
     "expo-constants": "~16.0.2",
