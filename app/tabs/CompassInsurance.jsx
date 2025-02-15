@@ -17,6 +17,7 @@ import {
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Picker } from "@react-native-picker/picker";
 import { fetchNationalities } from "../../helper/api";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const CompassInsurance = () => {
   const travelModalRef = useRef();
@@ -124,42 +125,66 @@ const CompassInsurance = () => {
                 Personal Details
               </Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                gap: 16,
-              }}
+           
+            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+            <View style={{ flex: 1 }}>
+            <Text className="font-semibold mb-2">Commencing Date</Text>
+            <TouchableOpacity
+              onPress={() => setShowCommencingDate(true)}
+              activeOpacity={0.7}
             >
-              <View style={{ flex: 1 }}>
-                <Text className="font-semibold mb-2">Commencing Date</Text>
-                <TouchableOpacity
-                  onPress={() => setShowCommencingDate(true)}
-                  activeOpacity={0.7}
-                >
-                  <PTextInput
-                    style={inputStyle}
-                    editable={false}
-                    value={formData.commencingDate.toDateString()}
-                  />
-                </TouchableOpacity>
-              </View>
+              <PTextInput
+                style={inputStyle}
+                editable={false}
+                value={formData.commencingDate ? formData.commencingDate.toDateString() : ''}
+              />
+            </TouchableOpacity>
 
-              <View style={{ flex: 1 }}>
-                <Text className="font-semibold mb-2">Maturity Date</Text>
-                <TouchableOpacity
-                  onPress={() => setShowMaturityDate(true)}
-                  activeOpacity={0.7}
-                >
-                  <PTextInput
-                    style={inputStyle}
-                    editable={false}
-                    value={formData.commencingDate.toDateString()}
-                  />
-                </TouchableOpacity>
-              </View>
+            {showCommencingDate && (
+              <DateTimePicker
+                value={formData.commencingDate || new Date()} // Ensure a valid date is used
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShowCommencingDate(false); // Hide the picker after selection
+                  if (selectedDate) {
+                    setFormData({ ...formData, commencingDate: selectedDate }); // Update state
+                  }
+                }}
+              />
+            )}
+
             </View>
+          
 
+            <View style={{ flex: 1 }}>
+            <Text className="font-semibold mb-2">Maturity Date</Text>
+            <TouchableOpacity
+              onPress={() => setShowMaturityDate(true)}
+              activeOpacity={0.7}
+            >
+              <PTextInput
+                style={inputStyle}
+                editable={false}
+                value={formData.maturityDate.toDateString()}
+              />
+            </TouchableOpacity>
+            {showMaturityDate && (
+              <DateTimePicker
+                value={formData.maturityDate || new Date()} // Ensure a valid date is used
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShowMaturityDate(false); // Hide the picker after selection
+                  if (selectedDate) {
+                    setFormData({ ...formData, maturityDate: selectedDate }); // Update state
+                  }
+                }}
+              />
+            )}
+            </View>
+            
+            </View>
             <View
               style={{
                 flexDirection: "row",

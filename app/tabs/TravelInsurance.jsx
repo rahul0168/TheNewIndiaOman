@@ -299,42 +299,66 @@ const TravelInsurance = () => {
                 </View>
               </View>
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  gap: 16,
+              
+            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+            <View style={{ flex: 1 }}>
+            <Text className="font-semibold mb-2">Commencing Date</Text>
+            <TouchableOpacity
+              onPress={() => setShowCommencingDate(true)}
+              activeOpacity={0.7}
+            >
+              <PTextInput
+                style={inputStyle}
+                editable={false}
+                value={formData.commencingDate ? formData.commencingDate.toDateString() : ''}
+              />
+            </TouchableOpacity>
+
+            {showCommencingDate && (
+              <DateTimePicker
+                value={formData.commencingDate || new Date()} // Ensure a valid date is used
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShowCommencingDate(false); // Hide the picker after selection
+                  if (selectedDate) {
+                    setFormData({ ...formData, commencingDate: selectedDate }); // Update state
+                  }
                 }}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">Commencing Date</Text>
-                  <TouchableOpacity
-                    onPress={() => setShowCommencingDate(true)}
-                    activeOpacity={0.7}
-                  >
-                    <PTextInput
-                      style={inputStyle}
-                      editable={false}
-                      value={formData.commencingDate.toDateString()}
-                    />
-                  </TouchableOpacity>
-                </View>
+              />
+            )}
 
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">Maturity Date</Text>
-                  <TouchableOpacity
-                    onPress={() => setShowMaturityDate(true)}
-                    activeOpacity={0.7}
-                  >
-                    <PTextInput
-                      style={inputStyle}
-                      editable={false}
-                      value={formData.commencingDate.toDateString()}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
+            </View>
+          
 
+            <View style={{ flex: 1 }}>
+            <Text className="font-semibold mb-2">Maturity Date</Text>
+            <TouchableOpacity
+              onPress={() => setShowMaturityDate(true)}
+              activeOpacity={0.7}
+            >
+              <PTextInput
+                style={inputStyle}
+                editable={false}
+                value={formData.maturityDate.toDateString()}
+              />
+            </TouchableOpacity>
+            {showMaturityDate && (
+              <DateTimePicker
+                value={formData.maturityDate || new Date()} // Ensure a valid date is used
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShowMaturityDate(false); // Hide the picker after selection
+                  if (selectedDate) {
+                    setFormData({ ...formData, maturityDate: selectedDate }); // Update state
+                  }
+                }}
+              />
+            )}
+            </View>
+            
+            </View>
               <View
                 style={{
                   flexDirection: "row",
@@ -515,7 +539,6 @@ const TravelInsurance = () => {
                       <PTextInput
                         label="Name "
                         value={formData.telephoneNo}
-                        keyboardType="phone-pad"
                         onChangeText={(text) =>
                           setFormData({ ...formData, telephoneNo: text })
                         }
@@ -527,7 +550,7 @@ const TravelInsurance = () => {
                       <Text className="font-semibold mb-2">Passport No </Text>
 
                       <PTextInput
-                        label="Name "
+                        label="Passport No "
                         value={formData.telephoneNo}
                         keyboardType="phone-pad"
                         onChangeText={(text) =>
@@ -608,7 +631,6 @@ const TravelInsurance = () => {
                       <PTextInput
                         label="Name "
                         value={formData.telephoneNo}
-                        keyboardType="phone-pad"
                         onChangeText={(text) =>
                           setFormData({ ...formData, telephoneNo: text })
                         }
@@ -620,7 +642,7 @@ const TravelInsurance = () => {
                       <Text className="font-semibold mb-2">Passport No </Text>
 
                       <PTextInput
-                        label="Name "
+                        label="Passport No "
                         value={formData.telephoneNo}
                         keyboardType="phone-pad"
                         onChangeText={(text) =>
@@ -702,7 +724,6 @@ const TravelInsurance = () => {
                       <PTextInput
                         label="Name "
                         value={formData.telephoneNo}
-                        keyboardType="phone-pad"
                         onChangeText={(text) =>
                           setFormData({ ...formData, telephoneNo: text })
                         }
@@ -714,7 +735,7 @@ const TravelInsurance = () => {
                       <Text className="font-semibold mb-2">Passport No </Text>
 
                       <PTextInput
-                        label="Name "
+                        label="Passport No. "
                         value={formData.telephoneNo}
                         keyboardType="phone-pad"
                         onChangeText={(text) =>
@@ -796,7 +817,6 @@ const TravelInsurance = () => {
                       <PTextInput
                         label="Name "
                         value={formData.telephoneNo}
-                        keyboardType="phone-pad"
                         onChangeText={(text) =>
                           setFormData({ ...formData, telephoneNo: text })
                         }
@@ -808,7 +828,7 @@ const TravelInsurance = () => {
                       <Text className="font-semibold mb-2">Passport No </Text>
 
                       <PTextInput
-                        label="Name "
+                        label="Passport No "
                         value={formData.telephoneNo}
                         keyboardType="phone-pad"
                         onChangeText={(text) =>
@@ -890,7 +910,6 @@ const TravelInsurance = () => {
                       <PTextInput
                         label="Name "
                         value={formData.telephoneNo}
-                        keyboardType="phone-pad"
                         onChangeText={(text) =>
                           setFormData({ ...formData, telephoneNo: text })
                         }
@@ -902,7 +921,7 @@ const TravelInsurance = () => {
                       <Text className="font-semibold mb-2">Passport No </Text>
 
                       <PTextInput
-                        label="Name "
+                        label="Passport No "
                         value={formData.telephoneNo}
                         keyboardType="phone-pad"
                         onChangeText={(text) =>

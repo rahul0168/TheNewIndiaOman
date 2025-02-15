@@ -1,6 +1,6 @@
 import SummaryRow from "../../components/SummaryRow";
 import ImportantField from "../../components/ImportantField";
-import { useRef, useState } from "react";
+import { useRef, useState,useEffect } from "react";
 import {
     Checkbox,
     TextInput as PTextInput,
@@ -9,6 +9,8 @@ import {
   import { StyleSheet, TouchableOpacity,Text, View, ScrollView , Image} from "react-native";
   import Ionicons from "@expo/vector-icons/Ionicons";
   import { Picker } from "@react-native-picker/picker";
+  import { fetchNationalities } from "../../helper/api";
+  import DateTimePicker from "@react-native-community/datetimepicker";
 
 const PersonalAccident = () => {
   const travelModalRef = useRef();
@@ -41,7 +43,7 @@ const PersonalAccident = () => {
   const nextTab = () => {
     const tabs = [
       "Personal Info",
-      "Motor Summery",
+      "Personal Accident Summery",
     ];
     const currentIndex = tabs.indexOf(activeTab);
     const nextIndex = (currentIndex + 1) % tabs.length;
@@ -65,6 +67,7 @@ const PersonalAccident = () => {
   const [premiumAmount, setPremiumAmount] = useState("");
   const [visaType, setVisaType] = useState('employment');
   const [coverageType, setCoverageType] = useState("");
+  const [nationalities, setNationalities] = useState([]);
   const styles = StyleSheet.create({
     pickerContainer: {
       borderWidth: 2, // Tailwind `border-2`
@@ -78,6 +81,20 @@ const PersonalAccident = () => {
       resizeMode: 'contain',
     },
   });
+    useEffect(() => {
+      const getNationalities = async () => {
+        try {
+          const data = await fetchNationalities();
+          
+          setNationalities(data);
+         // console.log("data logged is", data);
+        } catch (err) {
+          setError(err);
+        } finally {
+        }
+      };
+      getNationalities();
+    }, []);
   const renderTabContent = () => {
     switch (activeTab) {
      
@@ -120,9 +137,24 @@ const PersonalAccident = () => {
               <PTextInput
                 style={inputStyle}
                 editable={false}
-                value={formData.commencingDate.toDateString()}
+                value={formData.commencingDate ? formData.commencingDate.toDateString() : ''}
               />
             </TouchableOpacity>
+
+            {showCommencingDate && (
+              <DateTimePicker
+                value={formData.commencingDate || new Date()} // Ensure a valid date is used
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShowCommencingDate(false); // Hide the picker after selection
+                  if (selectedDate) {
+                    setFormData({ ...formData, commencingDate: selectedDate }); // Update state
+                  }
+                }}
+              />
+            )}
+
             </View>
           
 
@@ -135,9 +167,22 @@ const PersonalAccident = () => {
               <PTextInput
                 style={inputStyle}
                 editable={false}
-                value={formData.commencingDate.toDateString()}
+                value={formData.maturityDate.toDateString()}
               />
             </TouchableOpacity>
+            {showMaturityDate && (
+              <DateTimePicker
+                value={formData.maturityDate || new Date()} // Ensure a valid date is used
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShowMaturityDate(false); // Hide the picker after selection
+                  if (selectedDate) {
+                    setFormData({ ...formData, maturityDate: selectedDate }); // Update state
+                  }
+                }}
+              />
+            )}
             </View>
             
             </View>
@@ -255,7 +300,6 @@ const PersonalAccident = () => {
                   <PTextInput
                       label="Nominee "
                       value={formData.Nominee}
-                      keyboardType="phone-pad"
                       onChangeText={(text) =>
                       setFormData({ ...formData, Nominee: text })
                       }
@@ -323,7 +367,7 @@ const PersonalAccident = () => {
                   <PTextInput
                       label="Business/Occupation "
                       value={formData.Business}
-                      keyboardType="phone-pad"
+                    
                       onChangeText={(text) =>
                       setFormData({ ...formData, Business: text })
                       }
@@ -343,9 +387,13 @@ const PersonalAccident = () => {
                     onValueChange={(itemValue) => setCoverageType(itemValue)}
                   >
                     <Picker.Item label="Select" value="" />
-                    <Picker.Item label="3000" value="3000" />
-                    <Picker.Item label="5000" value="5000" />
-                
+                    {nationalities.map((country, index) => (
+                      <Picker.Item
+                        key={index}
+                        label={country.name.common}
+                        value={country.name.common}
+                      />
+                    ))}
                   </Picker>
                   </View>
 
