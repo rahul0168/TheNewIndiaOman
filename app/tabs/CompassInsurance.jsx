@@ -26,6 +26,8 @@ const CompassInsurance = () => {
   const [policyNo, setPolicyNo] = useState("");
   const [passportNo, setPassportNo] = useState("");
   const [nationalities, setNationalities] = useState([]);
+  const [showCommencingDate, setShowCommencingDate] = useState(false);
+  const [showMaturityDate, setShowMaturityDate] = useState(false);
   const [travelInfoFormData, setTravelInfoFormData] = useState({
     policyNo: "",
     passportNo: "",
@@ -90,8 +92,9 @@ const CompassInsurance = () => {
     const getNationalities = async () => {
       try {
         const data = await fetchNationalities();
+        
         setNationalities(data);
-        console.log("data logged is", data);
+       // console.log("data logged is", data);
       } catch (err) {
         setError(err);
       } finally {
