@@ -315,31 +315,22 @@ const CompassInsurance = () => {
               </View>
             </View>
 
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                gap: 16,
-              }}
-            >
-              <View style={{ flex: 1 }}>
-                <Text className="font-semibold mb-2">Business/Occupation </Text>
+            
+            <Text className="font-semibold mb-2">Business/Occupation </Text>
 
-                <PTextInput
-                  label="Business/Occupation "
-                  value={formData.Business}
-                  keyboardType="phone-pad"
-                  onChangeText={(text) =>
-                    setFormData({ ...formData, Business: text })
-                  }
-                  style={inputStyle}
-                  mode="outlined"
-                  outlineStyle={{ borderRadius: 25 }}
-                  theme={{ colors: { primary: "#1E3A8A" } }}
-                />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text className="font-semibold mb-2">Nationality</Text>
+              <PTextInput
+                label="Business/Occupation "
+                value={formData.Business}
+              
+                onChangeText={(text) =>
+                  setFormData({ ...formData, Business: text })
+                }
+                style={inputStyle}
+                mode="outlined"
+                outlineStyle={{ borderRadius: 25 }}
+                theme={{ colors: { primary: "#1E3A8A" } }}
+              />
+            <Text className="font-semibold mb-2">Nationality</Text>
                 <View style={styles.pickerContainer}>
                   <Picker
                     selectedValue={coverageType}
@@ -355,8 +346,6 @@ const CompassInsurance = () => {
                     ))}
                   </Picker>
                 </View>
-              </View>
-            </View>
 
             <Text className="font-semibold mb-2"> Address Of Sponsor</Text>
             <PTextInput
