@@ -1,6 +1,6 @@
 import SummaryRow from "../../components/SummaryRow";
 import ImportantField from "../../components/ImportantField";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Checkbox,
   TextInput as PTextInput,
@@ -13,17 +13,20 @@ import {
   TouchableOpacity,
   Text,
   View,
-  ScrollView,Image
+  ScrollView,
+  Image,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import DeclarationModal from "../../components/DeclarationModal";
+import { fetchNationalities } from "../../helper/api";
 
 const TravelInsurance = () => {
   const travelModalRef = useRef();
   const [activeTab, setActiveTab] = useState("Personal Details");
   const [modalVisible, setModalVisible] = useState(true);
+  const [nationalities, setNationalities] = useState([]);
 
   const inputStyle = {
     marginBottom: 16,
@@ -37,10 +40,11 @@ const TravelInsurance = () => {
       borderRadius: 28, // Tailwind `rounded`
       marginBottom: 8, // Tailwind `mb-2`
       paddingHorizontal: 8, // Tailwind `px-2`
-    },logo: {
+    },
+    logo: {
       width: 100,
       height: 30,
-      resizeMode: 'contain',
+      resizeMode: "contain",
     },
   });
   const prevPage = () => setCurrentPage(currentPage - 1);
@@ -120,7 +124,19 @@ const TravelInsurance = () => {
     setFormData({ ...formData, [key]: value });
     setMenuVisible({ ...menuVisible, [key]: false });
   };
-
+  useEffect(() => {
+    const getNationalities = async () => {
+      try {
+        const data = await fetchNationalities();
+        setNationalities(data);
+        console.log("data logged is", data);
+      } catch (err) {
+        setError(err);
+      } finally {
+      }
+    };
+    getNationalities();
+  }, []);
   const handleSubmit = () => {
     console.log("Form Data:", formData);
     // Add form submission logic here
@@ -397,556 +413,554 @@ const TravelInsurance = () => {
               </Text>
             </View>
             <ScrollView>
-            {policyType === "Single" && (
-              <View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  gap: 16,
-                }}
-              >
-                
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">Name </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                  <Text className="font-semibold mb-2">Passport No </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">DOB Date</Text>
-                  <TouchableOpacity
-                    onPress={() => setShowMaturityDate(true)}
-                    activeOpacity={0.7}
+              {policyType === "Single" && (
+                <View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      gap: 16,
+                    }}
                   >
-                    <PTextInput
-                      style={inputStyle}
-                      editable={false}
-                      value={formData.commencingDate.toDateString()}
-                    />
-                  </TouchableOpacity>
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">Name </Text>
 
-                  <Text className="font-semibold mb-2">Resident Card </Text>
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                      <Text className="font-semibold mb-2">Passport No </Text>
 
-                  <PTextInput
-                    label="Resident Card "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">DOB Date</Text>
+                      <TouchableOpacity
+                        onPress={() => setShowMaturityDate(true)}
+                        activeOpacity={0.7}
+                      >
+                        <PTextInput
+                          style={inputStyle}
+                          editable={false}
+                          value={formData.commencingDate.toDateString()}
+                        />
+                      </TouchableOpacity>
+
+                      <Text className="font-semibold mb-2">Resident Card </Text>
+
+                      <PTextInput
+                        label="Resident Card "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                  </View>
+                  <Text className="font-semibold mb-2">Nationality </Text>
+                  <View style={styles.pickerContainer}>
+                    <Picker
+                      selectedValue={policyType}
+                      onValueChange={(itemValue) => setPolicyType(itemValue)}
+                    >
+                      <Picker.Item label="Select" value="" />
+                      {nationalities.map((country, index) => (
+                        <Picker.Item
+                          key={index}
+                          label={country.name.common}
+                          value={country.name.common}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
                 </View>
-              </View>
-              <Text className="font-semibold mb-2">Nationality </Text>
-              <View style={styles.pickerContainer}>
-                <Picker
-                  selectedValue={policyType}
-                  onValueChange={(itemValue) => setPolicyType(itemValue)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {policyTypes.map((poltypes, index) => (
-                    <Picker.Item
-                      key={index}
-                      label={poltypes}
-                      value={poltypes}
-                    />
-                  ))}
-                </Picker>
-              </View>
-              </View>
-            )}
+              )}
 
-         {policyType === "Family" && (
-              <View>
-                <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  gap: 16,
-                }}
-              >
-                
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">Name </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                  <Text className="font-semibold mb-2">Passport No </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">DOB Date</Text>
-                  <TouchableOpacity
-                    onPress={() => setShowMaturityDate(true)}
-                    activeOpacity={0.7}
+              {policyType === "Family" && (
+                <View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      gap: 16,
+                    }}
                   >
-                    <PTextInput
-                      style={inputStyle}
-                      editable={false}
-                      value={formData.commencingDate.toDateString()}
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">Name </Text>
+
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                      <Text className="font-semibold mb-2">Passport No </Text>
+
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">DOB Date</Text>
+                      <TouchableOpacity
+                        onPress={() => setShowMaturityDate(true)}
+                        activeOpacity={0.7}
+                      >
+                        <PTextInput
+                          style={inputStyle}
+                          editable={false}
+                          value={formData.commencingDate.toDateString()}
+                        />
+                      </TouchableOpacity>
+
+                      <Text className="font-semibold mb-2">Resident Card </Text>
+
+                      <PTextInput
+                        label="Resident Card "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                  </View>
+                  <Text className="font-semibold mb-2">Nationality </Text>
+                  <View style={styles.pickerContainer}>
+                    <Picker
+                      selectedValue={policyType}
+                      onValueChange={(itemValue) => setPolicyType(itemValue)}
+                    >
+                      <Picker.Item label="Select" value="" />
+                      {nationalities.map((country, index) => (
+                        <Picker.Item
+                          key={index}
+                          label={country.name.common}
+                          value={country.name.common}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+                  <View className="flex-row items-center mb-4 mt-4">
+                    <Ionicons
+                      name="person-circle-outline"
+                      size={28}
+                      color="#0c4ea2"
                     />
-                  </TouchableOpacity>
+                    <Text className="ml-3 text-lg font-bold text-gray-700">
+                      Spouse Info
+                    </Text>
+                  </View>
 
-                  <Text className="font-semibold mb-2">Resident Card </Text>
-
-                  <PTextInput
-                    label="Resident Card "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                </View>
-              </View>
-              <Text className="font-semibold mb-2">Nationality </Text>
-              <View style={styles.pickerContainer}>
-                <Picker
-                  selectedValue={policyType}
-                  onValueChange={(itemValue) => setPolicyType(itemValue)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {policyTypes.map((poltypes, index) => (
-                    <Picker.Item
-                      key={index}
-                      label={poltypes}
-                      value={poltypes}
-                    />
-                  ))}
-                </Picker>
-              </View>
-              <View className="flex-row items-center mb-4 mt-4">
-                <Ionicons
-                  name="person-circle-outline"
-                  size={28}
-                  color="#0c4ea2"
-                />
-                <Text className="ml-3 text-lg font-bold text-gray-700">
-                  Spouse Info
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  gap: 16,
-                }}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">Name </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                  <Text className="font-semibold mb-2">Passport No </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">DOB Date</Text>
-                  <TouchableOpacity
-                    onPress={() => setShowMaturityDate(true)}
-                    activeOpacity={0.7}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      gap: 16,
+                    }}
                   >
-                    <PTextInput
-                      style={inputStyle}
-                      editable={false}
-                      value={formData.commencingDate.toDateString()}
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">Name </Text>
+
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                      <Text className="font-semibold mb-2">Passport No </Text>
+
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">DOB Date</Text>
+                      <TouchableOpacity
+                        onPress={() => setShowMaturityDate(true)}
+                        activeOpacity={0.7}
+                      >
+                        <PTextInput
+                          style={inputStyle}
+                          editable={false}
+                          value={formData.commencingDate.toDateString()}
+                        />
+                      </TouchableOpacity>
+
+                      <Text className="font-semibold mb-2">Resident Card </Text>
+
+                      <PTextInput
+                        label="Resident Card "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                  </View>
+                  <Text className="font-semibold mb-2">Nationality </Text>
+                  <View style={styles.pickerContainer}>
+                    <Picker
+                      selectedValue={policyType}
+                      onValueChange={(itemValue) => setPolicyType(itemValue)}
+                    >
+                      <Picker.Item label="Select" value="" />
+                      {nationalities.map((country, index) => (
+                        <Picker.Item
+                          key={index}
+                          label={country.name.common}
+                          value={country.name.common}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+
+                  <View className="flex-row items-center mb-4 mt-4">
+                    <Ionicons
+                      name="person-circle-outline"
+                      size={28}
+                      color="#0c4ea2"
                     />
-                  </TouchableOpacity>
+                    <Text className="ml-3 text-lg font-bold text-gray-700">
+                      Child 1 Info
+                    </Text>
+                  </View>
 
-                  <Text className="font-semibold mb-2">Resident Card </Text>
-
-                  <PTextInput
-                    label="Resident Card "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                </View>
-              </View>
-              <Text className="font-semibold mb-2">Nationality </Text>
-              <View style={styles.pickerContainer}>
-                <Picker
-                  selectedValue={policyType}
-                  onValueChange={(itemValue) => setPolicyType(itemValue)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {policyTypes.map((poltypes, index) => (
-                    <Picker.Item
-                      key={index}
-                      label={poltypes}
-                      value={poltypes}
-                    />
-                  ))}
-                </Picker>
-              </View>
-
-              <View className="flex-row items-center mb-4 mt-4">
-                <Ionicons
-                  name="person-circle-outline"
-                  size={28}
-                  color="#0c4ea2"
-                />
-                <Text className="ml-3 text-lg font-bold text-gray-700">
-                  Child 1 Info
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  gap: 16,
-                }}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">Name </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                  <Text className="font-semibold mb-2">Passport No </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">DOB Date</Text>
-                  <TouchableOpacity
-                    onPress={() => setShowMaturityDate(true)}
-                    activeOpacity={0.7}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      gap: 16,
+                    }}
                   >
-                    <PTextInput
-                      style={inputStyle}
-                      editable={false}
-                      value={formData.commencingDate.toDateString()}
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">Name </Text>
+
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                      <Text className="font-semibold mb-2">Passport No </Text>
+
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">DOB Date</Text>
+                      <TouchableOpacity
+                        onPress={() => setShowMaturityDate(true)}
+                        activeOpacity={0.7}
+                      >
+                        <PTextInput
+                          style={inputStyle}
+                          editable={false}
+                          value={formData.commencingDate.toDateString()}
+                        />
+                      </TouchableOpacity>
+
+                      <Text className="font-semibold mb-2">Resident Card </Text>
+
+                      <PTextInput
+                        label="Resident Card "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                  </View>
+                  <Text className="font-semibold mb-2">Nationality </Text>
+                  <View style={styles.pickerContainer}>
+                    <Picker
+                      selectedValue={policyType}
+                      onValueChange={(itemValue) => setPolicyType(itemValue)}
+                    >
+                      <Picker.Item label="Select" value="" />
+                      {nationalities.map((country, index) => (
+                        <Picker.Item
+                          key={index}
+                          label={country.name.common}
+                          value={country.name.common}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+
+                  <View className="flex-row items-center mb-4 mt-4">
+                    <Ionicons
+                      name="person-circle-outline"
+                      size={28}
+                      color="#0c4ea2"
                     />
-                  </TouchableOpacity>
+                    <Text className="ml-3 text-lg font-bold text-gray-700">
+                      Child 2 Info
+                    </Text>
+                  </View>
 
-                  <Text className="font-semibold mb-2">Resident Card </Text>
-
-                  <PTextInput
-                    label="Resident Card "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                </View>
-              </View>
-              <Text className="font-semibold mb-2">Nationality </Text>
-              <View style={styles.pickerContainer}>
-                <Picker
-                  selectedValue={policyType}
-                  onValueChange={(itemValue) => setPolicyType(itemValue)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {policyTypes.map((poltypes, index) => (
-                    <Picker.Item
-                      key={index}
-                      label={poltypes}
-                      value={poltypes}
-                    />
-                  ))}
-                </Picker>
-              </View>
-
-              <View className="flex-row items-center mb-4 mt-4">
-                <Ionicons
-                  name="person-circle-outline"
-                  size={28}
-                  color="#0c4ea2"
-                />
-                <Text className="ml-3 text-lg font-bold text-gray-700">
-                  Child 2 Info
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  gap: 16,
-                }}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">Name </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                  <Text className="font-semibold mb-2">Passport No </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">DOB Date</Text>
-                  <TouchableOpacity
-                    onPress={() => setShowMaturityDate(true)}
-                    activeOpacity={0.7}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      gap: 16,
+                    }}
                   >
-                    <PTextInput
-                      style={inputStyle}
-                      editable={false}
-                      value={formData.commencingDate.toDateString()}
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">Name </Text>
+
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                      <Text className="font-semibold mb-2">Passport No </Text>
+
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">DOB Date</Text>
+                      <TouchableOpacity
+                        onPress={() => setShowMaturityDate(true)}
+                        activeOpacity={0.7}
+                      >
+                        <PTextInput
+                          style={inputStyle}
+                          editable={false}
+                          value={formData.commencingDate.toDateString()}
+                        />
+                      </TouchableOpacity>
+
+                      <Text className="font-semibold mb-2">Resident Card </Text>
+
+                      <PTextInput
+                        label="Resident Card "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                  </View>
+                  <Text className="font-semibold mb-2">Nationality </Text>
+                  <View style={styles.pickerContainer}>
+                    <Picker
+                      selectedValue={policyType}
+                      onValueChange={(itemValue) => setPolicyType(itemValue)}
+                    >
+                      <Picker.Item label="Select" value="" />
+                      {nationalities.map((country, index) => (
+                        <Picker.Item
+                          key={index}
+                          label={country.name.common}
+                          value={country.name.common}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+
+                  <View className="flex-row items-center mb-4 mt-4">
+                    <Ionicons
+                      name="person-circle-outline"
+                      size={28}
+                      color="#0c4ea2"
                     />
-                  </TouchableOpacity>
+                    <Text className="ml-3 text-lg font-bold text-gray-700">
+                      Child 3 Info
+                    </Text>
+                  </View>
 
-                  <Text className="font-semibold mb-2">Resident Card </Text>
-
-                  <PTextInput
-                    label="Resident Card "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                </View>
-              </View>
-              <Text className="font-semibold mb-2">Nationality </Text>
-              <View style={styles.pickerContainer}>
-                <Picker
-                  selectedValue={policyType}
-                  onValueChange={(itemValue) => setPolicyType(itemValue)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {policyTypes.map((poltypes, index) => (
-                    <Picker.Item
-                      key={index}
-                      label={poltypes}
-                      value={poltypes}
-                    />
-                  ))}
-                </Picker>
-              </View>
-
-              <View className="flex-row items-center mb-4 mt-4">
-                <Ionicons
-                  name="person-circle-outline"
-                  size={28}
-                  color="#0c4ea2"
-                />
-                <Text className="ml-3 text-lg font-bold text-gray-700">
-                  Child 3 Info
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  gap: 16,
-                }}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">Name </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                  <Text className="font-semibold mb-2">Passport No </Text>
-
-                  <PTextInput
-                    label="Name "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text className="font-semibold mb-2">DOB Date</Text>
-                  <TouchableOpacity
-                    onPress={() => setShowMaturityDate(true)}
-                    activeOpacity={0.7}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      gap: 16,
+                    }}
                   >
-                    <PTextInput
-                      style={inputStyle}
-                      editable={false}
-                      value={formData.commencingDate.toDateString()}
-                    />
-                  </TouchableOpacity>
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">Name </Text>
 
-                  <Text className="font-semibold mb-2">Resident Card </Text>
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                      <Text className="font-semibold mb-2">Passport No </Text>
 
-                  <PTextInput
-                    label="Resident Card "
-                    value={formData.telephoneNo}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) =>
-                      setFormData({ ...formData, telephoneNo: text })
-                    }
-                    style={inputStyle}
-                    mode="outlined"
-                    outlineStyle={{ borderRadius: 25 }}
-                    theme={{ colors: { primary: "#1E3A8A" } }}
-                  />
+                      <PTextInput
+                        label="Name "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text className="font-semibold mb-2">DOB Date</Text>
+                      <TouchableOpacity
+                        onPress={() => setShowMaturityDate(true)}
+                        activeOpacity={0.7}
+                      >
+                        <PTextInput
+                          style={inputStyle}
+                          editable={false}
+                          value={formData.commencingDate.toDateString()}
+                        />
+                      </TouchableOpacity>
+
+                      <Text className="font-semibold mb-2">Resident Card </Text>
+
+                      <PTextInput
+                        label="Resident Card "
+                        value={formData.telephoneNo}
+                        keyboardType="phone-pad"
+                        onChangeText={(text) =>
+                          setFormData({ ...formData, telephoneNo: text })
+                        }
+                        style={inputStyle}
+                        mode="outlined"
+                        outlineStyle={{ borderRadius: 25 }}
+                        theme={{ colors: { primary: "#1E3A8A" } }}
+                      />
+                    </View>
+                  </View>
+                  <Text className="font-semibold mb-2">Nationality </Text>
+                  <View style={styles.pickerContainer}>
+                    <Picker
+                      selectedValue={policyType}
+                      onValueChange={(itemValue) => setPolicyType(itemValue)}
+                    >
+                      <Picker.Item label="Select" value="" />
+                      {nationalities.map((country, index) => (
+                        <Picker.Item
+                          key={index}
+                          label={country.name.common}
+                          value={country.name.common}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
                 </View>
-              </View>
-              <Text className="font-semibold mb-2">Nationality </Text>
-              <View style={styles.pickerContainer}>
-                <Picker
-                  selectedValue={policyType}
-                  onValueChange={(itemValue) => setPolicyType(itemValue)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {policyTypes.map((poltypes, index) => (
-                    <Picker.Item
-                      key={index}
-                      label={poltypes}
-                      value={poltypes}
-                    />
-                  ))}
-                </Picker>
-              </View>
-              </View>
-            )}
+              )}
             </ScrollView>
 
             <View
@@ -1004,10 +1018,12 @@ const TravelInsurance = () => {
               <View className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center">
                 <Text className="text-sm font-medium">MC</Text>
               </View> */}
-                <Image
-            source={{ uri: 'https://newindiaoman.com/directcustomer/images/Vcard.png' }}
-            style={styles.logo}
-          />
+              <Image
+                source={{
+                  uri: "https://newindiaoman.com/directcustomer/images/Vcard.png",
+                }}
+                style={styles.logo}
+              />
             </View>
             <View className="flex-row items-center mb-2">
               <Checkbox theme={{ colors: { primary: "#1E3A8A" } }} />
