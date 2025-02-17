@@ -77,7 +77,7 @@ export default function TabLayout() {
         <Tab.Screen
           name="Settings"
           component={ProfileViewScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: false  }}
           screenOptions={{ headershown: false }}
         />
 
@@ -109,6 +109,7 @@ export default function TabLayout() {
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,
+            title: "Moto Insurances ",
             // Hide tabBar when viewing ProductDetails
           }}
         />
@@ -120,6 +121,8 @@ export default function TabLayout() {
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,
+            title: "Travel Insurances ",
+
             // Hide tabBar when viewing ProductDetails
           }}
         />
@@ -130,6 +133,7 @@ export default function TabLayout() {
           title="Personal Accident "
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
+            title: "Personal Accident ",
             tabBarVisible: false,
             // Hide tabBar when viewing ProductDetails
           }}
@@ -141,6 +145,8 @@ export default function TabLayout() {
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,
+            title: "Policy  Search",
+
             // Hide tabBar when viewing ProductDetails
           }}
         />
@@ -151,6 +157,8 @@ export default function TabLayout() {
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,
+            title: "Compass  Insurance",
+
             // Hide tabBar when viewing ProductDetails
           }}
         />
@@ -161,6 +169,8 @@ export default function TabLayout() {
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,
+            title: "New Motor Insurance",
+
             // Hide tabBar when viewing ProductDetails
           }}
         />
@@ -170,7 +180,9 @@ export default function TabLayout() {
           title="New Motor Insurance"
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
-            tabBarVisible: false,
+            tabBarVisible: false,     
+            title: "Edit Profile",
+
             // Hide tabBar when viewing ProductDetails
           }}
         />
