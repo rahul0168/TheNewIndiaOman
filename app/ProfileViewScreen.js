@@ -43,7 +43,7 @@ const ProfileViewScreen = () => {
         <View style={styles.optionsContainer}>
           {/* My Profile */}
           <TouchableOpacity
-            onPress={() => navigation.navigate("EditProfileScreen")}
+            onPress={() => navigation.navigate("ProfileEdit")}
             style={styles.optionItem}
           >
             <FontAwesome name="user-o" size={24} color="#000" />
