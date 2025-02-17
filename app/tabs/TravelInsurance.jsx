@@ -25,7 +25,7 @@ import { fetchNationalities } from "../../helper/api";
 const TravelInsurance = () => {
   const travelModalRef = useRef();
   const [activeTab, setActiveTab] = useState("Personal Details");
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [nationalities, setNationalities] = useState([]);
 
   const inputStyle = {
@@ -299,66 +299,78 @@ const TravelInsurance = () => {
                 </View>
               </View>
 
-              
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
-            <Text className="font-semibold mb-2">Commencing Date</Text>
-            <TouchableOpacity
-              onPress={() => setShowCommencingDate(true)}
-              activeOpacity={0.7}
-            >
-              <PTextInput
-                style={inputStyle}
-                editable={false}
-                value={formData.commencingDate ? formData.commencingDate.toDateString() : ''}
-              />
-            </TouchableOpacity>
-
-            {showCommencingDate && (
-              <DateTimePicker
-                value={formData.commencingDate || new Date()} // Ensure a valid date is used
-                mode="date"
-                display="default"
-                onChange={(event, selectedDate) => {
-                  setShowCommencingDate(false); // Hide the picker after selection
-                  if (selectedDate) {
-                    setFormData({ ...formData, commencingDate: selectedDate }); // Update state
-                  }
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  gap: 16,
                 }}
-              />
-            )}
+              >
+                <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Commencing Date</Text>
+                  <TouchableOpacity
+                    onPress={() => setShowCommencingDate(true)}
+                    activeOpacity={0.7}
+                  >
+                    <PTextInput
+                      style={inputStyle}
+                      editable={false}
+                      value={
+                        formData.commencingDate
+                          ? formData.commencingDate.toDateString()
+                          : ""
+                      }
+                    />
+                  </TouchableOpacity>
 
-            </View>
-          
+                  {showCommencingDate && (
+                    <DateTimePicker
+                      value={formData.commencingDate || new Date()} // Ensure a valid date is used
+                      mode="date"
+                      display="default"
+                      onChange={(event, selectedDate) => {
+                        setShowCommencingDate(false); // Hide the picker after selection
+                        if (selectedDate) {
+                          setFormData({
+                            ...formData,
+                            commencingDate: selectedDate,
+                          }); // Update state
+                        }
+                      }}
+                    />
+                  )}
+                </View>
 
-            <View style={{ flex: 1 }}>
-            <Text className="font-semibold mb-2">Maturity Date</Text>
-            <TouchableOpacity
-              onPress={() => setShowMaturityDate(true)}
-              activeOpacity={0.7}
-            >
-              <PTextInput
-                style={inputStyle}
-                editable={false}
-                value={formData.maturityDate.toDateString()}
-              />
-            </TouchableOpacity>
-            {showMaturityDate && (
-              <DateTimePicker
-                value={formData.maturityDate || new Date()} // Ensure a valid date is used
-                mode="date"
-                display="default"
-                onChange={(event, selectedDate) => {
-                  setShowMaturityDate(false); // Hide the picker after selection
-                  if (selectedDate) {
-                    setFormData({ ...formData, maturityDate: selectedDate }); // Update state
-                  }
-                }}
-              />
-            )}
-            </View>
-            
-            </View>
+                <View style={{ flex: 1 }}>
+                  <Text className="font-semibold mb-2">Maturity Date</Text>
+                  <TouchableOpacity
+                    onPress={() => setShowMaturityDate(true)}
+                    activeOpacity={0.7}
+                  >
+                    <PTextInput
+                      style={inputStyle}
+                      editable={false}
+                      value={formData.maturityDate.toDateString()}
+                    />
+                  </TouchableOpacity>
+                  {showMaturityDate && (
+                    <DateTimePicker
+                      value={formData.maturityDate || new Date()} // Ensure a valid date is used
+                      mode="date"
+                      display="default"
+                      onChange={(event, selectedDate) => {
+                        setShowMaturityDate(false); // Hide the picker after selection
+                        if (selectedDate) {
+                          setFormData({
+                            ...formData,
+                            maturityDate: selectedDate,
+                          }); // Update state
+                        }
+                      }}
+                    />
+                  )}
+                </View>
+              </View>
               <View
                 style={{
                   flexDirection: "row",

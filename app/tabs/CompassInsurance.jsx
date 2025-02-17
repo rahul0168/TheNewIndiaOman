@@ -18,6 +18,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Picker } from "@react-native-picker/picker";
 import { fetchNationalities } from "../../helper/api";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import DeclarationModal from "../../components/DeclarationModal";
 
 const CompassInsurance = () => {
   const travelModalRef = useRef();
@@ -29,6 +30,7 @@ const CompassInsurance = () => {
   const [nationalities, setNationalities] = useState([]);
   const [showCommencingDate, setShowCommencingDate] = useState(false);
   const [showMaturityDate, setShowMaturityDate] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [travelInfoFormData, setTravelInfoFormData] = useState({
     policyNo: "",
     passportNo: "",
@@ -55,6 +57,17 @@ const CompassInsurance = () => {
   };
   const prevPage = () => setCurrentPage(currentPage - 1);
   const nextTab = () => {
+    const tabs = ["Personal Info", "Motor Summery"];
+    if (activeTab === "Personal Info") {
+      setModalVisible(true);
+    } else {
+      const currentIndex = tabs.indexOf(activeTab);
+      const nextIndex = (currentIndex + 1) % tabs.length;
+      setActiveTab(tabs[nextIndex]);
+    }
+  };
+  const handleProceed = () => {
+    setModalVisible(false);
     const tabs = ["Personal Info", "Motor Summery"];
     const currentIndex = tabs.indexOf(activeTab);
     const nextIndex = (currentIndex + 1) % tabs.length;
@@ -93,9 +106,9 @@ const CompassInsurance = () => {
     const getNationalities = async () => {
       try {
         const data = await fetchNationalities();
-        
+
         setNationalities(data);
-       // console.log("data logged is", data);
+        // console.log("data logged is", data);
       } catch (err) {
         setError(err);
       } finally {
@@ -125,65 +138,78 @@ const CompassInsurance = () => {
                 Personal Details
               </Text>
             </View>
-           
-            <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
-            <View style={{ flex: 1 }}>
-            <Text className="font-semibold mb-2">Commencing Date</Text>
-            <TouchableOpacity
-              onPress={() => setShowCommencingDate(true)}
-              activeOpacity={0.7}
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
             >
-              <PTextInput
-                style={inputStyle}
-                editable={false}
-                value={formData.commencingDate ? formData.commencingDate.toDateString() : ''}
-              />
-            </TouchableOpacity>
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Commencing Date</Text>
+                <TouchableOpacity
+                  onPress={() => setShowCommencingDate(true)}
+                  activeOpacity={0.7}
+                >
+                  <PTextInput
+                    style={inputStyle}
+                    editable={false}
+                    value={
+                      formData.commencingDate
+                        ? formData.commencingDate.toDateString()
+                        : ""
+                    }
+                  />
+                </TouchableOpacity>
 
-            {showCommencingDate && (
-              <DateTimePicker
-                value={formData.commencingDate || new Date()} // Ensure a valid date is used
-                mode="date"
-                display="default"
-                onChange={(event, selectedDate) => {
-                  setShowCommencingDate(false); // Hide the picker after selection
-                  if (selectedDate) {
-                    setFormData({ ...formData, commencingDate: selectedDate }); // Update state
-                  }
-                }}
-              />
-            )}
+                {showCommencingDate && (
+                  <DateTimePicker
+                    value={formData.commencingDate || new Date()} // Ensure a valid date is used
+                    mode="date"
+                    display="default"
+                    onChange={(event, selectedDate) => {
+                      setShowCommencingDate(false); // Hide the picker after selection
+                      if (selectedDate) {
+                        setFormData({
+                          ...formData,
+                          commencingDate: selectedDate,
+                        }); // Update state
+                      }
+                    }}
+                  />
+                )}
+              </View>
 
-            </View>
-          
-
-            <View style={{ flex: 1 }}>
-            <Text className="font-semibold mb-2">Maturity Date</Text>
-            <TouchableOpacity
-              onPress={() => setShowMaturityDate(true)}
-              activeOpacity={0.7}
-            >
-              <PTextInput
-                style={inputStyle}
-                editable={false}
-                value={formData.maturityDate.toDateString()}
-              />
-            </TouchableOpacity>
-            {showMaturityDate && (
-              <DateTimePicker
-                value={formData.maturityDate || new Date()} // Ensure a valid date is used
-                mode="date"
-                display="default"
-                onChange={(event, selectedDate) => {
-                  setShowMaturityDate(false); // Hide the picker after selection
-                  if (selectedDate) {
-                    setFormData({ ...formData, maturityDate: selectedDate }); // Update state
-                  }
-                }}
-              />
-            )}
-            </View>
-            
+              <View style={{ flex: 1 }}>
+                <Text className="font-semibold mb-2">Maturity Date</Text>
+                <TouchableOpacity
+                  onPress={() => setShowMaturityDate(true)}
+                  activeOpacity={0.7}
+                >
+                  <PTextInput
+                    style={inputStyle}
+                    editable={false}
+                    value={formData.maturityDate.toDateString()}
+                  />
+                </TouchableOpacity>
+                {showMaturityDate && (
+                  <DateTimePicker
+                    value={formData.maturityDate || new Date()} // Ensure a valid date is used
+                    mode="date"
+                    display="default"
+                    onChange={(event, selectedDate) => {
+                      setShowMaturityDate(false); // Hide the picker after selection
+                      if (selectedDate) {
+                        setFormData({
+                          ...formData,
+                          maturityDate: selectedDate,
+                        }); // Update state
+                      }
+                    }}
+                  />
+                )}
+              </View>
             </View>
             <View
               style={{
@@ -340,37 +366,35 @@ const CompassInsurance = () => {
               </View>
             </View>
 
-            
             <Text className="font-semibold mb-2">Business/Occupation </Text>
 
-              <PTextInput
-                label="Business/Occupation "
-                value={formData.Business}
-              
-                onChangeText={(text) =>
-                  setFormData({ ...formData, Business: text })
-                }
-                style={inputStyle}
-                mode="outlined"
-                outlineStyle={{ borderRadius: 25 }}
-                theme={{ colors: { primary: "#1E3A8A" } }}
-              />
+            <PTextInput
+              label="Business/Occupation "
+              value={formData.Business}
+              onChangeText={(text) =>
+                setFormData({ ...formData, Business: text })
+              }
+              style={inputStyle}
+              mode="outlined"
+              outlineStyle={{ borderRadius: 25 }}
+              theme={{ colors: { primary: "#1E3A8A" } }}
+            />
             <Text className="font-semibold mb-2">Nationality</Text>
-                <View style={styles.pickerContainer}>
-                  <Picker
-                    selectedValue={coverageType}
-                    onValueChange={(itemValue) => setCoverageType(itemValue)}
-                  >
-                    <Picker.Item label="Select" value="" />
-                    {nationalities.map((country, index) => (
-                      <Picker.Item
-                        key={index}
-                        label={country.name.common}
-                        value={country.name.common}
-                      />
-                    ))}
-                  </Picker>
-                </View>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={coverageType}
+                onValueChange={(itemValue) => setCoverageType(itemValue)}
+              >
+                <Picker.Item label="Select" value="" />
+                {nationalities.map((country, index) => (
+                  <Picker.Item
+                    key={index}
+                    label={country.name.common}
+                    value={country.name.common}
+                  />
+                ))}
+              </Picker>
+            </View>
 
             <Text className="font-semibold mb-2"> Address Of Sponsor</Text>
             <PTextInput
@@ -560,6 +584,11 @@ const CompassInsurance = () => {
       <ScrollView className="flex-1 p-3">
         {renderTabContent()}
         <View style={{ height: 50 }} />
+        <DeclarationModal
+          onClose={() => setModalVisible(false)}
+          visible={modalVisible}
+          onProceed={handleProceed}
+        />
       </ScrollView>
     </View>
   );
