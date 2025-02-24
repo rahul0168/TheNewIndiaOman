@@ -10,7 +10,7 @@ export default function Index() {
       {/* Background Image */}
       <ImageBackground
         source={{ uri: 'https://img.freepik.com/premium-photo/abstract-blue-curved-lines-background_1174990-218533.jpg' }} // Placeholder image URL
-        className="flex-1 justify-center items-center mb-4"
+        className="flex-1 justify-center items-center "
         resizeMode="cover"
       >
         <View className="flex-1 justify-center items-center">

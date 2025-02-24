@@ -18,15 +18,15 @@ const ProfileViewScreen = () => {
       <View style={styles.cardContainer}>
         {/* Profile Section */}
 
-        <View style={styles.profileContainer}>
+        <View style={styles.profileContainer} className="mb-4">
           <TouchableOpacity>
-            <Text style={styles.addNameButton}>Add Your Name</Text>
+            <Text style={styles.addNameButton}>John  </Text>
           </TouchableOpacity>
           <Text style={styles.phoneNumber}>+968 123455</Text>
         </View>
 
-        {/* ABHA Card Section */}
-        <TouchableOpacity style={styles.abhaContainer}>
+       
+        {/* <TouchableOpacity style={styles.abhaContainer}>
           <View>
             <Text style={styles.abhaTitle}>Create your ABHA Number</Text>
             <Text style={styles.abhaSubtitle}>
@@ -37,13 +37,13 @@ const ProfileViewScreen = () => {
             source={require("../assets/images/abhaImage.webp")}
             style={styles.abhaImage}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* Options Section */}
         <View style={styles.optionsContainer}>
           {/* My Profile */}
           <TouchableOpacity
-            onPress={() => navigation.navigate("EditProfileScreen")}
+            onPress={() => navigation.navigate("ProfileEdit")}
             style={styles.optionItem}
           >
             <FontAwesome name="user-o" size={24} color="#000" />

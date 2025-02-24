@@ -23,14 +23,14 @@ export default function SignupScreen() {
 
   // Function to handle sign-up logic
   const handleSignUp = () => {
-    if (!email || !password || !confirmPassword) {
+    if (!email || !password ) {
       alert("Please fill all fields");
       return;
     }
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+    // if (password !== confirmPassword) {
+    //   alert("Passwords do not match");
+    //   return;
+    // }
     alert("Sign Up successful");
     navigation.replace("tabs");
   };

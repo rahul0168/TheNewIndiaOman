@@ -30,6 +30,8 @@ const CompassInsurance = () => {
   const [nationalities, setNationalities] = useState([]);
   const [showCommencingDate, setShowCommencingDate] = useState(false);
   const [showMaturityDate, setShowMaturityDate] = useState(false);
+  const [showResiexpiry, setShowResiexpiry] = useState(false);
+  const [showdob, setShowdob] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [travelInfoFormData, setTravelInfoFormData] = useState({
     policyNo: "",
@@ -47,6 +49,8 @@ const CompassInsurance = () => {
     Telephone: "",
     commencingDate: new Date(),
     maturityDate: new Date(),
+    resicardexpiry: new Date(),
+    dob: new Date(),
     Employer: "",
     AddressOfSponsor: "",
   });
@@ -315,15 +319,28 @@ const CompassInsurance = () => {
               <View style={{ flex: 1 }}>
                 <Text className="font-semibold mb-2">Date of Birth</Text>
                 <TouchableOpacity
-                  onPress={() => setShowMaturityDate(true)}
+                  onPress={() => setShowdob(true)}
                   activeOpacity={0.7}
                 >
                   <PTextInput
                     style={inputStyle}
                     editable={false}
-                    value={formData.commencingDate.toDateString()}
+                    value={formData.dob.toDateString()}
                   />
                 </TouchableOpacity>
+                {showdob && (
+              <DateTimePicker
+                value={formData.dob || new Date()} // Ensure a valid date is used
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShowdob(false); // Hide the picker after selection
+                  if (selectedDate) {
+                    setFormData({ ...formData, dob: selectedDate }); // Update state
+                  }
+                }}
+              />
+            )}
               </View>
             </View>
             <View
@@ -350,7 +367,35 @@ const CompassInsurance = () => {
                 />
               </View>
               <View style={{ flex: 1 }}>
-                <Text className="font-semibold mb-2">Passport No</Text>
+              <Text className="font-semibold mb-2">Resi.Card Expiry</Text>
+                <TouchableOpacity
+                  onPress={() => setShowResiexpiry(true)}
+                  activeOpacity={0.7}
+                >
+                  <PTextInput
+                    style={inputStyle}
+                    editable={false}
+                    value={formData.resicardexpiry.toDateString()}
+                  />
+                </TouchableOpacity>
+                {showResiexpiry && (
+              <DateTimePicker
+                value={formData.resicardexpiry || new Date()} // Ensure a valid date is used
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShowResiexpiry(false); // Hide the picker after selection
+                  if (selectedDate) {
+                    setFormData({ ...formData, resicardexpiry: selectedDate }); // Update state
+                  }
+                }}
+              />
+            )}
+              
+              </View>
+            </View>
+
+            <Text className="font-semibold mb-2">Passport No</Text>
                 <PTextInput
                   label=" Passport No "
                   value={formData.Passport}
@@ -363,8 +408,6 @@ const CompassInsurance = () => {
                   outlineStyle={{ borderRadius: 25 }}
                   theme={{ colors: { primary: "#1E3A8A" } }}
                 />
-              </View>
-            </View>
 
             <Text className="font-semibold mb-2">Business/Occupation </Text>
 

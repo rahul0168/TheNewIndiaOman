@@ -18,6 +18,7 @@ import { Ionicons } from "@expo/vector-icons"; // Ensure you have the correct im
 import HomeScreen from "./Home";
 import HomeScreen1 from "./HomeScreen";
 import ProfileViewScreen from "../ProfileViewScreen";
+import ProfileEdit from "./ProfileEdit";
 
 const Tab = createBottomTabNavigator();
 
@@ -74,9 +75,9 @@ export default function TabLayout() {
         />
         {/* Profile Tab */}
         <Tab.Screen
-          name="Profile"
+          name="Settings"
           component={ProfileViewScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: false  }}
           screenOptions={{ headershown: false }}
         />
 
@@ -108,6 +109,7 @@ export default function TabLayout() {
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,
+            title: "Moto Insurances ",
             // Hide tabBar when viewing ProductDetails
           }}
         />
@@ -119,6 +121,8 @@ export default function TabLayout() {
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,
+            title: "Travel Insurances ",
+
             // Hide tabBar when viewing ProductDetails
           }}
         />
@@ -129,6 +133,7 @@ export default function TabLayout() {
           title="Personal Accident "
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
+            title: "Personal Accident ",
             tabBarVisible: false,
             // Hide tabBar when viewing ProductDetails
           }}
@@ -140,6 +145,8 @@ export default function TabLayout() {
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,
+            title: "Policy  Search",
+
             // Hide tabBar when viewing ProductDetails
           }}
         />
@@ -150,6 +157,8 @@ export default function TabLayout() {
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,
+            title: "Compass  Insurance",
+
             // Hide tabBar when viewing ProductDetails
           }}
         />
@@ -160,6 +169,20 @@ export default function TabLayout() {
           options={{
             tabBarButton: () => null, // Hide ProductDetails from the bottom tab
             tabBarVisible: false,
+            title: "New Motor Insurance",
+
+            // Hide tabBar when viewing ProductDetails
+          }}
+        />
+         <Tab.Screen
+          name="ProfileEdit"
+          component={ProfileEdit}
+          title="New Motor Insurance"
+          options={{
+            tabBarButton: () => null, // Hide ProductDetails from the bottom tab
+            tabBarVisible: false,     
+            title: "Edit Profile",
+
             // Hide tabBar when viewing ProductDetails
           }}
         />
