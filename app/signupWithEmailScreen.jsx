@@ -55,7 +55,7 @@ export default function SignupScreen() {
       >
         <Ionicons name="arrow-back" size={24} color="white" />
       </TouchableOpacity>
-      <View style={{ marginTop: height * 0.30 }} className="flex-1 w-full">
+      <View style={{ marginTop: height * 0.3 }} className="flex-1 w-full">
         <ScrollView>
           <Card className="w-full bg-white p-6 rounded-tl-2xl rounded-tr-2xl shadow-lg ">
             {/* Logo */}
@@ -84,7 +84,7 @@ export default function SignupScreen() {
             />
 
             {/* Phone Input */}
-            <TextInput
+            {/* <TextInput
               mode="outlined"
               label="Phone"
               value={phone}
@@ -94,7 +94,7 @@ export default function SignupScreen() {
                 roundness: 12,
                 colors: { primary: "#6b7280", background: "#ffffff" },
               }}
-            />
+            /> */}
 
             {/* Password Input */}
             <TextInput
