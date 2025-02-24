@@ -25,7 +25,7 @@ const HomeScreen1 = () => {
             Need Assistance?
           </Text>
           <Text className="text-center text-gray-600">
-            Contact our support team for any inquiries.
+            Please contact +968 93738126
           </Text>
         </View>
       </ScrollView>

@@ -11,7 +11,13 @@ import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
 
 const insuranceOptions = [
-  { id: "1", title: "New Motor Insurance", subtitle: "Starts @₹19/day*", icon: "car" ,URL: "MotorInsurance",},
+  {
+    id: "1",
+    title: "New Motor Insurance",
+    subtitle: "Starts @₹19/day*",
+    icon: "car",
+    URL: "MotorInsurance",
+  },
   {
     id: "2",
     title: "Renew Motor Insurance",
@@ -19,12 +25,29 @@ const insuranceOptions = [
     icon: "car",
     URL: "RenewalMotorInsurance",
   },
-  { id: "3", title: "Personal Accident", subtitle: "Starts @₹2094/yr*", icon: "heart" ,URL: "PersonalAccident"},
-  { id: "4", title: "Travel", subtitle: "Starts @₹300/trip*", icon: "flight" ,URL: "TravelInsurance",},
+  {
+    id: "3",
+    title: "Personal Accident",
+    subtitle: "Starts @₹2094/yr*",
+    icon: "heart",
+    URL: "PersonalAccident",
+  },
+  {
+    id: "4",
+    title: "Travel",
+    subtitle: "Starts @₹300/trip*",
+    icon: "flight",
+    URL: "TravelInsurance",
+  },
   // { id: "5", title: "Life", subtitle: "Starts @₹500/month*", icon: "heart" ,URL: "PersonalAccident",},
-  { id: "5", title: "Policy Search", subtitle: "Starts @₹1000/yr*", icon: "file" ,URL: "PolicySearch",},
-  { id: "6", title: "Compass Insurance", subtitle: "Starts @₹1000/yr*", icon: "file-text" ,URL: "CompassInsurance",},
- 
+  {
+    id: "5",
+    title: "Policy Search",
+    subtitle: "Starts @₹1000/yr*",
+    icon: "file",
+    URL: "PolicySearch",
+  },
+  // { id: "6", title: "Compass Insurance", subtitle: "Starts @₹1000/yr*", icon: "file-text" ,URL: "CompassInsurance",},
 ];
 
 const BottomSheetComponent = () => {
